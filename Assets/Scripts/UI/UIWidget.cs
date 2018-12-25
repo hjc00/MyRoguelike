@@ -15,6 +15,7 @@ public class UIWidget : MonoBehaviour
 
     }
 
+
     public void AddBtnClickListener(UnityAction action)
     {
         Button tmp = transform.GetComponent<Button>();

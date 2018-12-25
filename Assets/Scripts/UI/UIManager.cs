@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, Dictionary<string, GameObject>> allWidgets; //保存对所有控件的引用
 
+
+
     public static UIManager Instance
     {
         get
@@ -33,6 +35,15 @@ public class UIManager : MonoBehaviour
         }
         return null;
     }
+
+    //public GameObject GetSubManager(string panelName, string subName)
+    //{
+    //    if (allWidgets.ContainsKey(panelName))
+    //    {
+    //        return allWidgets[panelName][subName];
+    //    }
+    //    return null;
+    //}
 
     public void AddWidget(string panelName, string widgetName, GameObject widgetGo)
     {
@@ -65,5 +76,7 @@ public class UIManager : MonoBehaviour
             allWidgets[panelName] = null;
         }
     }
+
+
 
 }

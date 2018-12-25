@@ -16,6 +16,9 @@ public class UIBase : MonoBehaviour
         {
             if (trans[i].name.EndsWith("_w"))
                 trans[i].gameObject.AddComponent<UIWidget>();
+
+            if (trans[i].name.EndsWith("_s"))
+                trans[i].gameObject.AddComponent<UISubManager>();
         }
     }
 
@@ -36,6 +39,22 @@ public class UIBase : MonoBehaviour
         return null;
     }
 
+    public UISubManager GetSubManager(string subName)
+    {
+        return UIManager.Instance.GetWidget(this.gameObject.name, subName).GetComponent<UISubManager>();
+    }
+
+    public void AddBtnOnClickListener(string subName, string widgetName, UnityAction action)
+    {
+
+        UIWidget tmp = GetSubManager(subName).GetWidget(widgetName).GetComponent<UIWidget>();
+
+        if (tmp != null)
+        {
+            tmp.AddBtnClickListener(action);
+        }
+    }
+
     public void AddBtnOnClickListener(string widgetName, UnityAction action)
     {
         UIWidget tmp = GetUIWidget(widgetName);
@@ -46,8 +65,11 @@ public class UIBase : MonoBehaviour
         }
     }
 
+
     private void OnDestroy()
     {
         UIManager.Instance.RemovePanel(this.gameObject.name);
     }
+
+
 }
