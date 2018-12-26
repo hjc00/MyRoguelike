@@ -30,7 +30,7 @@ public class NpcManager : MonoBehaviour
     {
         Vector3 dir = attacked.position - attack.position;
 
-        float dot = Vector3.dot(dir, attack.forward);  //得到方向在攻击者前方的投影
+        float dot = Vector3.Dot(dir, attack.forward);  //得到方向在攻击者前方的投影
 
         if (dot > 0 && dot < forward)    //dot > 0 表示在前方，dot < forward 表示在范围内s
         {

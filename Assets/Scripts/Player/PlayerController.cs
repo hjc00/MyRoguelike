@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
         animator = GetComponent<Animator>();
         instance = this;
+
+        
     }
 
     private void Update()
@@ -74,10 +76,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            Debug.Log(target.magnitude);
-
             SetFloat("velocity", target.magnitude);
-
 
             cc.SimpleMove(target * speed);
 
