@@ -13,7 +13,7 @@ public class NpcData
         set { health = value; }
     }
 }
-public class RoleNpc : RoleBase
+public class RoleNpcCtrl : RoleBaseCtrl
 {
 
 

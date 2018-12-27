@@ -56,7 +56,7 @@ public class NpcManager : MonoBehaviour
         {
             if (CheckInRect(player, npcs[i], forward, width))
             {
-                npcs[i].GetComponent<RoleNpc>().ReduceHealth(power);
+                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
             }
         }
     }
@@ -81,7 +81,7 @@ public class NpcManager : MonoBehaviour
         {
             if (CheckInSector(player, npcs[i], angle, radius))
             {
-                npcs[i].GetComponent<RoleNpc>().ReduceHealth(power);
+                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
             }
         }
     }
@@ -102,7 +102,7 @@ public class NpcManager : MonoBehaviour
         {
             if (CheckInCircle(player, npcs[i], radius))
             {
-                npcs[i].GetComponent<RoleNpc>().ReduceHealth(power);
+                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
             }
         }
     }

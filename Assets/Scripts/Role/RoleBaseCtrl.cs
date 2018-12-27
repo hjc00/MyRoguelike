@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class RoleBase : MonoBehaviour
+public class RoleBaseCtrl : MonoBehaviour
 {
 
     //todo animation fsm
