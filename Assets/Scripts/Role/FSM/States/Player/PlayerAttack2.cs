@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack2 : FsmBase {
+public class PlayerAttack2 : FsmBase
+{
 
-	Animator anim;
+    Animator anim;
 
     PlayerCtrl playerCtrl;
 
@@ -16,12 +17,16 @@ public class PlayerAttack2 : FsmBase {
 
     public override void OnEnter()
     {
-        base.OnEnter();
+        anim.SetTrigger("attack");
     }
 
     public override void OnStay()
     {
-        base.OnStay();
+        HandleInput();
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && !Input.GetMouseButtonDown(0))
+        {
+            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
+        }
     }
 
     public override void OnExit()
@@ -31,6 +36,9 @@ public class PlayerAttack2 : FsmBase {
 
     public override void HandleInput()
     {
-        base.HandleInput();
+        if (Input.GetMouseButtonDown(0))
+        {
+            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack3);
+        }
     }
 }
