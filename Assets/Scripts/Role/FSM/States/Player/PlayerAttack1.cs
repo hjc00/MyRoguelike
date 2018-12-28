@@ -25,7 +25,7 @@ public class PlayerAttack1 : FsmBase
     public override void OnStay()
     {
         HandleInput();
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f && !Input.GetMouseButtonDown(0))
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
         {
             playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
         }

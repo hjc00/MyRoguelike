@@ -129,14 +129,24 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
     }
 
+    private void Update()
+    {
+        fsmManager.FsmUpdate();
+    }
+
     public void DoRectDamage()
     {
         NpcManager.Instance.DoRectDamage(PlayerData.RectForward, PlayerData.RectWidth, PlayerData.AtkPower);
     }
 
-    private void Update()
+    public void DoSectorDamage()
     {
-        fsmManager.FsmUpdate();
+        NpcManager.Instance.DoSectorDamage(PlayerData.SectorAngle, PlayerData.SectorRadius, PlayerData.AtkPower);
+    }
+
+    public void DoCircleDamage()
+    {
+        NpcManager.Instance.DoCircleDamage(PlayerData.CircleRadius, PlayerData.AtkPower);
     }
 
 

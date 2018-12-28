@@ -39,23 +39,22 @@ public class PlayerRun : FsmBase
             playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack1);
         }
 
+
         if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
         {
             float x = Input.GetAxis("Horizontal");
 
             float z = Input.GetAxis("Vertical");
 
-            Vector3 target = this.playerCtrl.transform.position + (new Vector3(x, 0, z) - this.playerCtrl.transform.position);
+            Vector3 target = new Vector3(x, 0, z);
 
-            //if (x != 0 || z != 0)
-           // {
-                Quaternion rot = Quaternion.LookRotation(target, playerCtrl.transform.up);
+            //playerCtrl.transform.LookAt(this.playerCtrl.transform.position + target);
 
-                playerCtrl.transform.rotation = Quaternion.Slerp(this.playerCtrl.transform.rotation, rot, 0.5f);
-
-           // }
+            playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(playerCtrl.transform.forward + target), 0.9f);
 
             playerCtrl.SimpleMove(target * playerCtrl.PlayerData.Speed);
+
+            Debug.Log(target);
 
             anim.SetFloat("velocity", target.magnitude);
 

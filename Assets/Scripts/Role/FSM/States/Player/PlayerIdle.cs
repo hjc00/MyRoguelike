@@ -41,10 +41,15 @@ public class PlayerIdle : FsmBase
         {
             float x = Input.GetAxis("Horizontal");
 
-            float y = Input.GetAxis("Vertical");
+            float z = Input.GetAxis("Vertical");
 
+            Vector3 target = new Vector3(x, 0, z);
 
-            if (x != 0 || y != 0)
+            // if (x < 0.5 || z < 0.5)
+
+            //    playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(playerCtrl.transform.position + target), 0.9f);
+
+            if (x != 0 || z != 0)
             {
                 playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Run);
             }

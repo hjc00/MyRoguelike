@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main : MonoBehaviour {
+public class Main : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         gameObject.AddComponent<UIManager>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+        gameObject.AddComponent<NpcManager>();
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

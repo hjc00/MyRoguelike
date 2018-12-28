@@ -16,6 +16,11 @@ public class NpcManager : MonoBehaviour
 
     private Transform player;
 
+    public Transform Player
+    {
+        get { return player; }
+    }
+
     private void Awake()
     {
         instance = this;
