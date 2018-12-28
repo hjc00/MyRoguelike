@@ -2,126 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#region PlayerStates
-public class PlayerIdle : FsmBase
-{
-    Animator anim;
-
-    PlayerCtrl playerCtrl;
-
-    public PlayerIdle(Animator animator, PlayerCtrl ctrl)
-    {
-        anim = animator;
-        playerCtrl = ctrl;
-    }
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
-    public override void OnStay()
-    {
-        base.OnStay();
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-    }
-}
-
-
-public class PlayerRun : FsmBase
-{
-    Animator anim;
-
-    PlayerCtrl playerCtrl;
-
-    public PlayerRun(Animator animator, PlayerCtrl ctrl)
-    {
-        anim = animator;
-        playerCtrl = ctrl;
-    }
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
-    public override void OnStay()
-    {
-        base.OnStay();
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-    }
-}
-
-public class PlayerDie : FsmBase
-{
-    Animator anim;
-
-    PlayerCtrl playerCtrl;
-
-    public PlayerDie(Animator animator, PlayerCtrl ctrl)
-    {
-        anim = animator;
-        playerCtrl = ctrl;
-    }
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
-    public override void OnStay()
-    {
-        base.OnStay();
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-    }
-}
-
-public class PlayeAttack : FsmBase
-{
-    Animator anim;
-
-    PlayerCtrl playerCtrl;
-
-    public PlayeAttack(Animator animator, PlayerCtrl ctrl)
-    {
-        anim = animator;
-        playerCtrl = ctrl;
-    }
-
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
-    public override void OnStay()
-    {
-        base.OnStay();
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-    }
-}
-#endregion
 
 public enum PlayerAnimationEnum
 {
     Idle,
     Run,
-    Attak1,
+    Attack1,
     Attack2,
     Attack3,
 
@@ -133,6 +19,14 @@ public enum PlayerAnimationEnum
 
 public class PlayerData
 {
+    int speed = 5;   //移动速度
+
+    public int Speed
+    {
+        get { return speed; }
+        set { speed = value; }
+    }
+
     int atkPower = 10;   //攻击力
     public int AtkPower
     {
@@ -196,14 +90,43 @@ public class PlayerCtrl : RoleBaseCtrl
 
     FsmManager fsmManager;
 
-    void Awake()
+    public FsmManager FsmManager
     {
+        get { return fsmManager; }
+    }
+
+    public override void Awake()
+    {
+        base.Awake();
+
         playData = new PlayerData();
 
         anim = GetComponent<Animator>();
 
         fsmManager = new FsmManager((int)PlayerAnimationEnum.Max);
 
+        PlayerIdle playerIdle = new PlayerIdle(anim, this);
+
+        PlayerRun playerRun = new PlayerRun(anim, this);
+
+        PlayerAttack1 playerAttack1 = new PlayerAttack1(anim, this);
+
+        PlayerAttack2 playerAttack2 = new PlayerAttack2(anim, this);
+
+        PlayerAttack3 playerAttack3 = new PlayerAttack3(anim, this);
+
+
+        fsmManager.AddState(playerIdle);
+
+        fsmManager.AddState(playerRun);
+
+        fsmManager.AddState(playerAttack1);
+
+        fsmManager.AddState(playerAttack2);
+
+        fsmManager.AddState(playerAttack3);
+
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
     }
 
     public void DoRectDamage()
@@ -213,8 +136,9 @@ public class PlayerCtrl : RoleBaseCtrl
 
     private void Update()
     {
-
+        fsmManager.FsmUpdate();
     }
+
 
 }
 #endregion

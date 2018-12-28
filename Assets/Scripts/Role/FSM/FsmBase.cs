@@ -13,7 +13,7 @@ public class FsmBase
 
     public virtual void OnStay()
     {
-
+        HandleInput();
     }
 
     public virtual void OnExit()
@@ -21,4 +21,9 @@ public class FsmBase
 
     }
 
+
+    public virtual void HandleInput()
+    {
+ 
+    }
 }

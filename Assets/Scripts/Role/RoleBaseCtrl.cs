@@ -8,11 +8,12 @@ public class RoleBaseCtrl : MonoBehaviour
 
     //todo animation fsm
 
-    private CharacterController cc;
+    protected CharacterController cc;
 
-    void Awake()
+    public virtual void Awake()
     {
-        cc = transform.GetComponent<CharacterController>();
+        cc = this.gameObject.GetComponent<CharacterController>();
+
     }
 
     public virtual void SimpleMove(Vector3 speed)

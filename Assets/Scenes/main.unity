@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641252, b: 0.574817, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2331,6 +2331,7 @@ GameObject:
   - component: {fileID: 2101188493}
   - component: {fileID: 2101188489}
   - component: {fileID: 2101188492}
+  - component: {fileID: 2101188494}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2374,7 +2375,7 @@ Animator:
   m_GameObject: {fileID: 2101188488}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 9ba3da4e8596b6e4ab2af2bf5238fded, type: 3}
-  m_Controller: {fileID: 9100000, guid: 92d5344f81057a4409cb0e19045b70d2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 608996bff1d1ef341b2c2ae7cf809152, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2388,7 +2389,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2101188488}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a1c46f4a2b8d7439c5f228ef136994, type: 3}
   m_Name: 
@@ -2411,3 +2412,14 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &2101188494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2101188488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e325b2b055f824c92b16543b24cd61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
