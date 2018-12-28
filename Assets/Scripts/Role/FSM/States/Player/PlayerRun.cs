@@ -50,7 +50,9 @@ public class PlayerRun : FsmBase
 
             //playerCtrl.transform.LookAt(this.playerCtrl.transform.position + target);
 
-            playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(playerCtrl.transform.forward + target), 0.9f);
+            if (x != 0 || z != 0)
+
+                playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(target), 0.2f);
 
             playerCtrl.SimpleMove(target * playerCtrl.PlayerData.Speed);
 
