@@ -17,13 +17,12 @@ public class PlayerRun : FsmBase
 
     public override void OnEnter()
     {
-
+        Debug.Log("run state");
         base.OnEnter();
     }
 
     public override void OnStay()
     {
-        Debug.Log("run state");
         HandleInput();
     }
 
@@ -56,7 +55,6 @@ public class PlayerRun : FsmBase
 
             playerCtrl.SimpleMove(target * playerCtrl.PlayerData.Speed);
 
-            Debug.Log(target);
 
             anim.SetFloat("velocity", target.magnitude);
 

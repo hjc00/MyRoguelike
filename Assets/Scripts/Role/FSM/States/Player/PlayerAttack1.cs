@@ -17,6 +17,7 @@ public class PlayerAttack1 : FsmBase
 
     public override void OnEnter()
     {
+        Debug.Log("attack 1 state");
         anim.SetTrigger("attack");
     }
 

@@ -16,8 +16,9 @@ public class PlayerIdle : FsmBase
 
     public override void OnEnter()
     {
-        Debug.Log("idle state");
         base.OnEnter();
+        Debug.Log("idle state");
+        anim.SetFloat("velocity", 0);
     }
 
     public override void OnStay()
