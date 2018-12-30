@@ -35,6 +35,11 @@ public class RoomModel
     Vector3 bottom;
     public Vector3 Bottom { get { return bottom; } }
 
+    public RoomModel()
+    {
+ 
+    }
+
     public RoomModel(Vector3 _center, int _length, int _width)
     {
         this.center = _center;

@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePf: {fileID: 1608090672151762, guid: 1916045bae534ab4b9adc8ae00c73376, type: 2}
+  pathPf: {fileID: 1608090672151762, guid: 3a8cf47c5cf0d9049957e0e38c076f09, type: 2}
 --- !u!4 &806432546
 Transform:
   m_ObjectHideFlags: 0

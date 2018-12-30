@@ -61,6 +61,8 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject cubePf;
 
+    public GameObject pathPf;
+
     private List<Vector3> points = new List<Vector3>();
 
     void Awake()
@@ -80,35 +82,66 @@ public class MapGenerator : MonoBehaviour
 
     void CreateRoomFlow()   //创建房间流程
     {
-        RoomModel firstRoom = CreateRoom(Vector3.zero, 3, 3);  //在原点创建第一个房间
+        //RoomModel lastRoom = CreateRoom(Vector3.zero, 5, 5);  //在原点创建第一个房间
 
-        points.Add(firstRoom.Center);
+        //points.Add(lastRoom.Center);
 
-        int curRoomCount = 1;
+        //int curRoomCount = 1;
 
-        Vector3 lastCenter = firstRoom.Center;
+        int curRoomCount = 0;
+
+        //Vector3 lastCenter = lastRoom.Center;
+
+        RoomModel lastRoom = new RoomModel();
 
         Vector3 nextCenter = Vector3.zero;
 
-        while (curRoomCount < map.RoomCount)
+        Vector3 lastCenter = Vector3.zero;
+
+        int count = 0;
+        while (curRoomCount < map.RoomCount || count > 5000)
         {
-            int nextLengh = Random.Range(10,15); //可随机
+            count++;
+
+            int nextLengh = Random.Range(10, 15); //可随机
 
             int nextWidth = Random.Range(10, 15); //可随机
 
-            nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth);
+            int pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
+
+            int dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);   //随机生成方向
+
+            nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth, pathLength, dir);
+
+            if (curRoomCount == 0)
+            {
+                lastRoom = CreateRoom(Vector3.zero, 5, 5);
+
+                lastCenter = lastRoom.Center;
+
+                CreatePath(lastCenter, nextCenter, pathLength, dir, lastRoom);
+
+                curRoomCount++;
+            }
 
 
             while (!CheckSpaceEnough(nextCenter, nextLengh, nextWidth))
             {
-                nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth);
+
+                dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);
+
+
+                nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth, pathLength, dir);
             }
+            Debug.Log("dir " + (RoomDir)dir);
 
             lastCenter = nextCenter;
 
             points.Add(nextCenter);
 
-            CreateRoom(nextCenter, nextLengh, nextWidth);
+            lastRoom = CreateRoom(nextCenter, nextLengh, nextWidth);
+
+            CreatePath(lastCenter, nextCenter, pathLength, dir, lastRoom);
 
             curRoomCount++;
         }
@@ -133,8 +166,27 @@ public class MapGenerator : MonoBehaviour
         return room;
     }
 
-    void CreatePath()
+    void CreatePath(Vector3 _lastCenter, Vector3 _nextCenter, int _pathLength, int _dir, RoomModel _lastRoom)
     {
+
+        PathModel path = new PathModel();
+
+        if (_dir == (int)RoomDir.Left)
+        {
+
+        }
+        else if (_dir == (int)RoomDir.Right)
+        {
+
+        }
+        else if (_dir == (int)RoomDir.Top)
+        {
+
+        }
+        else if (_dir == (int)RoomDir.Bottom)
+        {
+
+        }
 
     }
 
@@ -145,33 +197,25 @@ public class MapGenerator : MonoBehaviour
     /// <param name="_nextLength">  下一个房间的长度    </param>
     /// <param name="_nextWidth">   下一个房间的宽度    </param>
     /// <returns></returns>
-    Vector3 FindNextRoomCenter(Vector3 _lastCenter, int _nextLength, int _nextWidth)        //寻找下一个房间的原点
+    Vector3 FindNextRoomCenter(Vector3 _lastCenter, int _nextLength, int _nextWidth, int _pathLength, int _dir)        //寻找下一个房间的原点
     {
         Vector3 nextCenter = _lastCenter;
 
-        int tmpDir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);
-
-        Debug.Log("tmpDir " + (RoomDir)tmpDir);
-
-        int pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
-
-        //Debug.Log("pathLength " + pathLength);
-
-        if (tmpDir == (int)RoomDir.Left)
+        if (_dir == (int)RoomDir.Left)
         {
-            nextCenter.x -= (pathLength + _nextWidth * 0.5f);
+            nextCenter.x -= (_pathLength + _nextWidth * 0.5f);
         }
-        else if (tmpDir == (int)RoomDir.Right)
+        else if (_dir == (int)RoomDir.Right)
         {
-            nextCenter.x += (pathLength - _nextWidth * 0.5f);
+            nextCenter.x += (_pathLength - _nextWidth * 0.5f);
         }
-        else if (tmpDir == (int)RoomDir.Top)
+        else if (_dir == (int)RoomDir.Top)
         {
-            nextCenter.z += (pathLength + _nextLength * 0.5f);
+            nextCenter.z += (_pathLength + _nextLength * 0.5f);
         }
-        else if (tmpDir == (int)RoomDir.Bottom)
+        else if (_dir == (int)RoomDir.Bottom)
         {
-            nextCenter.z -= (pathLength - _nextLength * 0.5f);
+            nextCenter.z -= (_pathLength - _nextLength * 0.5f);
         }
         return nextCenter;
     }
