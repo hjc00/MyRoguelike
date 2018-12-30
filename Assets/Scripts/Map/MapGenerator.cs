@@ -61,6 +61,8 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject cubePf;
 
+    private List<Vector3> points = new List<Vector3>();
+
     void Awake()
     {
         map = new MapModel(50, 50, 5);
@@ -80,29 +82,35 @@ public class MapGenerator : MonoBehaviour
     {
         RoomModel firstRoom = CreateRoom(Vector3.zero, 3, 3);  //在原点创建第一个房间
 
+        points.Add(firstRoom.Center);
+
         int curRoomCount = 1;
 
-        Vector3 tempCenter = firstRoom.Center;
+        Vector3 lastCenter = firstRoom.Center;
+
+        Vector3 nextCenter = Vector3.zero;
 
         while (curRoomCount < map.RoomCount)
         {
-            int nextLengh = 3;
+            int nextLengh = Random.Range(10,15); //可随机
 
-            int nextWidth = 3;
+            int nextWidth = Random.Range(10, 15); //可随机
 
-            Vector3 nextCenter = FindNextRoomCenter(firstRoom.Center, nextLengh, nextWidth);
+            nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth);
 
-            if (CheckSpaceEnough(nextCenter, nextLengh, nextWidth))
+
+            while (!CheckSpaceEnough(nextCenter, nextLengh, nextWidth))
             {
-
-                CreateRoom(nextCenter, nextLengh, nextWidth);
-                curRoomCount++;
-            }
-            else
-            {
-                // nextCenter
+                nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth);
             }
 
+            lastCenter = nextCenter;
+
+            points.Add(nextCenter);
+
+            CreateRoom(nextCenter, nextLengh, nextWidth);
+
+            curRoomCount++;
         }
     }
     RoomModel CreateRoom(Vector3 _center, int _long, int _width)
@@ -111,15 +119,15 @@ public class MapGenerator : MonoBehaviour
 
         int startX = (int)(room.Center.x - room.Width * 0.5f);  //循环开始的索引
 
-        int startY = (int)(room.Center.y - room.Length * 0.5f);  //
+        int startZ = (int)(room.Center.z - room.Length * 0.5f);  //
 
-        for (int i = startX; i < room.Width - 1; i++)
+        for (int i = 0; i < room.Width - 1; i++)
         {
-            for (int j = startY; j < room.Length - 1; j++)
+            for (int j = 0; j < room.Length - 1; j++)
             {
                 GameObject cubeGo = Instantiate(cubePf);
 
-                cubeGo.transform.position = new Vector3(i, 0, j);
+                cubeGo.transform.position = new Vector3(startX + i, 0, startZ + j);
             }
         }
         return room;
@@ -143,29 +151,28 @@ public class MapGenerator : MonoBehaviour
 
         int tmpDir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);
 
-        Debug.Log("tmpDir " + tmpDir);
+        Debug.Log("tmpDir " + (RoomDir)tmpDir);
 
         int pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
 
-        Debug.Log("pathLength " + pathLength);
+        //Debug.Log("pathLength " + pathLength);
 
         if (tmpDir == (int)RoomDir.Left)
         {
-            nextCenter.x -= (pathLength + _nextLength * 0.5f);
+            nextCenter.x -= (pathLength + _nextWidth * 0.5f);
         }
         else if (tmpDir == (int)RoomDir.Right)
         {
-            nextCenter.x += (pathLength - _nextLength * 0.5f);
+            nextCenter.x += (pathLength - _nextWidth * 0.5f);
         }
         else if (tmpDir == (int)RoomDir.Top)
         {
-            nextCenter.y += (pathLength + _nextWidth * 0.5f);
+            nextCenter.z += (pathLength + _nextLength * 0.5f);
         }
         else if (tmpDir == (int)RoomDir.Bottom)
         {
-            nextCenter.y += (pathLength - _nextWidth * 0.5f);
+            nextCenter.z -= (pathLength - _nextLength * 0.5f);
         }
-
         return nextCenter;
     }
 
@@ -183,4 +190,13 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+
+    void OnDrawGizmos()
+    {
+        for (int i = 0; i < points.Count; i++)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(points[i], i + 1);
+        }
+    }
 }
