@@ -18,12 +18,12 @@ public class PlayerAttack3 : FsmBase
     public override void OnEnter()
     {
         Debug.Log("attack 3 state");
-        anim.SetTrigger("attack");
     }
+
 
     public override void OnStay()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f && !Input.GetMouseButtonDown(0))
         {
             playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
         }

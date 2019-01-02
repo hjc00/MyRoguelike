@@ -108,11 +108,11 @@ public class MapGenerator : MonoBehaviour
         while (curRoomCount < map.RoomCount || count > 5000)
         {
 
-            nextLengh = Random.Range(10, 15); //可随机
+            nextLengh = Random.Range(30, 60); //可随机
 
-            nextWidth = Random.Range(10, 15); //可随机
+            nextWidth = Random.Range(30, 60); //可随机
 
-            pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
+            pathLength = Random.Range(30, 60);   //随机出房间通路的长度，此处先固定，以后可扩展
 
             dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);   //随机生成方向
 
@@ -120,7 +120,7 @@ public class MapGenerator : MonoBehaviour
 
             if (curRoomCount == 0)
             {
-                lastRoom = CreateRoom(Vector3.zero, 5, 5);
+                lastRoom = CreateRoom(Vector3.zero, 10, 10);
 
                 curRoom = lastRoom;
 
@@ -141,12 +141,11 @@ public class MapGenerator : MonoBehaviour
 
                 count++;
 
-                if (count >= 500)
+                if (count >= 2000)
                     break;
             }
 
-            if (count >= 500)
-                break;
+           
 
             //Debug.Log("dir " + (RoomDir)dir);
 

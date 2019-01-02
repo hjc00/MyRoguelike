@@ -47,8 +47,6 @@ public class PlayerRun : FsmBase
 
             Vector3 target = new Vector3(x, 0, z);
 
-            //playerCtrl.transform.LookAt(this.playerCtrl.transform.position + target);
-
             if (x != 0 || z != 0)
 
                 playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(target), 0.2f);

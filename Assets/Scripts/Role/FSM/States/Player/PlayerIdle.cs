@@ -19,6 +19,7 @@ public class PlayerIdle : FsmBase
         base.OnEnter();
         Debug.Log("idle state");
         anim.SetFloat("velocity", 0);
+        anim.ResetTrigger("attack");
     }
 
     public override void OnStay()
@@ -28,7 +29,7 @@ public class PlayerIdle : FsmBase
 
     public override void OnExit()
     {
-        base.OnExit();
+     
     }
 
     public override void HandleInput()
