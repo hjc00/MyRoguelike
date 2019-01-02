@@ -39,7 +39,7 @@ public class MapModel
         this.width = _width;
         this.coordinates = new int[_length, _width];
         this.roomCount = _roomCount;
-        //InitCoordinate();
+        InitCoordinate();
     }
 
     private void InitCoordinate()
@@ -65,9 +65,11 @@ public class MapGenerator : MonoBehaviour
 
     private List<Vector3> points = new List<Vector3>();
 
+    private List<RoomModel> rooms = new List<RoomModel>();
+
     void Awake()
     {
-        map = new MapModel(50, 50, 5);
+        map = new MapModel(50, 50, 10);
     }
 
     void Start()
@@ -82,34 +84,37 @@ public class MapGenerator : MonoBehaviour
 
     void CreateRoomFlow()   //创建房间流程
     {
-        //RoomModel lastRoom = CreateRoom(Vector3.zero, 5, 5);  //在原点创建第一个房间
-
-        //points.Add(lastRoom.Center);
-
-        //int curRoomCount = 1;
 
         int curRoomCount = 0;
 
-        //Vector3 lastCenter = lastRoom.Center;
-
         RoomModel lastRoom = new RoomModel();
+
+        RoomModel curRoom = new RoomModel();
 
         Vector3 nextCenter = Vector3.zero;
 
         Vector3 lastCenter = Vector3.zero;
 
+        int nextLengh = 0;
+
+        int nextWidth = 0;
+
+        int pathLength = 0;
+
+        int dir = 0;
+
         int count = 0;
+
         while (curRoomCount < map.RoomCount || count > 5000)
         {
-            count++;
 
-            int nextLengh = Random.Range(10, 15); //可随机
+            nextLengh = Random.Range(10, 15); //可随机
 
-            int nextWidth = Random.Range(10, 15); //可随机
+            nextWidth = Random.Range(10, 15); //可随机
 
-            int pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
+            pathLength = Random.Range(15, 30);   //随机出房间通路的长度，此处先固定，以后可扩展
 
-            int dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);   //随机生成方向
+            dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);   //随机生成方向
 
             nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth, pathLength, dir);
 
@@ -117,11 +122,13 @@ public class MapGenerator : MonoBehaviour
             {
                 lastRoom = CreateRoom(Vector3.zero, 5, 5);
 
+                curRoom = lastRoom;
+
                 lastCenter = lastRoom.Center;
 
-                CreatePath(lastCenter, nextCenter, pathLength, dir, lastRoom);
-
                 curRoomCount++;
+
+                //CreatePath(lastCenter, nextCenter, pathLength, lastRoom, dir);
             }
 
 
@@ -130,18 +137,30 @@ public class MapGenerator : MonoBehaviour
 
                 dir = Random.Range((int)RoomDir.Left, (int)RoomDir.Bottom + 1);
 
-
                 nextCenter = FindNextRoomCenter(lastCenter, nextLengh, nextWidth, pathLength, dir);
+
+                count++;
+
+                if (count >= 500)
+                    break;
             }
-            Debug.Log("dir " + (RoomDir)dir);
+
+            if (count >= 500)
+                break;
+
+            //Debug.Log("dir " + (RoomDir)dir);
 
             lastCenter = nextCenter;
 
             points.Add(nextCenter);
 
-            lastRoom = CreateRoom(nextCenter, nextLengh, nextWidth);
+            lastRoom = curRoom;
 
-            CreatePath(lastCenter, nextCenter, pathLength, dir, lastRoom);
+            curRoom = CreateRoom(nextCenter, nextLengh, nextWidth);
+
+            //rooms.Add(lastRoom);
+
+            CreatePath(lastCenter, nextCenter, pathLength, lastRoom, dir);
 
             curRoomCount++;
         }
@@ -166,27 +185,58 @@ public class MapGenerator : MonoBehaviour
         return room;
     }
 
-    void CreatePath(Vector3 _lastCenter, Vector3 _nextCenter, int _pathLength, int _dir, RoomModel _lastRoom)
+    void CreatePath(Vector3 _lastCenter, Vector3 _nextCenter, int _pathLength, RoomModel _lastRoom, int _dir)
     {
+        Debug.Log("create path dir " + (RoomDir)_dir);
 
-        PathModel path = new PathModel();
+        Vector3 startPathPos = Vector3.zero;
 
         if (_dir == (int)RoomDir.Left)
         {
+            startPathPos = _lastRoom.Left;
 
+            for (int i = 0; i < _pathLength; i++)
+            {
+                GameObject pathGo = Instantiate(pathPf);
+
+                pathGo.transform.position = new Vector3(startPathPos.x - i, 0, startPathPos.z);
+            }
         }
         else if (_dir == (int)RoomDir.Right)
         {
+            startPathPos = _lastRoom.Right;
 
+            for (int i = 0; i < _pathLength; i++)
+            {
+                GameObject pathGo = Instantiate(pathPf);
+
+                pathGo.transform.position = new Vector3(startPathPos.x + i, 0, startPathPos.z);
+            }
         }
         else if (_dir == (int)RoomDir.Top)
         {
+            startPathPos = _lastRoom.Top;
 
+            for (int i = 0; i < _pathLength; i++)
+            {
+                GameObject pathGo = Instantiate(pathPf);
+
+                pathGo.transform.position = new Vector3(startPathPos.x, 0, startPathPos.z + i);
+            }
         }
         else if (_dir == (int)RoomDir.Bottom)
         {
+            startPathPos = _lastRoom.Bottom;
 
+            for (int i = 0; i < _pathLength; i++)
+            {
+                GameObject pathGo = Instantiate(pathPf);
+
+                pathGo.transform.position = new Vector3(startPathPos.x, 0, startPathPos.z - i);
+            }
         }
+
+
 
     }
 
@@ -240,7 +290,7 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < points.Count; i++)
         {
             Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(points[i], i + 1);
+           // Gizmos.DrawSphere(points[i], i + 1);
         }
     }
 }

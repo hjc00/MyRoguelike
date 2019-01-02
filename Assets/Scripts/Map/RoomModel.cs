@@ -35,6 +35,8 @@ public class RoomModel
     Vector3 bottom;
     public Vector3 Bottom { get { return bottom; } }
 
+
+
     public RoomModel()
     {
  
@@ -46,13 +48,15 @@ public class RoomModel
         this.length = _length;
         this.width = _width;
 
-        this.left = new Vector3(this.center.x - this.width * 0.5f, 0, this.center.y);
+        this.left = new Vector3(this.center.x - this.width * 0.5f, 0, this.center.z);
 
-        this.right = new Vector3(this.center.x + this.width * 0.5f, 0, this.center.y);
+        this.right = new Vector3(this.center.x + this.width * 0.5f, 0, this.center.z);
 
-        this.top = new Vector3(this.center.x, 0, this.center.y + this.length * 0.5f);
+        this.top = new Vector3(this.center.x, 0, this.center.z + this.length * 0.5f);
 
-        this.bottom = new Vector3(this.center.x, 0, this.center.y - this.length * 0.5f);
+        this.bottom = new Vector3(this.center.x, 0, this.center.z - this.length * 0.5f);
     }
+
+
 
 }
