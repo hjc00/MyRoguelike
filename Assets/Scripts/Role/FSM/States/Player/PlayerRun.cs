@@ -17,13 +17,12 @@ public class PlayerRun : FsmBase
 
     public override void OnEnter()
     {
-
+        Debug.Log("run state");
         base.OnEnter();
     }
 
     public override void OnStay()
     {
-        Debug.Log("run state");
         HandleInput();
     }
 
@@ -48,15 +47,12 @@ public class PlayerRun : FsmBase
 
             Vector3 target = new Vector3(x, 0, z);
 
-            //playerCtrl.transform.LookAt(this.playerCtrl.transform.position + target);
-
             if (x != 0 || z != 0)
 
                 playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(target), 0.2f);
 
             playerCtrl.SimpleMove(target * playerCtrl.PlayerData.Speed);
 
-            Debug.Log(target);
 
             anim.SetFloat("velocity", target.magnitude);
 

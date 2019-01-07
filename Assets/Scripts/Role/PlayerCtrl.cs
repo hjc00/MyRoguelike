@@ -19,7 +19,7 @@ public enum PlayerAnimationEnum
 
 public class PlayerData
 {
-    int speed = 5;   //移动速度
+    int speed = 8;   //移动速度
 
     public int Speed
     {
