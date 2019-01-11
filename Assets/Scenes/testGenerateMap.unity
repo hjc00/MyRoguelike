@@ -137,11 +137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 806432544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1664b8e3dad34a04dafc0108f4a8f2d6, type: 3}
+  m_Script: {fileID: 11500000, guid: fa44b0152462d7e4693136be8ee59808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePf: {fileID: 1608090672151762, guid: 1916045bae534ab4b9adc8ae00c73376, type: 2}
-  pathPf: {fileID: 1608090672151762, guid: 3a8cf47c5cf0d9049957e0e38c076f09, type: 2}
+  floorPf: {fileID: 1608090672151762, guid: 1916045bae534ab4b9adc8ae00c73376, type: 2}
 --- !u!4 &806432546
 Transform:
   m_ObjectHideFlags: 0
