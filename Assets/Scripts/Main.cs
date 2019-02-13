@@ -6,7 +6,7 @@ public class Main : MonoBehaviour
 {
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         gameObject.AddComponent<UIManager>();
 

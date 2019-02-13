@@ -30,6 +30,20 @@ public class NpcManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    public void AddNpc(Transform go)
+    {
+        if (!this.npcs.Contains(go))
+            this.npcs.Add(go);
+    }
+
+    public void RemoveNpc(Transform go)
+    {
+        if (!this.npcs.Contains(go))
+            return;
+        this.npcs.Remove(go);
+    }
+
+
 
     private bool CheckInRect(Transform attack, Transform attacked, int forward, int width)
     {
@@ -50,18 +64,19 @@ public class NpcManager : MonoBehaviour
 
 
     /// <summary>
-    /// //矩形攻击伤害
+    /// //玩家矩形攻击伤害
     /// </summary>
     /// <param name="forward">  前向长度    </param>
     /// <param name="width">    宽度  </param>
-    /// <param name="power">    攻击力 </param>
+    /// <param name="power">    攻击力 </param> 
     public void DoRectDamage(int forward, int width, int power)
     {
+        Debug.Log(npcs.Count);
         for (int i = 0; i < npcs.Count; i++)
         {
             if (CheckInRect(player, npcs[i], forward, width))
             {
-                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
+                npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
             }
         }
     }
@@ -82,11 +97,12 @@ public class NpcManager : MonoBehaviour
 
     public void DoSectorDamage(int angle, int radius, int power)   //扇形攻击伤害
     {
+
         for (int i = 0; i < npcs.Count; i++)
         {
             if (CheckInSector(player, npcs[i], angle, radius))
             {
-                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
+                npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
             }
         }
     }
@@ -103,11 +119,12 @@ public class NpcManager : MonoBehaviour
 
     public void DoCircleDamage(int radius, int power)
     {
+
         for (int i = 0; i < npcs.Count; i++)
         {
             if (CheckInCircle(player, npcs[i], radius))
             {
-                npcs[i].GetComponent<RoleNpcCtrl>().ReduceHealth(power);
+                npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
             }
         }
     }
