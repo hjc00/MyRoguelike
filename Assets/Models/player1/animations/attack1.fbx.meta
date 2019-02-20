@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c697e9ac94fdbd4d98703a7fd27a45c
+guid: 4545eae13367c504b972480ed8235452
 timeCreated: 1545561796
 licenseType: Free
 ModelImporter:
@@ -57,7 +57,7 @@ ModelImporter:
     400046: mixamorig:Spine
     400048: mixamorig:Spine1
     400050: mixamorig:Spine2
-    7400000: atk2
+    7400000: attack1
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -87,17 +87,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: atk2
+      name: attack1
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

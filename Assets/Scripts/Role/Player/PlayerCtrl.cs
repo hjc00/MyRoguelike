@@ -120,6 +120,20 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.FsmUpdate();
     }
 
+    private void ChangeToAttack1()
+    {
+
+    }
+
+    private void ChangeToAttack2()
+    {
+
+    }
+
+    private void ChangeToAttack3()
+    {
+    }
+
     public void DoRectDamage()
     {
         NpcManager.Instance.DoRectDamage(PlayerData.RectForward, PlayerData.RectWidth, PlayerData.AtkPower);
