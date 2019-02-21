@@ -29,7 +29,7 @@ public class PlayerAttack3 : FsmBase
 
     public override void OnExit()
     {
-        anim.ResetTrigger("attack3");
+        anim.ResetTrigger("attack");
     }
 
     public override void HandleInput()

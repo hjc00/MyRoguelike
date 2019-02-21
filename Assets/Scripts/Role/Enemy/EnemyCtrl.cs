@@ -82,19 +82,32 @@ public class EnemyCtrl : RoleBaseCtrl
     }
 
 
+    private void ChangeToHit()
+    {
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
+    }
+
     public void ReduceHealth(int amount)
     {
-       // fsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
+
+        if (enemyData.Health <= 0)
+            return;
+
+        anim.SetTrigger("hit");
 
         enemyData.Health -= amount;
+
         Debug.Log(enemyData.Health);
+
         if (enemyData.Health <= 0)
         {
-             fsmManager.ChangeState((int)GoblinAnimationEnum.Die);
-            Debug.Log(enemyData.Health);
-            return;
+            bool death = anim.GetBool("death");
+            Debug.Log(death);
+            if (!death)
+            {
+                this.enabled = false;
+                anim.SetBool("death", true);
+            }
         }
-
-        // Debug.Log(enemyData.Health);
     }
 }

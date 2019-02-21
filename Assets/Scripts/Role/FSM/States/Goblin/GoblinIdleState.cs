@@ -17,7 +17,7 @@ public class GoblinIdleState : FsmBase
 
     public override void OnEnter()
     {
-
+        anim.ResetTrigger("hit");
     }
 
     public override void OnStay()

@@ -15,7 +15,7 @@ public class GoblinHitState : FsmBase
 
     public override void OnEnter()
     {
-        this.anim.SetTrigger("hit");
+        anim.ResetTrigger("hit");
     }
 
     public override void OnStay()
@@ -25,8 +25,8 @@ public class GoblinHitState : FsmBase
 
     public override void OnExit()
     {
-        Debug.Log("hit exit");
-        enemyCtrl.FsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
+        anim.ResetTrigger("hit");
+
     }
 
 }

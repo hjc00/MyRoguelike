@@ -35,7 +35,8 @@ public class PlayerRun : FsmBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack1);
+            anim.SetTrigger("attack");
+            return;
         }
 
 

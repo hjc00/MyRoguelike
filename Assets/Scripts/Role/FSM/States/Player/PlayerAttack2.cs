@@ -38,7 +38,7 @@ public class PlayerAttack2 : FsmBase
 
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetTrigger("attack3");
+            anim.SetTrigger("attack");
             return;
         }
 

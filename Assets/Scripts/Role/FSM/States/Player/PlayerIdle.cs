@@ -34,7 +34,7 @@ public class PlayerIdle : FsmBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetTrigger("attack1");
+            anim.SetTrigger("attack");
             return;
         }
 

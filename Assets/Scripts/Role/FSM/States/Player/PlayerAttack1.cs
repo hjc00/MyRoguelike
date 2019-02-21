@@ -40,7 +40,7 @@ public class PlayerAttack1 : FsmBase
 
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetTrigger("attack2");
+            anim.SetTrigger("attack");
             return;
         }
     }

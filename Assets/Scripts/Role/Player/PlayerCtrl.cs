@@ -148,16 +148,19 @@ public class PlayerCtrl : RoleBaseCtrl
 
     public void DoRectDamage()
     {
+        anim.SetTrigger("attack");
         NpcManager.Instance.DoRectDamage(PlayerData.RectForward, PlayerData.RectWidth, PlayerData.AtkPower);
     }
 
     public void DoSectorDamage()
     {
+        anim.SetTrigger("attack");
         NpcManager.Instance.DoSectorDamage(PlayerData.SectorAngle, PlayerData.SectorRadius, PlayerData.AtkPower);
     }
 
     public void DoCircleDamage()
     {
+        anim.SetTrigger("attack");
         NpcManager.Instance.DoCircleDamage(PlayerData.CircleRadius, PlayerData.AtkPower);
     }
 

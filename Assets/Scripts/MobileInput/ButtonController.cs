@@ -40,7 +40,6 @@ public class ButtonController : MonoBehaviour
     }
     private void OnBtnAtkClick()
     {
-        playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack1);
         playerCtrl.DoRectDamage();
     }
 

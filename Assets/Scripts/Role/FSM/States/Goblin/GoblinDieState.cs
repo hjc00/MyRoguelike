@@ -16,7 +16,7 @@ public class GoblinDieState : FsmBase
 
     public override void OnEnter()
     {
-        this.anim.SetBool("death", true);
+
 
     }
 
