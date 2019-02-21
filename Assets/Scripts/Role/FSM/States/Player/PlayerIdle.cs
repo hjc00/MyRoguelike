@@ -18,8 +18,6 @@ public class PlayerIdle : FsmBase
     {
         base.OnEnter();
         Debug.Log("idle state");
-         anim.SetFloat("velocity", 0);
-
     }
 
     public override void OnStay()
@@ -36,7 +34,8 @@ public class PlayerIdle : FsmBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack1);
+            anim.SetTrigger("attack1");
+            return;
         }
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
@@ -45,10 +44,9 @@ public class PlayerIdle : FsmBase
 
             float z = Input.GetAxis("Vertical");
 
-            if (x != 0 || z != 0)
-            {
-                playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Run);
-            }
+            Vector3 target = new Vector3(x, 0, z);
+
+            anim.SetFloat("velocity", target.magnitude);
 
         }
     }

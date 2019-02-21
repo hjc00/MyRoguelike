@@ -120,19 +120,31 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.FsmUpdate();
     }
 
-    private void ChangeToAttack1()
+    public void ChangeToIdle()
     {
-
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
     }
 
-    private void ChangeToAttack2()
+    public void ChangeToAttack1()
     {
-
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Attack1);
     }
 
-    private void ChangeToAttack3()
+    public void ChangeToAttack2()
     {
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Attack2);
     }
+
+    public void ChangeToAttack3()
+    {
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Attack3);
+    }
+
+    public void ChangeToRun()
+    {
+        fsmManager.ChangeState((int)PlayerAnimationEnum.Run);
+    }
+
 
     public void DoRectDamage()
     {

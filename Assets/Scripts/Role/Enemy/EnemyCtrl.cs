@@ -76,10 +76,15 @@ public class EnemyCtrl : RoleBaseCtrl
         fsmManager.FsmUpdate();
     }
 
+    private void ChangeToIdle()
+    {
+        fsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
+    }
+
 
     public void ReduceHealth(int amount)
     {
-        fsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
+       // fsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
 
         enemyData.Health -= amount;
         Debug.Log(enemyData.Health);

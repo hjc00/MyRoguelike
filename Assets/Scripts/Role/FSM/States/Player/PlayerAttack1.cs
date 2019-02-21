@@ -9,8 +9,6 @@ public class PlayerAttack1 : FsmBase
     AnimatorStateInfo animatorInfo;
     PlayerCtrl playerCtrl;
 
-    float timer = 0;
-    float animationEndTime = 0;
 
     public PlayerAttack1(Animator animator, PlayerCtrl ctrl)
     {
@@ -18,14 +16,11 @@ public class PlayerAttack1 : FsmBase
 
         playerCtrl = ctrl;
 
-        animationEndTime = GameDefine.attack1Length * 0.5f;
     }
 
     public override void OnEnter()
     {
         Debug.Log("attack 1 state");
-        anim.SetTrigger("attack");
-        timer = 0;
 
     }
 
@@ -42,22 +37,11 @@ public class PlayerAttack1 : FsmBase
 
     public override void HandleInput()
     {
-        timer += Time.deltaTime;
-
 
         if (Input.GetMouseButtonDown(0))
         {
-            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Attack2);
+            anim.SetTrigger("attack2");
             return;
-        }
-
-
-
-        if (timer >= animationEndTime)
-        {
-            timer = 0;
-            playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
-
         }
     }
 }

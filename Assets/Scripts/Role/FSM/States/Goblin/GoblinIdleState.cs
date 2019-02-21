@@ -30,8 +30,5 @@ public class GoblinIdleState : FsmBase
 
     }
 
-    public override void HandleInput()
-    {
 
-    }
 }
