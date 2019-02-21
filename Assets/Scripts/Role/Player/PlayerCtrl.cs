@@ -17,22 +17,8 @@ public enum PlayerAnimationEnum
 
 #region PlayerData
 
-public class PlayerData
+public class PlayerData : RoleData
 {
-    int speed = 8;   //移动速度
-
-    public int Speed
-    {
-        get { return speed; }
-        set { speed = value; }
-    }
-
-    int atkPower = 10;   //攻击力
-    public int AtkPower
-    {
-        get { return atkPower; }
-        set { atkPower = value; }
-    }
 
     int rectForward = 10;   //矩形攻击范围长度
     public int RectForward
@@ -132,6 +118,20 @@ public class PlayerCtrl : RoleBaseCtrl
     private void Update()
     {
         fsmManager.FsmUpdate();
+    }
+
+    private void ChangeToAttack1()
+    {
+
+    }
+
+    private void ChangeToAttack2()
+    {
+
+    }
+
+    private void ChangeToAttack3()
+    {
     }
 
     public void DoRectDamage()

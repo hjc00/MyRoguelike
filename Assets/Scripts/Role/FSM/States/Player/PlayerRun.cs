@@ -56,10 +56,6 @@ public class PlayerRun : FsmBase
 
             anim.SetFloat("velocity", target.magnitude);
 
-            if (x == 0 && z == 0)
-            {
-                playerCtrl.FsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
-            }
         }
     }
 }
