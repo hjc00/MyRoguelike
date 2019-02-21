@@ -21,4 +21,9 @@ public class RoleBaseCtrl : MonoBehaviour
         cc.SimpleMove(speed);
     }
 
+    public virtual void RotateTo(Vector3 target)
+    {
+        cc.transform.rotation = Quaternion.Slerp(cc.transform.rotation, Quaternion.LookRotation(target), 0.2f);
+    }
+
 }

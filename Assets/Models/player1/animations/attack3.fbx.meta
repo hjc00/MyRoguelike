@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e6d644a109dcaf74e94261f0eb3cb30b
-timeCreated: 1545562946
+guid: 730c3824e5cf51e439e5f0ac431b4821
+timeCreated: 1545561867
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
+    100000: chr_knight
     100002: mixamorig:Head
     100004: mixamorig:HeadTop_End
     100006: mixamorig:Hips
@@ -31,7 +31,8 @@ ModelImporter:
     100046: mixamorig:Spine
     100048: mixamorig:Spine1
     100050: mixamorig:Spine2
-    400000: //RootNode
+    100052: //RootNode
+    400000: chr_knight
     400002: mixamorig:Head
     400004: mixamorig:HeadTop_End
     400006: mixamorig:Hips
@@ -57,8 +58,12 @@ ModelImporter:
     400046: mixamorig:Spine
     400048: mixamorig:Spine1
     400050: mixamorig:Spine2
+    400052: //RootNode
+    2100000: No Name
+    4300000: chr_knight
     7400000: attack3
     9500000: //RootNode
+    13700000: chr_knight
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -90,15 +95,15 @@ ModelImporter:
       name: attack3
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 70
+      lastFrame: 72
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0

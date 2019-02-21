@@ -18,7 +18,11 @@ public enum GoblinAnimationEnum
 
 public class EnemyData : RoleData
 {
-
+    private int attackRange = 3;
+    public int AttackRange
+    {
+        get { return attackRange; }
+    }
 }
 
 public class EnemyCtrl : RoleBaseCtrl
@@ -39,13 +43,20 @@ public class EnemyCtrl : RoleBaseCtrl
         get { return fsmManager; }
     }
 
+    private Sensor sensor;
+
+    private float sensorTimer = 0;
+    private float sensorCheckInterval = 0.1f;
+
     public override void Awake()
     {
         base.Awake();
         anim = GetComponent<Animator>();
         enemyData = new EnemyData();
+        enemyData.Speed = 3;
 
         fsmManager = new FsmManager((int)GoblinAnimationEnum.Max);
+        sensor = new Sensor(10, 120, this);
 
         NpcManager.Instance.AddNpc(this.transform);
 
@@ -66,14 +77,19 @@ public class EnemyCtrl : RoleBaseCtrl
         fsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
     }
 
-    public override void SimpleMove(Vector3 speed)
+    public override void SimpleMove(Vector3 dir)
     {
-        //  base.SimpleMove(enemyData.Speed);
+        base.SimpleMove(dir.normalized * enemyData.Speed);
     }
 
     private void Update()
     {
+        sensorTimer += Time.deltaTime;
         fsmManager.FsmUpdate();
+        if (sensorTimer > sensorCheckInterval)
+        {
+            sensor.SensorUpdate();
+        }
     }
 
     private void ChangeToIdle()
@@ -85,6 +101,11 @@ public class EnemyCtrl : RoleBaseCtrl
     private void ChangeToHit()
     {
         FsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
+    }
+
+    public void ChangeToPersue()
+    {
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Persue);
     }
 
     public void ReduceHealth(int amount)

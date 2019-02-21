@@ -16,21 +16,27 @@ public class GoblinPersueState : FsmBase
 
     public override void OnEnter()
     {
-        base.OnEnter();
+        Debug.Log("persue a player");
     }
 
     public override void OnStay()
     {
-        HandleInput();
+        anim.SetBool("run", true);
+
+        if (Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) < enemyCtrl.EnemyData.AttackRange)
+        {
+            anim.SetBool("run", false);
+            anim.SetTrigger("attack");
+            return;
+        }
+        enemyCtrl.RotateTo(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
+
+        enemyCtrl.SimpleMove(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
+
     }
 
     public override void OnExit()
     {
         base.OnExit();
-    }
-
-    public override void HandleInput()
-    {
-        base.HandleInput();
     }
 }
