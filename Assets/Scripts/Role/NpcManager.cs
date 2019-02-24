@@ -43,6 +43,11 @@ public class NpcManager : MonoBehaviour
         this.npcs.Remove(go);
     }
 
+    public Vector3 GetPlayerPosition()
+    {
+        return player.position;
+    }
+
 
 
     private bool CheckInRect(Transform attack, Transform attacked, int forward, int width)
@@ -71,7 +76,7 @@ public class NpcManager : MonoBehaviour
     /// <param name="power">    攻击力 </param> 
     public void DoRectDamage(int forward, int width, int power)
     {
-       // Debug.Log(npcs.Count);
+        // Debug.Log(npcs.Count);
         for (int i = 0; i < npcs.Count; i++)
         {
             if (CheckInRect(player, npcs[i], forward, width))
