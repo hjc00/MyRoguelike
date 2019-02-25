@@ -16,17 +16,21 @@ public enum SkillBtnType
 public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public SkillBtnType type;
-    public GameObject RangeSprite;  //在角色地下生成的施法范围圆圈
+    public int skillRange = 5;
     private Transform btnRangeSprite;  //按钮按下时的范围圆圈
     private Transform btnCtrlSprite;   //按钮按下时标记位置的sprite
     float radius = 80;
     private Vector2 originPos;
+    private PlayerCtrl playerCtrl;
 
     private void Start()
     {
         btnRangeSprite = transform.Find("Range");
-        btnCtrlSprite = transform.Find("point");
+        btnCtrlSprite = transform.Find("Point");
         originPos = btnCtrlSprite.position;
+        // Debug.Log(originPos);
+
+        playerCtrl = NpcManager.Instance.Player.GetComponent<PlayerCtrl>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -47,6 +51,18 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         {
             this.btnCtrlSprite.position = eventData.position;
         }
+
+        Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
+        Debug.Log(dir);
+
+        float angle = Vector3.Angle(dir, originPos);
+        if (dir.x > 0 && dir.y > 0)
+            angle = -angle;
+
+        if (dir.x < 0 && dir.y > 0)
+            angle = -angle;
+        playerCtrl.ShowArrowIndicator(skillRange, angle);
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -59,12 +75,24 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         btnRangeSprite.gameObject.SetActive(true);
         btnCtrlSprite.gameObject.SetActive(true);
 
-        
+        playerCtrl.ShowRangeIndicator(skillRange);
+
+        Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
+
+
+        float angle = Vector3.Angle(dir, originPos);
+        if (dir.x > 0 && dir.y > 0)
+            angle = -angle;
+
+        playerCtrl.ShowArrowIndicator(skillRange, angle);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         btnRangeSprite.gameObject.SetActive(false);
         btnCtrlSprite.gameObject.SetActive(false);
+
+        playerCtrl.HideRangeIndicator();
+        playerCtrl.HideArrowIndicator();
     }
 }

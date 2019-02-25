@@ -81,6 +81,9 @@ public class PlayerCtrl : RoleBaseCtrl
         get { return fsmManager; }
     }
 
+    private GameObject RangeIndicator;
+    private GameObject ArrowIndicator;
+
     public override void Awake()
     {
         base.Awake();
@@ -113,6 +116,14 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.AddState(playerAttack3);
 
         fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
+
+        RangeIndicator = transform.Find("RangeIndicator").gameObject;
+        RangeIndicator.SetActive(false);
+
+        ArrowIndicator = transform.Find("ArrowIndicator").gameObject;
+        ArrowIndicator.SetActive(false);
+
+
     }
 
     private void Update()
@@ -120,6 +131,7 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.FsmUpdate();
     }
 
+    #region 状态机相关接口
     public void ChangeToIdle()
     {
         fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
@@ -144,8 +156,41 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         fsmManager.ChangeState((int)PlayerAnimationEnum.Run);
     }
+    #endregion
 
 
+    #region    技能UI相关
+    public void ShowRangeIndicator(int radius)
+    {
+        RangeIndicator.SetActive(true);
+        float multi = radius * 0.2f * 0.936f;
+        //Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f);
+        RangeIndicator.transform.localScale = new Vector3(0.1f * multi, 0.1f * multi, 1);
+    }
+
+    public void HideRangeIndicator()
+    {
+        RangeIndicator.SetActive(false);
+    }
+
+    public void ShowArrowIndicator(int radius, float angle)
+    {
+        if (ArrowIndicator.activeSelf == false)
+            ArrowIndicator.SetActive(true);
+        // Debug.Log(ArrowIndicator.GetComponentInChildren<SpriteRenderer>().bounds.size.x);  //6.96
+        float multi = radius / 6.5f;
+        ArrowIndicator.transform.localScale = new Vector3(multi, 1, 1);
+
+        ArrowIndicator.transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+    }
+
+    public void HideArrowIndicator()
+    {
+        ArrowIndicator.SetActive(false);
+    }
+    #endregion
+
+    #region    攻击相关
     public void DoRectDamage()
     {
         anim.SetTrigger("attack");
@@ -163,7 +208,7 @@ public class PlayerCtrl : RoleBaseCtrl
         anim.SetTrigger("attack");
         NpcManager.Instance.DoCircleDamage(PlayerData.CircleRadius, PlayerData.AtkPower);
     }
-
+    #endregion
 
 }
 #endregion

@@ -133,4 +133,9 @@ public class NpcManager : MonoBehaviour
             }
         }
     }
+
+    public Vector3 Test()
+    {
+        return this.npcs[0].transform.position;
+    }
 }
