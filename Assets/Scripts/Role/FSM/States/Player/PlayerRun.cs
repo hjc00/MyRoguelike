@@ -33,12 +33,7 @@ public class PlayerRun : FsmBase
 
     public override void HandleInput()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            anim.SetTrigger("attack");
-            return;
-        }
-
+ 
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
         {

@@ -83,6 +83,7 @@ public class PlayerCtrl : RoleBaseCtrl
 
     private GameObject RangeIndicator;
     private GameObject ArrowIndicator;
+    private GameObject CircleIndicator;
 
     public override void Awake()
     {
@@ -123,7 +124,8 @@ public class PlayerCtrl : RoleBaseCtrl
         ArrowIndicator = transform.Find("ArrowIndicator").gameObject;
         ArrowIndicator.SetActive(false);
 
-
+        CircleIndicator = transform.Find("CircleIndicator").gameObject;
+        CircleIndicator.SetActive(false);
     }
 
     private void Update()
@@ -188,12 +190,37 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         ArrowIndicator.SetActive(false);
     }
+
+    public void ShowCircleIndicator(int radius, Vector3 pos)
+    {
+
+        ////先计算相机到目标的向量
+        //Vector3 dir = pos - Camera.main.transform.position;
+        ////计算投影
+        //Vector3 normardir = Vector3.Project(dir, Camera.main.transform.forward);
+        ////计算是节点，需要知道处置屏幕的投影距离
+        //Vector3 worldpos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, normardir.magnitude));
+
+        //worldpos.y = 0.01f;
+
+
+        CircleIndicator.SetActive(true);
+        float multi = radius * 0.2f * 0.936f;
+        //Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f);
+        CircleIndicator.transform.localScale = new Vector3(0.1f * multi, 0.1f * multi, 1);
+        // CircleIndicator.transform.position =  worldpos;
+        CircleIndicator.transform.position = pos;
+    }
+
+    public void HideCircleIndicator()
+    {
+        CircleIndicator.SetActive(false);
+    }
     #endregion
 
     #region    攻击相关
     public void DoRectDamage()
     {
-        anim.SetTrigger("attack");
         NpcManager.Instance.DoRectDamage(PlayerData.RectForward, PlayerData.RectWidth, PlayerData.AtkPower);
     }
 

@@ -53,15 +53,36 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         }
 
         Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
-        Debug.Log(dir);
+        //Debug.Log(dir);
 
         float angle = Vector3.Angle(dir, originPos);
+
         if (dir.x > 0 && dir.y > 0)
             angle = -angle;
 
         if (dir.x < 0 && dir.y > 0)
             angle = -angle;
-        playerCtrl.ShowArrowIndicator(skillRange, angle);
+
+
+        switch (type)
+        {
+            case SkillBtnType.Direction:
+                playerCtrl.ShowArrowIndicator(skillRange, angle);
+                break;
+            case SkillBtnType.Sector:
+
+                break;
+            case SkillBtnType.Circle:
+                {
+
+                    playerCtrl.ShowCircleIndicator(2, this.btnCtrlSprite.position);
+                }
+                break;
+            case SkillBtnType.Choose:
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -80,11 +101,32 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
 
 
+
         float angle = Vector3.Angle(dir, originPos);
         if (dir.x > 0 && dir.y > 0)
             angle = -angle;
 
-        playerCtrl.ShowArrowIndicator(skillRange, angle);
+        switch (type)   //fix  拓展性
+        {
+            case SkillBtnType.Direction:
+                playerCtrl.ShowArrowIndicator(skillRange, angle);
+                break;
+            case SkillBtnType.Sector:
+
+                break;
+            case SkillBtnType.Circle:
+                {
+                    Vector3 pos = eventData.position;
+                    Debug.Log(pos);
+                    playerCtrl.ShowCircleIndicator(2, eventData.position);
+                }
+                break;
+            case SkillBtnType.Choose:
+                break;
+            default:
+                break;
+        }
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -92,7 +134,41 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
         btnRangeSprite.gameObject.SetActive(false);
         btnCtrlSprite.gameObject.SetActive(false);
 
+
+        Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
+
+
+        switch (type)   //fix  拓展性
+        {
+            case SkillBtnType.Direction:
+                {
+                    playerCtrl.HideArrowIndicator();
+                    ReleaseForwardSkill(new Vector3(dir.x, 0, dir.y));
+                }
+                break;
+            case SkillBtnType.Sector:
+
+                break;
+            case SkillBtnType.Circle:
+                {
+                    playerCtrl.HideCircleIndicator();
+                }
+                break;
+            case SkillBtnType.Choose:
+                break;
+            default:
+                break;
+        }
+
         playerCtrl.HideRangeIndicator();
-        playerCtrl.HideArrowIndicator();
+
     }
+
+    private void ReleaseForwardSkill(Vector3 dir)    //fix  拓展性
+    {
+        playerCtrl.transform.LookAt(dir);
+        playerCtrl.transform.position += dir.normalized * 8;
+    }
+
+
 }

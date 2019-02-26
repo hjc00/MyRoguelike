@@ -14,33 +14,17 @@ public class ButtonController : MonoBehaviour
 
     private void Start()
     {
-        btnA.onClick.AddListener(OnBtnAClick);
-        btnB.onClick.AddListener(OnBtnBClick);
-        btnC.onClick.AddListener(OnBtnCClick);
+
         btnAtk.onClick.AddListener(OnBtnAtkClick);
 
         playerCtrl = NpcManager.Instance.Player.gameObject.GetComponent<PlayerCtrl>();
     }
 
-    private void OnBtnAClick()
-    {
 
-
-    }
-    private void OnBtnBClick()
-    {
-
-
-
-    }
-    private void OnBtnCClick()
-    {
-
-
-    }
     private void OnBtnAtkClick()
     {
-        playerCtrl.DoRectDamage();
+        playerCtrl.transform.GetComponent<Animator>().SetTrigger("attack");
+        // playerCtrl.DoRectDamage();
     }
 
 }
