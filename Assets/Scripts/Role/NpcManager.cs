@@ -134,8 +134,17 @@ public class NpcManager : MonoBehaviour
         }
     }
 
-    public Vector3 Test()
+    public void CircleCheck(Vector3 center, int radius)          //以某一点为中心做圆形范围检测
     {
-        return this.npcs[0].transform.position;
+        for (int i = 0; i < npcs.Count; i++)
+        {
+            float magSqr = (npcs[i].position - center).sqrMagnitude;
+            if (magSqr <= radius * radius)
+            {
+                Debug.Log("reduce speed");
+                npcs[i].GetComponent<EnemyCtrl>().ReduceSpeed(2, 5);   //fix 持续时间
+            }
+        }
+
     }
 }

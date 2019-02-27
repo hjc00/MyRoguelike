@@ -83,7 +83,9 @@ public class PlayerCtrl : RoleBaseCtrl
 
     private GameObject RangeIndicator;
     private GameObject ArrowIndicator;
-    private GameObject CircleIndicator;
+    public GameObject CircleIndicator;
+
+    public GameObject frozonPs;
 
     public override void Awake()
     {
@@ -191,25 +193,29 @@ public class PlayerCtrl : RoleBaseCtrl
         ArrowIndicator.SetActive(false);
     }
 
-    public void ShowCircleIndicator(int radius, Vector3 pos)
+    public void ShowCircleIndicator(int radius, Vector3 dir, float quotient)
     {
-
-        ////先计算相机到目标的向量
-        //Vector3 dir = pos - Camera.main.transform.position;
-        ////计算投影
-        //Vector3 normardir = Vector3.Project(dir, Camera.main.transform.forward);
-        ////计算是节点，需要知道处置屏幕的投影距离
-        //Vector3 worldpos = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, normardir.magnitude));
-
-        //worldpos.y = 0.01f;
 
 
         CircleIndicator.SetActive(true);
-        float multi = radius * 0.2f * 0.936f;
-        //Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f);
+        float multi = radius * 0.2f * 0.936f;   //施法范围圆圈的缩放比例
+
+        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f);
+        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.y * 0.5f);
+        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().size);
+
+
         CircleIndicator.transform.localScale = new Vector3(0.1f * multi, 0.1f * multi, 1);
-        // CircleIndicator.transform.position =  worldpos;
-        CircleIndicator.transform.position = pos;
+        // Debug.Log(dir);
+
+        float percent = RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f * quotient;
+        Debug.Log("quotient " + quotient);
+        Debug.Log("percent " + percent);
+
+        Vector3 converDir = new Vector3(dir.x, 0.01f, dir.y);   //dir是屏幕坐标系，x y轴
+                                                                // Debug.Log(converDir);
+        CircleIndicator.transform.position = this.transform.position + converDir.normalized * percent;
+        Debug.Log(CircleIndicator.transform.position);
     }
 
     public void HideCircleIndicator()
@@ -237,5 +243,16 @@ public class PlayerCtrl : RoleBaseCtrl
     }
     #endregion
 
+
+    #region 技能相关
+    public void ReleaseFrozonSkill(int radius)
+    {
+        GameObject frozonGo = Instantiate(this.frozonPs);
+        frozonGo.transform.position = CircleIndicator.transform.position;
+        Debug.Log(frozonGo.transform.position + "------------" + CircleIndicator.transform.position);
+
+        NpcManager.Instance.CircleCheck(this.CircleIndicator.transform.position, radius);
+    }
+    #endregion
 }
 #endregion

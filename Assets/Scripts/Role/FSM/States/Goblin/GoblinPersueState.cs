@@ -16,7 +16,7 @@ public class GoblinPersueState : FsmBase
 
     public override void OnEnter()
     {
-        Debug.Log("persue a player");
+      //  Debug.Log("persue a player");
     }
 
     public override void OnStay()

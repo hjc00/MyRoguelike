@@ -131,4 +131,22 @@ public class EnemyCtrl : RoleBaseCtrl
             }
         }
     }
+
+    public void ReduceSpeed(int amount,int time)  //减少敌人速度
+    {
+        if (amount > enemyData.Speed)
+        {
+            enemyData.Speed = 0;
+            StartCoroutine(ResumeSpeed(5));
+            return;
+        }
+        enemyData.Speed -= amount;
+        StartCoroutine(ResumeSpeed(5));
+    }
+
+    IEnumerator ResumeSpeed(int time)
+    {
+        yield return time;
+        enemyData.Speed -= 3;
+    }
 }

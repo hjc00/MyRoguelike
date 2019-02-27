@@ -64,6 +64,12 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             angle = -angle;
 
 
+        float mag = (new Vector2(this.btnCtrlSprite.position.x, this.btnCtrlSprite.position.y) - this.originPos).magnitude;
+
+        Debug.Log(mag);
+
+        float quotient = mag / 80;//求出所占倍数
+
         switch (type)
         {
             case SkillBtnType.Direction:
@@ -75,7 +81,8 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             case SkillBtnType.Circle:
                 {
 
-                    playerCtrl.ShowCircleIndicator(2, this.btnCtrlSprite.position);
+
+                    playerCtrl.ShowCircleIndicator(1, dir, quotient);   //fix 半径扩展性
                 }
                 break;
             case SkillBtnType.Choose:
@@ -117,8 +124,8 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
             case SkillBtnType.Circle:
                 {
                     Vector3 pos = eventData.position;
-                    Debug.Log(pos);
-                    playerCtrl.ShowCircleIndicator(2, eventData.position);
+                    //  Debug.Log(pos);
+                    playerCtrl.ShowCircleIndicator(2, dir, 0);
                 }
                 break;
             case SkillBtnType.Choose:
@@ -151,6 +158,8 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
                 break;
             case SkillBtnType.Circle:
                 {
+                    Debug.Log("pointer up " + playerCtrl.CircleIndicator.transform.position);
+                    ReleaseCircleSkill(new Vector3(dir.x, 0, dir.y));
                     playerCtrl.HideCircleIndicator();
                 }
                 break;
@@ -168,6 +177,13 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     {
         playerCtrl.transform.LookAt(dir);
         playerCtrl.transform.position += dir.normalized * 8;
+    }
+
+    private void ReleaseCircleSkill(Vector3 dir)
+    {
+       // playerCtrl.transform.LookAt(dir);
+        Debug.Log("release " + playerCtrl.CircleIndicator.transform.position);
+        playerCtrl.ReleaseFrozonSkill(1);
     }
 
 
