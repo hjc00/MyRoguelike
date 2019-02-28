@@ -81,9 +81,11 @@ public class PlayerCtrl : RoleBaseCtrl
         get { return fsmManager; }
     }
 
+    private AudioCtrl audioCtrl;
+
     private GameObject RangeIndicator;
     private GameObject ArrowIndicator;
-    public GameObject CircleIndicator;
+    private GameObject CircleIndicator;
 
     public GameObject frozonPs;
 
@@ -94,6 +96,8 @@ public class PlayerCtrl : RoleBaseCtrl
         playData = new PlayerData();
 
         anim = GetComponent<Animator>();
+
+        audioCtrl = GetComponent<AudioCtrl>();
 
         fsmManager = new FsmManager((int)PlayerAnimationEnum.Max);
 
@@ -252,6 +256,14 @@ public class PlayerCtrl : RoleBaseCtrl
         Debug.Log(frozonGo.transform.position + "------------" + CircleIndicator.transform.position);
 
         NpcManager.Instance.CircleCheck(this.CircleIndicator.transform.position, radius);
+    }
+    #endregion
+
+    #region 声音相关
+    public void PlayAttackSound()
+    {
+        audioCtrl.PlayAttackSound();
+        Debug.Log("playAttackSound");
     }
     #endregion
 }

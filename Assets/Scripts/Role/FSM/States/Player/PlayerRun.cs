@@ -33,13 +33,28 @@ public class PlayerRun : FsmBase
 
     public override void HandleInput()
     {
- 
+
+
+        float x = 0;
+        float z = 0;
+
+
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
         {
-            float x = Input.GetAxis("Horizontal");
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                x = JoystickController.Instance.GetX();
 
-            float z = Input.GetAxis("Vertical");
+                z = JoystickController.Instance.GetY();
+            }
+            else
+            {
+
+                x = Input.GetAxis("Horizontal");
+
+                z = Input.GetAxis("Vertical");
+            }
 
             Vector3 target = new Vector3(x, 0, z);
 

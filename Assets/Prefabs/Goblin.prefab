@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 95982558545389334}
   - component: {fileID: 143333795666362526}
   - component: {fileID: 114147608750819790}
+  - component: {fileID: 114480837472813958}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -2152,7 +2153,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1323704284395622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.426, y: 0, z: 0}
+  m_LocalPosition: {x: 5.34, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4250854798737022}
@@ -2305,6 +2306,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc698ff769ba0948af37cb126afe5c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114480837472813958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1323704284395622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9fee56e2880af4b8c4655fa949693c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damgeUiPrefab: {fileID: 1673715341623064, guid: dd3d775a31cc4eb4b94adf1bff1aac4d,
+    type: 2}
+  offset: {x: 0, y: 2, z: 0}
 --- !u!137 &137263770676401008
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

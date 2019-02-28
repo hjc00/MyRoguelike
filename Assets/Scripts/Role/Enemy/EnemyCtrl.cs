@@ -118,7 +118,9 @@ public class EnemyCtrl : RoleBaseCtrl
 
         enemyData.Health -= amount;
 
-        Debug.Log(enemyData.Health);
+        //Debug.Log(enemyData.Health);
+
+        ShowDamageUI(amount);
 
         if (enemyData.Health <= 0)
         {
@@ -132,7 +134,12 @@ public class EnemyCtrl : RoleBaseCtrl
         }
     }
 
-    public void ReduceSpeed(int amount,int time)  //减少敌人速度
+    public void ShowDamageUI(int amount)
+    {
+        transform.GetComponent<RoleUI>().ShowDamage(amount);
+    }
+
+    public void ReduceSpeed(int amount, int time)  //减少敌人速度
     {
         if (amount > enemyData.Speed)
         {
@@ -147,6 +154,6 @@ public class EnemyCtrl : RoleBaseCtrl
     IEnumerator ResumeSpeed(int time)
     {
         yield return time;
-        enemyData.Speed -= 3;
+        enemyData.Speed = 3;
     }
 }

@@ -158,7 +158,6 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
                 break;
             case SkillBtnType.Circle:
                 {
-                    Debug.Log("pointer up " + playerCtrl.CircleIndicator.transform.position);
                     ReleaseCircleSkill(new Vector3(dir.x, 0, dir.y));
                     playerCtrl.HideCircleIndicator();
                 }
@@ -182,7 +181,6 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void ReleaseCircleSkill(Vector3 dir)
     {
        // playerCtrl.transform.LookAt(dir);
-        Debug.Log("release " + playerCtrl.CircleIndicator.transform.position);
         playerCtrl.ReleaseFrozonSkill(1);
     }
 

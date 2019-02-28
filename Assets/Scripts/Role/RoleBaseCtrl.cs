@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class RoleBaseCtrl : MonoBehaviour
 {
 
     //todo animation fsm
+
+
 
     protected CharacterController cc;
 
@@ -25,5 +28,4 @@ public class RoleBaseCtrl : MonoBehaviour
     {
         cc.transform.rotation = Quaternion.Slerp(cc.transform.rotation, Quaternion.LookRotation(target), 0.2f);
     }
-
 }

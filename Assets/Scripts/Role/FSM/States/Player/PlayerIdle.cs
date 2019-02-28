@@ -32,17 +32,26 @@ public class PlayerIdle : FsmBase
 
     public override void HandleInput()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    anim.SetTrigger("attack");
-        //    return;
-        //}
 
         if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("attack"))
         {
-            float x = Input.GetAxis("Horizontal");
+            float x = 0;
+            float z = 0;
 
-            float z = Input.GetAxis("Vertical");
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                x = JoystickController.Instance.GetX();
+
+                z = JoystickController.Instance.GetY();
+            }
+            else
+            {
+
+                x = Input.GetAxis("Horizontal");
+
+                z = Input.GetAxis("Vertical");
+            }
+
 
             Vector3 target = new Vector3(x, 0, z);
 
@@ -50,4 +59,7 @@ public class PlayerIdle : FsmBase
 
         }
     }
+
+
+
 }
