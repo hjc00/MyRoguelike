@@ -89,6 +89,9 @@ public class PlayerCtrl : RoleBaseCtrl
 
     public GameObject frozonPs;
 
+    public delegate void OnPlayerHealthReduce();
+    public event OnPlayerHealthReduce onPlayerHealthReduce;
+
     public override void Awake()
     {
         base.Awake();
@@ -244,6 +247,40 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         anim.SetTrigger("attack");
         NpcManager.Instance.DoCircleDamage(PlayerData.CircleRadius, PlayerData.AtkPower);
+    }
+
+    public void ReduceHealth(int amount)
+    {
+        if (playData.Health <= 0)
+            return;
+
+        anim.SetTrigger("hit");
+
+        playData.Speed = 0;
+
+        playData.Health -= amount;
+
+        onPlayerHealthReduce();
+
+        //Debug.Log(enemyData.Health);
+
+        ShowDamageUI(amount);
+
+        if (playData.Health <= 0)
+        {
+            bool death = anim.GetBool("death");
+
+            if (!death)
+            {
+                this.enabled = false;
+                anim.SetBool("death", true);
+            }
+        }
+    }
+
+    public void ShowDamageUI(int amount)
+    {
+        transform.GetComponent<RoleUI>().ShowDamage(amount);
     }
     #endregion
 

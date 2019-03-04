@@ -48,13 +48,20 @@ public class NpcManager : MonoBehaviour
         return player.position;
     }
 
-
-
+    /// <summary>
+    /// //玩家矩形攻击伤害
+    /// </summary>
+    /// <param name="attack">  攻击者    </param>
+    /// <param name="attacked">    被攻击者  </param>
+    /// <param name="forward">    前向长度 </param> 
+    /// <param name="width">    宽度 </param> 
     private bool CheckInRect(Transform attack, Transform attacked, int forward, int width)
     {
         Vector3 dir = attacked.position - attack.position;
 
         float dot = Vector3.Dot(dir, attack.forward);  //得到方向在攻击者前方的投影
+
+        Debug.Log(dot);
 
         if (dot > 0 && dot < forward)    //dot > 0 表示在前方，dot < forward 表示在范围内s
         {
@@ -146,5 +153,15 @@ public class NpcManager : MonoBehaviour
             }
         }
 
+    }
+
+    public void DoPlayerDamage(Transform enemy, int forward, int width, int power)
+    {
+
+        if (CheckInRect(enemy, player, forward, width))
+        {
+            Debug.Log("do player damage");
+            player.GetComponent<PlayerCtrl>().ReduceHealth(power);
+        }
     }
 }

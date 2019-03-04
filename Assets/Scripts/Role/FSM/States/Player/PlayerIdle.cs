@@ -17,6 +17,7 @@ public class PlayerIdle : FsmBase
     public override void OnEnter()
     {
         base.OnEnter();
+        playerCtrl.PlayerData.Speed = 8;
         Debug.Log("idle state");
     }
 

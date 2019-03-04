@@ -48,6 +48,7 @@ public class EnemyCtrl : RoleBaseCtrl
     private float sensorTimer = 0;
     private float sensorCheckInterval = 0.1f;
 
+
     public override void Awake()
     {
         base.Awake();
@@ -122,6 +123,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
         ShowDamageUI(amount);
 
+ 
         if (enemyData.Health <= 0)
         {
             bool death = anim.GetBool("death");
@@ -155,5 +157,10 @@ public class EnemyCtrl : RoleBaseCtrl
     {
         yield return time;
         enemyData.Speed = 3;
+    }
+
+    public void DoPlayerDamage()
+    {
+        NpcManager.Instance.DoPlayerDamage(this.transform, 3, 1, EnemyData.AtkPower);
     }
 }
