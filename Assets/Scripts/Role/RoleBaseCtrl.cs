@@ -9,7 +9,12 @@ public class RoleBaseCtrl : MonoBehaviour
 
     //todo animation fsm
 
+    protected RoleData roleData;
 
+    public RoleData RoleData
+    {
+        get { return this.roleData; }
+    }
 
     protected CharacterController cc;
 

@@ -61,7 +61,7 @@ public class NpcManager : MonoBehaviour
 
         float dot = Vector3.Dot(dir, attack.forward);  //得到方向在攻击者前方的投影
 
-        Debug.Log(dot);
+       // Debug.Log(dot);
 
         if (dot > 0 && dot < forward)    //dot > 0 表示在前方，dot < forward 表示在范围内s
         {
@@ -160,7 +160,6 @@ public class NpcManager : MonoBehaviour
 
         if (CheckInRect(enemy, player, forward, width))
         {
-            Debug.Log("do player damage");
             player.GetComponent<PlayerCtrl>().ReduceHealth(power);
         }
     }

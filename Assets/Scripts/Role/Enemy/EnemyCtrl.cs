@@ -123,7 +123,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
         ShowDamageUI(amount);
 
- 
+
         if (enemyData.Health <= 0)
         {
             bool death = anim.GetBool("death");
@@ -161,6 +161,10 @@ public class EnemyCtrl : RoleBaseCtrl
 
     public void DoPlayerDamage()
     {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))
+        {
+            return;
+        }
         NpcManager.Instance.DoPlayerDamage(this.transform, 3, 1, EnemyData.AtkPower);
     }
 }

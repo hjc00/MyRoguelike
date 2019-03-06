@@ -6,11 +6,17 @@ public class RoleData
 {
 
     int health = 100;
+    int maxHealth = 100;
 
     public int Health
     {
         get { return health; }
-        set { health = value; }
+        set
+        {
+            health = value;
+            if (health >= maxHealth)
+                health = maxHealth;
+        }
     }
 
     int speed = 8;   //移动速度

@@ -89,7 +89,7 @@ public class PlayerCtrl : RoleBaseCtrl
 
     public GameObject frozonPs;
 
-    public delegate void OnPlayerHealthReduce();
+    public delegate void OnPlayerHealthReduce(int amount);
     public event OnPlayerHealthReduce onPlayerHealthReduce;
 
     public override void Awake()
@@ -260,7 +260,7 @@ public class PlayerCtrl : RoleBaseCtrl
 
         playData.Health -= amount;
 
-        onPlayerHealthReduce();
+        onPlayerHealthReduce(playData.Health);
 
         //Debug.Log(enemyData.Health);
 
@@ -276,6 +276,12 @@ public class PlayerCtrl : RoleBaseCtrl
                 anim.SetBool("death", true);
             }
         }
+    }
+
+    public void AddHealth(int amount)
+    {
+        playData.Health += amount;
+        onPlayerHealthReduce(playData.Health);
     }
 
     public void ShowDamageUI(int amount)

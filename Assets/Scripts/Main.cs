@@ -12,6 +12,8 @@ public class Main : MonoBehaviour
 
         gameObject.AddComponent<NpcManager>();
 
+        gameObject.AddComponent<ItemConfig>();
+
         DontDestroyOnLoad(this.gameObject);
     }
 

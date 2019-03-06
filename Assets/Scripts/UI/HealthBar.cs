@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
 
-
+    public Slider healthSlider;
 
 
     private void Start()
     {
-        NpcManager.Instance.Player.GetComponent<PlayerCtrl>().onPlayerHealthReduce += Test;
+        NpcManager.Instance.Player.GetComponent<PlayerCtrl>().onPlayerHealthReduce += UpdateHealthBar;
     }
 
-    private void Test()
+    private void UpdateHealthBar(int healthAmount)
     {
-        Debug.Log("test");
+
+        healthSlider.value = healthAmount;
     }
 }
