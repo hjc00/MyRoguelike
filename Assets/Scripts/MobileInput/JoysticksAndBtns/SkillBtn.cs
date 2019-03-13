@@ -66,7 +66,7 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
 
         float mag = (new Vector2(this.btnCtrlSprite.position.x, this.btnCtrlSprite.position.y) - this.originPos).magnitude;
 
-        Debug.Log(mag);
+      //  Debug.Log(mag);
 
         float quotient = mag / 80;//求出所占倍数
 
@@ -175,12 +175,14 @@ public class SkillBtn : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, I
     private void ReleaseForwardSkill(Vector3 dir)    //fix  拓展性
     {
         playerCtrl.transform.LookAt(dir);
-        playerCtrl.transform.position += dir.normalized * 8;
+        // playerCtrl.transform.position += dir.normalized * 8;
+        Vector3 targetPos = playerCtrl.transform.position + dir.normalized * 8;
+        SkillPerform.Instance.Forward(playerCtrl.transform, targetPos, 0.5f);
     }
 
     private void ReleaseCircleSkill(Vector3 dir)
     {
-       // playerCtrl.transform.LookAt(dir);
+        // playerCtrl.transform.LookAt(dir);
         playerCtrl.ReleaseFrozonSkill(1);
     }
 

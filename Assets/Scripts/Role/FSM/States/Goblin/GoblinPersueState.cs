@@ -23,7 +23,7 @@ public class GoblinPersueState : FsmBase
     {
         anim.SetBool("run", true);
 
-        if (Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) < enemyCtrl.EnemyData.AttackRange)
+        if (Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) < enemyCtrl.EnemyData.AtkForward)
         {
             anim.SetBool("run", false);
 

@@ -33,4 +33,19 @@ public class RoleData
         get { return atkPower; }
         set { atkPower = value; }
     }
+
+    public int DefPower { get; private set; }
+
+    public RoleData(int health, int speed, int atkPower, int defPower)
+    {
+        this.health = health;
+        this.speed = speed;
+        this.atkPower = atkPower;
+        this.DefPower = defPower;
+    }
+
+    public RoleData()
+    {
+
+    }
 }

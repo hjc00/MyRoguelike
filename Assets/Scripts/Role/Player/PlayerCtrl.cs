@@ -56,6 +56,16 @@ public class PlayerData : RoleData
         set { circleRadius = value; }
     }
 
+    public PlayerData(int rectForward, int rectWidth, int sectorAngle, int sectorRadius, int circleRadius)
+    {
+
+    }
+
+    public PlayerData(int rectForward, int rectWidth, int sectorAngle, int sectorRadius, int circleRadius,
+        int health, int speed, int atkPower, int defPower) : base(health, speed, atkPower, defPower)
+    {
+
+    }
 }
 #endregion
 
@@ -96,7 +106,7 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         base.Awake();
 
-        playData = new PlayerData();
+        playData = new PlayerData(5, 5, 60, 5, 5);
 
         anim = GetComponent<Animator>();
 
@@ -207,22 +217,25 @@ public class PlayerCtrl : RoleBaseCtrl
         CircleIndicator.SetActive(true);
         float multi = radius * 0.2f * 0.936f;   //施法范围圆圈的缩放比例
 
+        Debug.Log(radius);
+
         Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f);
-        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.y * 0.5f);
-        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().size);
+
 
 
         CircleIndicator.transform.localScale = new Vector3(0.1f * multi, 0.1f * multi, 1);
         // Debug.Log(dir);
 
         float percent = RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x * 0.5f * quotient;
-        Debug.Log("quotient " + quotient);
-        Debug.Log("percent " + percent);
+
+        Debug.Log(RangeIndicator.GetComponent<SpriteRenderer>().bounds.size.x);
+        //  Debug.Log("quotient " + quotient);
+        //  Debug.Log("percent " + percent);
 
         Vector3 converDir = new Vector3(dir.x, 0.01f, dir.y);   //dir是屏幕坐标系，x y轴
                                                                 // Debug.Log(converDir);
         CircleIndicator.transform.position = this.transform.position + converDir.normalized * percent;
-        Debug.Log(CircleIndicator.transform.position);
+        // Debug.Log(CircleIndicator.transform.position);
     }
 
     public void HideCircleIndicator()
@@ -264,7 +277,7 @@ public class PlayerCtrl : RoleBaseCtrl
 
         //Debug.Log(enemyData.Health);
 
-        ShowDamageUI(amount);
+        EffectPerform.Instance.ShowDamageUI(amount, this.transform);
 
         if (playData.Health <= 0)
         {
@@ -284,21 +297,14 @@ public class PlayerCtrl : RoleBaseCtrl
         onPlayerHealthReduce(playData.Health);
     }
 
-    public void ShowDamageUI(int amount)
-    {
-        transform.GetComponent<RoleUI>().ShowDamage(amount);
-    }
     #endregion
 
 
     #region 技能相关
     public void ReleaseFrozonSkill(int radius)
     {
-        GameObject frozonGo = Instantiate(this.frozonPs);
-        frozonGo.transform.position = CircleIndicator.transform.position;
-        Debug.Log(frozonGo.transform.position + "------------" + CircleIndicator.transform.position);
-
-        NpcManager.Instance.CircleCheck(this.CircleIndicator.transform.position, radius);
+        EffectPerform.Instance.PlayFrozenPs(this.CircleIndicator.transform.position);
+        NpcManager.Instance.ReduceSpeed(this.CircleIndicator.transform.position, radius);
     }
     #endregion
 
@@ -306,7 +312,6 @@ public class PlayerCtrl : RoleBaseCtrl
     public void PlayAttackSound()
     {
         audioCtrl.PlayAttackSound();
-        Debug.Log("playAttackSound");
     }
     #endregion
 }

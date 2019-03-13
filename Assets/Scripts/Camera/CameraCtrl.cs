@@ -1,12 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraCtrl : MonoBehaviour
 {
+    private static CameraCtrl instacne;
+
+    public static CameraCtrl Instance
+    {
+        get
+        {
+            return instacne;
+        }
+    }
 
     private Vector3 offset;
     private Transform target;
+
+    private void Awake()
+    {
+        instacne = this;
+
+    }
+
     void Start()
     {
         target = NpcManager.Instance.Player;
@@ -19,6 +36,17 @@ public class CameraCtrl : MonoBehaviour
     {
         Vector3 targetPos = target.position + offset;
 
-        this.transform.position = Vector3.Lerp(this.transform.position, targetPos, 0.5f);
+        this.transform.position = Vector3.Lerp(this.transform.position, targetPos, 0.1f);
+    }
+
+    public void CameraShake(float duration,float strength)
+    {
+        
+        Tween tween = this.transform.DOShakePosition(duration,strength);
+    }
+
+    public void CameraShake(float duration, Vector3 strength)
+    {
+        Tween tween = this.transform.DOShakePosition(duration, strength);
     }
 }

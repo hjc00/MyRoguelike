@@ -18,48 +18,54 @@ public enum GoblinAnimationEnum
 
 public class EnemyData : RoleData
 {
-    private int attackRange = 3;
-    public int AttackRange
+    private int atkForward = 3;
+    public int AtkForward
     {
-        get { return attackRange; }
+        get { return atkForward; }
+    }
+
+    public int AtkWidth { get; private set; }
+
+    public EnemyData(int atkForward, int atkWidth, int health, int speed, int atkPower, int defPower) : base(health, speed, atkPower, defPower)
+    {
+        this.atkForward = atkForward;
+        this.AtkWidth = atkWidth;
     }
 }
 
 public class EnemyCtrl : RoleBaseCtrl
 {
-    Animator anim;
+    protected Animator anim;
 
-    private EnemyData enemyData;
 
-    public EnemyData EnemyData
-    {
-        get { return enemyData; }
-    }
+    public EnemyData EnemyData { get; set; }
 
-    private FsmManager fsmManager;
 
-    public FsmManager FsmManager
-    {
-        get { return fsmManager; }
-    }
+    protected FsmManager FsmManager { get; set; }
+
 
     private Sensor sensor;
 
-    private float sensorTimer = 0;
-    private float sensorCheckInterval = 0.1f;
+    protected float sensorTimer = 0;
+    protected float sensorCheckInterval = 0.1f;
 
 
     public override void Awake()
     {
         base.Awake();
         anim = GetComponent<Animator>();
-        enemyData = new EnemyData();
-        enemyData.Speed = 3;
+        NpcManager.Instance.AddNpc(this.transform);
 
-        fsmManager = new FsmManager((int)GoblinAnimationEnum.Max);
+    }
+
+    private void Start()
+    {
+        Debug.Log("enemy init");
+        EnemyData = new EnemyData(3, 2, 100, 3, 10, 10);
+
+        FsmManager = new FsmManager((int)GoblinAnimationEnum.Max);
         sensor = new Sensor(10, 120, this);
 
-        NpcManager.Instance.AddNpc(this.transform);
 
         GoblinAttackState goblinAttackState = new GoblinAttackState(anim, this);
         GoblinDieState goblinDieState = new GoblinDieState(anim, this);
@@ -68,66 +74,64 @@ public class EnemyCtrl : RoleBaseCtrl
         GoblinPatrolState goblinPatrolState = new GoblinPatrolState(anim, this);
         GoblinPersueState goblinPersueState = new GoblinPersueState(anim, this);
 
-        fsmManager.AddState(goblinIdleState);
-        fsmManager.AddState(goblinDieState);
-        fsmManager.AddState(goblinHitState);
-        fsmManager.AddState(goblinAttackState);
-        fsmManager.AddState(goblinPatrolState);
-        fsmManager.AddState(goblinPersueState);
+        FsmManager.AddState(goblinIdleState);
+        FsmManager.AddState(goblinDieState);
+        FsmManager.AddState(goblinHitState);
+        FsmManager.AddState(goblinAttackState);
+        FsmManager.AddState(goblinPatrolState);
+        FsmManager.AddState(goblinPersueState);
 
-        fsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
     }
 
     public override void SimpleMove(Vector3 dir)
     {
-        base.SimpleMove(dir.normalized * enemyData.Speed);
+        base.SimpleMove(dir.normalized * EnemyData.Speed);
     }
 
     private void Update()
     {
+        FsmManager.FsmUpdate();
         sensorTimer += Time.deltaTime;
-        fsmManager.FsmUpdate();
         if (sensorTimer > sensorCheckInterval)
         {
             sensor.SensorUpdate();
         }
     }
 
-    private void ChangeToIdle()
+    public virtual void ChangeToIdle()
     {
-        fsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Idle);
     }
 
 
-    private void ChangeToHit()
+    public virtual void ChangeToHit()
     {
         FsmManager.ChangeState((int)GoblinAnimationEnum.Hit);
     }
 
-    public void ChangeToPersue()
+    public virtual void ChangeToPersue()
     {
         FsmManager.ChangeState((int)GoblinAnimationEnum.Persue);
     }
 
-    public void ReduceHealth(int amount)
+    public virtual void ReduceHealth(int amount)
     {
 
-        if (enemyData.Health <= 0)
+        if (EnemyData.Health <= 0)
             return;
 
         anim.SetTrigger("hit");
 
-        enemyData.Health -= amount;
+        EnemyData.Health -= amount;
 
-        //Debug.Log(enemyData.Health);
-
-        ShowDamageUI(amount);
+        EffectPerform.Instance.ShowDamageUI(amount, this.transform);
 
 
-        if (enemyData.Health <= 0)
+        if (EnemyData.Health <= 0)
         {
             bool death = anim.GetBool("death");
-            Debug.Log(death);
+
             if (!death)
             {
                 this.enabled = false;
@@ -136,35 +140,37 @@ public class EnemyCtrl : RoleBaseCtrl
         }
     }
 
-    public void ShowDamageUI(int amount)
-    {
-        transform.GetComponent<RoleUI>().ShowDamage(amount);
-    }
-
     public void ReduceSpeed(int amount, int time)  //减少敌人速度
     {
-        if (amount > enemyData.Speed)
+        if (amount > EnemyData.Speed)
         {
-            enemyData.Speed = 0;
+            EnemyData.Speed = 0;
             StartCoroutine(ResumeSpeed(5));
             return;
         }
-        enemyData.Speed -= amount;
+        EnemyData.Speed -= amount;
         StartCoroutine(ResumeSpeed(5));
     }
 
     IEnumerator ResumeSpeed(int time)
     {
         yield return time;
-        enemyData.Speed = 3;
+        EnemyData.Speed = 3;
     }
 
-    public void DoPlayerDamage()
+    public virtual void DoPlayerDamage()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))
         {
             return;
         }
-        NpcManager.Instance.DoPlayerDamage(this.transform, 3, 1, EnemyData.AtkPower);
+        NpcManager.Instance.DoPlayerDamage(this.transform, EnemyData.AtkForward, EnemyData.AtkWidth, EnemyData.AtkPower);
+        Debug.Log(EnemyData.AtkForward);
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawCube(this.transform.position + this.transform.forward * EnemyData.AtkForward, new Vector3(EnemyData.AtkWidth, 2, EnemyData.AtkWidth));
+    //    Gizmos.color = Color.red;
+    //}
 }

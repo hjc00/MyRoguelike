@@ -16,17 +16,19 @@ public class GoblinAttackState : FsmBase
 
     public override void OnEnter()
     {
+        this.enemyCtrl.DisableCtrl();
         base.OnEnter();
     }
 
     public override void OnStay()
     {
         HandleInput();
+
     }
 
     public override void OnExit()
     {
-        base.OnExit();
+        this.enemyCtrl.EnableCtrl();
     }
 
     public override void HandleInput()

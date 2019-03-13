@@ -5,8 +5,8 @@ using UnityEngine;
 public class Sensor
 {
 
-    private int viewRadius;
-    private int viewAngle;
+    public int viewRadius { get; private set; }
+    public int viewAngle { get; private set; }
     private EnemyCtrl ctrl;
 
     public Sensor(int viewRadius, int viewAngle, EnemyCtrl ctrl)

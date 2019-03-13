@@ -61,7 +61,7 @@ public class NpcManager : MonoBehaviour
 
         float dot = Vector3.Dot(dir, attack.forward);  //得到方向在攻击者前方的投影
 
-       // Debug.Log(dot);
+        // Debug.Log(dot);
 
         if (dot > 0 && dot < forward)    //dot > 0 表示在前方，dot < forward 表示在范围内s
         {
@@ -83,12 +83,13 @@ public class NpcManager : MonoBehaviour
     /// <param name="power">    攻击力 </param> 
     public void DoRectDamage(int forward, int width, int power)
     {
-        // Debug.Log(npcs.Count);
         for (int i = 0; i < npcs.Count; i++)
         {
             if (CheckInRect(player, npcs[i], forward, width))
             {
                 npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
+                CameraCtrl.Instance.CameraShake(0.1f, 0.5f);
+
             }
         }
     }
@@ -141,7 +142,7 @@ public class NpcManager : MonoBehaviour
         }
     }
 
-    public void CircleCheck(Vector3 center, int radius)          //以某一点为中心做圆形范围检测
+    public void ReduceSpeed(Vector3 center, int radius)          //以某一点为中心做圆形范围检测
     {
         for (int i = 0; i < npcs.Count; i++)
         {
