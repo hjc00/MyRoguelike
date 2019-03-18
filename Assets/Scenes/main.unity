@@ -1054,7 +1054,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114772189035274970, guid: 094e0693aaa200f4389c2533560587a3, type: 2}
+    - {fileID: 82131884196904154, guid: 094e0693aaa200f4389c2533560587a3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 094e0693aaa200f4389c2533560587a3, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &930100226
@@ -2402,6 +2404,7 @@ GameObject:
   - component: {fileID: 2016030482}
   - component: {fileID: 2016030481}
   - component: {fileID: 2016030483}
+  - component: {fileID: 2016030484}
   m_Layer: 0
   m_Name: Global
   m_TagString: Untagged
@@ -2446,6 +2449,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DamageUI: {fileID: 1673715341623064, guid: dd3d775a31cc4eb4b94adf1bff1aac4d, type: 2}
   frozonEfx: {fileID: 1375923447465686, guid: 9f3731a0578a0af4681495047cecdc13, type: 2}
+--- !u!114 &2016030484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2016030480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a0b8e6e1deb4d4ca46b5043b72b9a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceCount: 3
 --- !u!1 &2028862072
 GameObject:
   m_ObjectHideFlags: 0

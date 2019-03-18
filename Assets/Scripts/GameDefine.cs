@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class GameDefine
 {
-    public const string SlashSoundPath = "";
-
+    public const string audioPath = "Audio/";
+    public const string attackSoundName = "attack";
 }

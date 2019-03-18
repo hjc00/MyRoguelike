@@ -308,11 +308,5 @@ public class PlayerCtrl : RoleBaseCtrl
     }
     #endregion
 
-    #region 声音相关
-    public void PlayAttackSound()
-    {
-        audioCtrl.PlayAttackSound();
-    }
-    #endregion
 }
 #endregion

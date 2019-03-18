@@ -19,7 +19,7 @@ public class PlayerAttack3 : FsmBase
     public override void OnEnter()
     {
         Debug.Log("attack 3 state");
-        playerCtrl.PlayAttackSound();
+        AudioManager.Instance.PlayClip(GameDefine.attackSoundName);
     }
 
 
