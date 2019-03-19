@@ -4,19 +4,19 @@ using UnityEngine;
 
 public abstract class BaseItem
 {
-    protected int cfgId;
-    protected string name;
-    protected string desc;
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public string Desc { get; private set; }
 
-    public BaseItem(int cfgId, string name, string desc)
+    public BaseItem(int id, string name, string desc)
     {
-        this.cfgId = cfgId;
-        this.name = name;
-        this.desc = desc;
+        this.Id = id;
+        this.Name = name;
+        this.Desc = desc;
     }
 
     public virtual void Use(PlayerCtrl playerCtrl)
     {
-       
+
     }
 }

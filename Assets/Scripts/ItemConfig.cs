@@ -19,9 +19,17 @@ public class ItemConfig : MonoBehaviour
     private void Awake()
     {
         instanse = this;
-        HealthPotionItem healthPotionItem = new HealthPotionItem(1, "血瓶", "加血的");
+        LoadJson();
+        BaseItem healthPotionItem = new HealthPotionItem(1, "血瓶", "加血的");
 
-        itemDict.Add(healthPotionItem.CfgId, healthPotionItem);
+        itemDict.Add(healthPotionItem.Id, healthPotionItem);
+    }
+
+    private void LoadJson()
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("Json/itemConfig");
+
+        // Debug.Log(JsonUtility.FromJson<BaseItem>(textAsset.text));
     }
 
     public BaseItem GetItemByCfgId(int cfgId)
