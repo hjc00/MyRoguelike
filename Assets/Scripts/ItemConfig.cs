@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class ItemConfig : MonoBehaviour
 {
@@ -20,16 +22,26 @@ public class ItemConfig : MonoBehaviour
     {
         instanse = this;
         LoadJson();
-        BaseItem healthPotionItem = new HealthPotionItem(1, "血瓶", "加血的");
+     //   BaseItem healthPotionItem = new HealthPotionItem(1, "血瓶", "加血的");
 
-        itemDict.Add(healthPotionItem.Id, healthPotionItem);
+      //  itemDict.Add(healthPotionItem.Id, healthPotionItem);
     }
 
     private void LoadJson()
     {
-        TextAsset textAsset = Resources.Load<TextAsset>("Json/itemConfig");
+        TextAsset textAsset = Resources.Load<TextAsset>("Json/item");
 
-        // Debug.Log(JsonUtility.FromJson<BaseItem>(textAsset.text));
+        Debug.Log(textAsset.text);
+        BaseItem[] baseItems = JsonConvert.DeserializeObject<BaseItem[]>(textAsset.text);
+
+        for (int i = 0; i < baseItems.Length; i++)
+        {
+            itemDict.Add(baseItems[i].Id, baseItems[i]);
+        }
+
+        Array.Clear(baseItems, 0, baseItems.Length);
+        baseItems = null;
+
     }
 
     public BaseItem GetItemByCfgId(int cfgId)

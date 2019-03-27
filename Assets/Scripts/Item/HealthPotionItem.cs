@@ -7,7 +7,7 @@ public class HealthPotionItem : BaseItem
 
     public int amount = 10;
 
-    public HealthPotionItem(int id, string name, string desc) : base(id, name, desc)
+    public HealthPotionItem(int id, string name, string desc, string prefabName, int addHp, int addMp, int addOff, int addDef) : base(id, name, desc, prefabName, addHp, addMp, addOff, addDef)
     {
 
     }

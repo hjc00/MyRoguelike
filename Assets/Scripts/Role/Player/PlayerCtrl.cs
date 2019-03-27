@@ -83,15 +83,13 @@ public class PlayerCtrl : RoleBaseCtrl
     }
 
     Animator anim;
-
+    private ItemUseCtrl itemUse;
     FsmManager fsmManager;
 
     public FsmManager FsmManager
     {
         get { return fsmManager; }
     }
-
-    private AudioCtrl audioCtrl;
 
     private GameObject RangeIndicator;
     private GameObject ArrowIndicator;
@@ -109,8 +107,7 @@ public class PlayerCtrl : RoleBaseCtrl
         playData = new PlayerData(5, 5, 60, 5, 5);
 
         anim = GetComponent<Animator>();
-
-        audioCtrl = GetComponent<AudioCtrl>();
+        itemUse = new ItemUseCtrl();
 
         fsmManager = new FsmManager((int)PlayerAnimationEnum.Max);
 

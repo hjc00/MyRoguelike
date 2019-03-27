@@ -5,6 +5,7 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
 
+    ItemUseEffectMgr ItemUseEffectMgr;
     // Use this for initialization
     void Awake()
     {
@@ -13,6 +14,8 @@ public class Main : MonoBehaviour
         gameObject.AddComponent<NpcManager>();
 
         gameObject.AddComponent<ItemConfig>();
+
+        ItemUseEffectMgr = new ItemUseEffectMgr();
 
         DontDestroyOnLoad(this.gameObject);
     }
