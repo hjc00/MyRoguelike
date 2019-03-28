@@ -18,10 +18,23 @@ public class point
 {
     public int x;
     public int y;
+
+    public point()
+    {
+        x = 0;
+        y = 0;
+    }
+
     public point(int x, int y)
     {
         this.x = x;
         this.y = y;
+    }
+
+    public point(float x, float y)
+    {
+        this.x = (int)x;
+        this.y = (int)y;
     }
 }
 
@@ -29,7 +42,18 @@ public class MapGenerator : MonoBehaviour
 {
 
 
-    int[,] map;
+    private int[,] map;
+
+    public int[,] Map
+    {
+        get { return map; }
+    }
+
+    private static MapGenerator instance;
+    public static MapGenerator Instance
+    {
+        get { return instance; }
+    }
 
     public int mapWidth = 100;
     public int mapLenghth = 100;
@@ -47,22 +71,32 @@ public class MapGenerator : MonoBehaviour
 
     private List<point> points = new List<point>();
     private List<point> wallPoints = new List<point>();
+    private List<point> floorPoints = new List<point>();
+    private List<point> roomCenterPoints = new List<point>();
+
+    public point playerPoint { get; private set; }   //玩家起始位置
+    public point bossPoint { get; private set; }   //玩家起始位置
+
+    public int mapCellMul = 5;  //地图元素在游戏场景的实际偏移位置
 
     private void Awake()
     {
+        instance = this;
         floorPf = Resources.Load<GameObject>("Prefabs/Floor");
         wallPf = Resources.Load<GameObject>("Prefabs/Wall");
         doorPf = Resources.Load<GameObject>("Prefabs/Door");
         pathPf = Resources.Load<GameObject>("Prefabs/Path");
+
+        bossPoint = new point();
+
+        map = new int[mapLenghth, mapWidth];
+        InitMap();
+        CreateFirstRoom();
     }
 
     void Start()
     {
-        map = new int[mapLenghth, mapWidth];
-        InitMap();
-        CreateFirstRoom();
         DrawMap();
-        // StartCoroutine(DrawMapSche());
     }
 
     bool IsOutY(int y)
@@ -108,7 +142,7 @@ public class MapGenerator : MonoBehaviour
 
         SetRoomEnum(startX, startY, endX, endY);
 
-        map[endX - 1, endY - 1] = (int)mapEnum.Door;
+        playerPoint = new point((startX + endX) * 0.5f, (startY + endY) * 0.5f);
 
         CreateRoom();
 
@@ -121,6 +155,9 @@ public class MapGenerator : MonoBehaviour
             for (int j = startY; j <= endY; j++)
             {
                 map[i, j] = (int)mapEnum.Floor;
+
+                floorPoints.Add(new point(i, j));
+
                 if (i == startX)
                 {
                     map[i, j] = (int)mapEnum.LeftWall;
@@ -149,7 +186,10 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
+        point center = new point((startX + endX) * 0.5f, (startY + endY) * 0.5f);
+        roomCenterPoints.Add(center);
+        map[center.x, center.y] = (int)mapEnum.Door;
+        
         // Debug.Log("cur wall points " + wallPoints.Count);
     }
 
@@ -187,6 +227,25 @@ public class MapGenerator : MonoBehaviour
         }
 
 
+    }
+
+    void SetBossPoint()
+    {
+        int maxSqrDis = 0;
+
+        for (int i = 0; i < this.roomCenterPoints.Count; i++)
+        {
+            int x = this.roomCenterPoints[i].x;
+            int y = this.roomCenterPoints[i].y;
+
+            int sqrDis = x * x + y * y;
+            if (sqrDis > maxSqrDis)
+            {
+                bossPoint.x = x;
+                bossPoint.y = y;
+            }
+        }
+       
     }
 
     bool CheckPathEnough()
@@ -302,6 +361,7 @@ public class MapGenerator : MonoBehaviour
 
         }
 
+        SetBossPoint();
         if (roomNum < roomCount)
         {
             Debug.Log("无法生成指定个数的房间！请确认数据的合法性或加大步数");
@@ -332,44 +392,44 @@ public class MapGenerator : MonoBehaviour
                         {
 
                             GameObject go = Instantiate(floorPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                     case (int)mapEnum.LeftWall:
                         {
                             GameObject go = Instantiate(wallPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                     case (int)mapEnum.RightWall:
                         {
                             GameObject go = Instantiate(wallPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
 
                         }; break;
                     case (int)mapEnum.UpWall:
                         {
                             GameObject go = Instantiate(wallPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
 
                         }; break;
                     case (int)mapEnum.BottomWall:
                         {
                             GameObject go = Instantiate(wallPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                     case (int)mapEnum.Door:
                         {
                             GameObject go = Instantiate(doorPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                     case (int)mapEnum.Path:
                         {
                             GameObject go = Instantiate(pathPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                     case (int)mapEnum.PathWall:
                         {
                             GameObject go = Instantiate(wallPf);
-                            go.transform.position = new Vector3(i * 5, 0, j * 5);
+                            go.transform.position = new Vector3(i * mapCellMul, 0, j * mapCellMul);
                         }; break;
                 }
             }
