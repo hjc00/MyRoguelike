@@ -74,6 +74,11 @@ public class MapGenerator : MonoBehaviour
     private List<point> floorPoints = new List<point>();
     private List<point> roomCenterPoints = new List<point>();
 
+    public List<point> RoomCenterPoints
+    {
+        get { return this.roomCenterPoints; }
+    }
+
     public point playerPoint { get; private set; }   //玩家起始位置
     public point bossPoint { get; private set; }   //玩家起始位置
 
@@ -187,9 +192,10 @@ public class MapGenerator : MonoBehaviour
             }
         }
         point center = new point((startX + endX) * 0.5f, (startY + endY) * 0.5f);
-        roomCenterPoints.Add(center);
-        map[center.x, center.y] = (int)mapEnum.Door;
-        
+        if (center.x != 0 && center.y != 0)
+            roomCenterPoints.Add(center);
+
+
         // Debug.Log("cur wall points " + wallPoints.Count);
     }
 
@@ -245,7 +251,7 @@ public class MapGenerator : MonoBehaviour
                 bossPoint.y = y;
             }
         }
-       
+
     }
 
     bool CheckPathEnough()
