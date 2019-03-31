@@ -16,7 +16,7 @@ public class DragonIdleState : FsmBase
 
     public override void OnEnter()
     {
-        Debug.Log("dragon idle");
+
     }
 
     public override void OnStay()

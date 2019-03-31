@@ -31,7 +31,6 @@ public class ItemConfig : MonoBehaviour
     {
         TextAsset textAsset = Resources.Load<TextAsset>("Json/item");
 
-        Debug.Log(textAsset.text);
         BaseItem[] baseItems = JsonConvert.DeserializeObject<BaseItem[]>(textAsset.text);
 
         for (int i = 0; i < baseItems.Length; i++)

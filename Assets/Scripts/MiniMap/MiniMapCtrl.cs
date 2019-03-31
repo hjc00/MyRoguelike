@@ -11,6 +11,9 @@ public class MiniMapCtrl : MonoBehaviour
     public GameObject pathTexture;
     public GameObject plane;
 
+    public float drawInterval = 0.1f;
+    private float timer = 0;
+
     // Use this for initialization
     void Start()
     {
@@ -35,6 +38,20 @@ public class MiniMapCtrl : MonoBehaviour
             }
         }
 
+        //for (int i = 0; i < MapGenerator.Instance.mapLenghth; i++)
+        //{
+        //    for (int j = 0; j < MapGenerator.Instance.mapLenghth; j++)
+        //    {
+        //        if (MapGenerator.Instance.Map[i, j] != -1)
+        //        {
+        //            GameObject newRoomTexture = Instantiate(roomTexture);
+        //            newRoomTexture.transform.SetParent(this.transform);
+        //            newRoomTexture.transform.SetSiblingIndex(0);
+        //            newRoomTexture.transform.localPosition = new Vector2(i * 2, j * 2);
+        //        }
+        //    }
+
+        //}
         DrawRole();
     }
 
@@ -53,6 +70,12 @@ public class MiniMapCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DrawRole();
+        timer += Time.deltaTime;
+
+        if (timer >= drawInterval)
+        {
+            timer = 0;
+            DrawRole();
+        }
     }
 }

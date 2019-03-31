@@ -8,4 +8,5 @@ public static class GameDefine
     public const string attackSoundName = "attack";
 
     public const string RedDragonPath = "Prefabs/Role/RedDragon";
+    public const string goblinPath = "Prefabs/Role/Goblin";
 }

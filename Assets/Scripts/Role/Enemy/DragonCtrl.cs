@@ -26,7 +26,7 @@ public class DragonCtrl : EnemyCtrl
 
     public void Start()
     {
-        Debug.Log("dragon init");
+
         EnemyData = new EnemyData(5, 3, 250, 6, 20, 20);
         sensor = new Sensor(10, 120, this);
 

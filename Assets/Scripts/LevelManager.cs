@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private GameObject bossPf;
+    private GameObject enemyPf;
 
     private void Awake()
     {
@@ -26,12 +27,14 @@ public class LevelManager : MonoBehaviour
 
         //todo  读取关卡配置
         bossPf = Resources.Load<GameObject>(GameDefine.RedDragonPath);
+        enemyPf = Resources.Load<GameObject>(GameDefine.goblinPath);
     }
 
     private void Start()
     {
         SetPlayPos();
         SetBossPos();
+        SetRoomEnemy();
     }
 
 
@@ -48,16 +51,64 @@ public class LevelManager : MonoBehaviour
     {
         point bossPoint = MapGenerator.Instance.bossPoint;
 
-        Debug.Log(bossPoint.x);
-        Debug.Log(bossPoint.y);
 
         Vector3 pos = new Vector3(bossPoint.x * MapGenerator.Instance.mapCellMul, 2, bossPoint.y * MapGenerator.Instance.mapCellMul);
-        Debug.Log(pos);
 
         GameObject bossGo = Instantiate(bossPf, pos, Quaternion.identity);
 
         //bossPf.transform.position = pos;
     }
+
+
+    private void SetRoomEnemy()
+    {
+    
+
+        for (int i = 0; i < MapGenerator.Instance.roomPoints.Count; i++)
+        {
+            SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
+        }
+    }
+
+    List<int> usedIndex = new List<int>();
+    int enemyCount = 3;
+
+
+    private void SetSingleRoomEnemy(List<point> singleRoomPoints)
+    {
+        usedIndex.Clear();
+        int tempCount = 0;
+        int index = Random.Range(0, singleRoomPoints.Count);
+
+        usedIndex.Add(index);
+ 
+        //Debug.Log(singleRoomPoints[index].x + " " + singleRoomPoints[index].y);
+        while (tempCount < enemyCount)
+        {
+
+            if (usedIndex.Contains(index))
+            {
+                index = Random.Range(0, singleRoomPoints.Count);
+
+            }
+            else
+            {
+                Debug.Log(index);
+                usedIndex.Add(index);
+
+                tempCount++;
+            }
+        }
+
+        for (int i = 0; i < usedIndex.Count; i++)
+        {
+
+            Vector3 pos = new Vector3(singleRoomPoints[usedIndex[i]].x * MapGenerator.Instance.mapCellMul, 0, singleRoomPoints[usedIndex[i]].y * MapGenerator.Instance.mapCellMul);
+
+            GameObject enemyGo = Instantiate(enemyPf, pos, Quaternion.identity);
+        }
+    }
+
 
     public void UpLevel()
     {

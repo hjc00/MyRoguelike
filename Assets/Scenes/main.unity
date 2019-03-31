@@ -2109,6 +2109,7 @@ MonoBehaviour:
   roomTexture: {fileID: 1002342898}
   pathTexture: {fileID: 0}
   plane: {fileID: 1125525542}
+  drawInterval: 0.5
 --- !u!1 &1886823677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,10 +2456,10 @@ MonoBehaviour:
   mapLenghth: 100
   roomMinWidth: 8
   roomMaxWidth: 12
-  maxTryCount: 100
+  maxTryCount: 500
   minPathLength: 8
   maxPathLength: 10
-  roomCount: 5
+  roomCount: 15
   mapCellMul: 5
 --- !u!1 &2019377859
 GameObject:

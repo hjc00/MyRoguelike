@@ -74,6 +74,8 @@ public class MapGenerator : MonoBehaviour
     private List<point> floorPoints = new List<point>();
     private List<point> roomCenterPoints = new List<point>();
 
+    public List<List<point>> roomPoints { get; private set; }
+
     public List<point> RoomCenterPoints
     {
         get { return this.roomCenterPoints; }
@@ -93,6 +95,7 @@ public class MapGenerator : MonoBehaviour
         pathPf = Resources.Load<GameObject>("Prefabs/Path");
 
         bossPoint = new point();
+        roomPoints = new List<List<point>>();
 
         map = new int[mapLenghth, mapWidth];
         InitMap();
@@ -124,7 +127,7 @@ public class MapGenerator : MonoBehaviour
 
     bool isAreaUsed(int xStart, int yStart, int xEnd, int yEnd)
     {
-        Debug.Log("checked used");
+        //  Debug.Log("checked used");
         for (int i = xStart; i <= xEnd; i++)
             for (int j = yStart; j <= yEnd; j++)
                 if (map[i, j] != -1)
@@ -153,15 +156,16 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+
     void SetRoomEnum(int startX, int startY, int endX, int endY)
     {
+        List<point> tmpRoom = new List<point>();
+
         for (int i = startX; i <= endX; i++)
         {
             for (int j = startY; j <= endY; j++)
             {
                 map[i, j] = (int)mapEnum.Floor;
-
-                floorPoints.Add(new point(i, j));
 
                 if (i == startX)
                 {
@@ -189,14 +193,20 @@ public class MapGenerator : MonoBehaviour
                     || j > startY && j < endY)
                         wallPoints.Add(new point(i, j));
                 }
+
+                if (map[i, j] == (int)mapEnum.Floor)
+                    tmpRoom.Add(new point(i, j));
             }
         }
+
         point center = new point((startX + endX) * 0.5f, (startY + endY) * 0.5f);
+
         if (center.x != 0 && center.y != 0)
+        {
+            roomPoints.Add(tmpRoom);
             roomCenterPoints.Add(center);
+        }
 
-
-        // Debug.Log("cur wall points " + wallPoints.Count);
     }
 
     void SetPathEnum(int xStart, int yStart, int xEnd, int yEnd, int dir)
