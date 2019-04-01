@@ -93,7 +93,7 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(index);
+     
                 usedIndex.Add(index);
 
                 tempCount++;

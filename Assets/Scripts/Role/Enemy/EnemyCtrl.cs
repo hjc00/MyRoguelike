@@ -165,7 +165,7 @@ public class EnemyCtrl : RoleBaseCtrl
             return;
         }
         NpcManager.Instance.DoPlayerDamage(this.transform, EnemyData.AtkForward, EnemyData.AtkWidth, EnemyData.AtkPower);
-        Debug.Log(EnemyData.AtkForward);
+    //    Debug.Log(EnemyData.AtkForward);
     }
 
     //private void OnDrawGizmos()
