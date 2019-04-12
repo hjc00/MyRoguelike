@@ -184,7 +184,7 @@ namespace DG.Tweening
                 if (Debugger.logPriority > 0) Debugger.LogMissingMaterialProperty(propertyID);
                 return null;
             }
-            return DOTween.To(() => target.GetTextureOffset(propertyID), x => target.SetTextureOffset(propertyID, x), endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.GetTextureOffset(propertyID), x => target.SetTextureOffset(propertyID, x), endValue, duration).Settarget(target);
         }
 
         /// <summary>Tweens a Material's named texture scale property with the given ID to the given value.
@@ -198,7 +198,7 @@ namespace DG.Tweening
                 if (Debugger.logPriority > 0) Debugger.LogMissingMaterialProperty(propertyID);
                 return null;
             }
-            return DOTween.To(() => target.GetTextureScale(propertyID), x => target.SetTextureScale(propertyID, x), endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.GetTextureScale(propertyID), x => target.SetTextureScale(propertyID, x), endValue, duration).Settarget(target);
         }
 
         #endregion

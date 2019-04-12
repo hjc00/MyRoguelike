@@ -7,7 +7,8 @@ public class StartPanelLogic
 {
     public void OnStartClick()
     {
-        SceneManager.LoadScene("main");
+        PlayerPrefs.SetInt("level", 1);
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void OnLoadClick()

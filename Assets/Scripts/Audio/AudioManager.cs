@@ -28,9 +28,8 @@ public class AudioManager : MonoBehaviour
     public void PlayClip(string name)
     {
         AudioSource tmpSource = sourceManager.GetFreeSource();
-        Debug.Log(tmpSource);
+
         AudioClip clip = clipManager.GetClip(name);
-        Debug.Log(clip);
         if (clip != null)
         {
             tmpSource.clip = clip;

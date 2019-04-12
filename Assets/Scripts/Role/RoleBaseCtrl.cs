@@ -37,7 +37,7 @@ public class RoleBaseCtrl : MonoBehaviour
 
     public void EnableCtrl()
     {
-        Debug.Log("enble");
+
         this.enabled = true;
     }
 

@@ -19,6 +19,9 @@ public class NpcManager : MonoBehaviour
     public Transform Player
     {
         get { return player; }
+        set {
+            player = value;
+        }
     }
 
     private void Awake()
@@ -27,7 +30,7 @@ public class NpcManager : MonoBehaviour
 
         npcs = new List<Transform>();
 
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+       // player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public void AddNpc(Transform go)
@@ -89,7 +92,7 @@ public class NpcManager : MonoBehaviour
             {
                 npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
                 CameraCtrl.Instance.CameraShake(0.1f, 0.5f);
-
+                SkillPerform.Instance.BeatBack(npcs[i], npcs[i].position - player.position, 0.1f, 0.5f);
             }
         }
     }
@@ -162,6 +165,7 @@ public class NpcManager : MonoBehaviour
         if (CheckInRect(enemy, player, forward, width))
         {
             player.GetComponent<PlayerCtrl>().ReduceHealth(power);
+            SkillPerform.Instance.BeatBack(player, player.position - enemy.position, 0.1f, 0.5f);
         }
     }
 }

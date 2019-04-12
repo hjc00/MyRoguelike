@@ -60,11 +60,12 @@ public class EnemyCtrl : RoleBaseCtrl
 
     private void Start()
     {
-        Debug.Log("enemy init");
+
         EnemyData = new EnemyData(3, 2, 100, 3, 10, 10);
 
-        FsmManager = new FsmManager((int)GoblinAnimationEnum.Max);
         sensor = new Sensor(10, 120, this);
+
+        FsmManager = new FsmManager((int)GoblinAnimationEnum.Max);
 
 
         GoblinAttackState goblinAttackState = new GoblinAttackState(anim, this);
@@ -131,11 +132,15 @@ public class EnemyCtrl : RoleBaseCtrl
         if (EnemyData.Health <= 0)
         {
             bool death = anim.GetBool("death");
-
+            this.enabled = false;
+            NpcManager.Instance.RemoveNpc(this.transform);
+            cc.enabled = false;
+            EventCenter.Broadcast<int>(EventType.OnAddGold, Random.Range(1, 5));
+            Destroy(gameObject, 3);
             if (!death)
             {
-                this.enabled = false;
                 anim.SetBool("death", true);
+
             }
         }
     }
@@ -165,7 +170,7 @@ public class EnemyCtrl : RoleBaseCtrl
             return;
         }
         NpcManager.Instance.DoPlayerDamage(this.transform, EnemyData.AtkForward, EnemyData.AtkWidth, EnemyData.AtkPower);
-    //    Debug.Log(EnemyData.AtkForward);
+        //    Debug.Log(EnemyData.AtkForward);
     }
 
     //private void OnDrawGizmos()

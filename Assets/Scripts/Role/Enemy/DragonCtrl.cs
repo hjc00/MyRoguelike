@@ -89,13 +89,18 @@ public class DragonCtrl : EnemyCtrl
         if (EnemyData.Health <= 0)
         {
             bool death = anim.GetBool("death");
-
+            EventCenter.Broadcast(EventType.OnBossDie);
             if (!death)
             {
                 this.enabled = false;
                 anim.SetBool("death", true);
             }
         }
+    }
+
+    private void OnDead()
+    {
+
     }
 
     public override void DoPlayerDamage()

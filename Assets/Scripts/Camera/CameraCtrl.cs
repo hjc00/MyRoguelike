@@ -23,9 +23,9 @@ public class CameraCtrl : MonoBehaviour
     {
         instacne = this;
 
-        target = NpcManager.Instance.Player;
+        target = NpcManager.Instance.Player.GetComponent<PlayerCtrl>().cameraPos;
 
-        offset = this.transform.position - target.position;
+        offset = target.position - NpcManager.Instance.Player.position;
 
         Follow();
     }
@@ -38,7 +38,7 @@ public class CameraCtrl : MonoBehaviour
 
     void Follow()
     {
-        Vector3 targetPos = target.position + offset;
+        Vector3 targetPos = NpcManager.Instance.Player.position + offset;
 
         this.transform.position = Vector3.Lerp(this.transform.position, targetPos, 0.1f);
     }

@@ -15,13 +15,13 @@ public class EffectPerform : MonoBehaviour
 
     public GameObject frozonEfx;  //冰冻特效
 
-    private GameObject canvas;
+    public GameObject canvas;
 
 
     private void Awake()
     {
         instance = this;
-        canvas = GameObject.FindGameObjectWithTag("Canvas");
+        //canvas = GameObject.FindGameObjectWithTag("Canvas");
     }
 
     public void ShowDamageUI(int amount, Transform appearTrans)

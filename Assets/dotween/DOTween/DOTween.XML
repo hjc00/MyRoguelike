@@ -672,7 +672,7 @@
         <member name="M:DG.Tweening.DOTween.KillAll(System.Boolean,System.Object[])">
             <summary>Kills all tweens and returns the number of actual tweens killed</summary>
             <param name="complete">If TRUE completes the tweens before killing them</param>
-            <param name="idsOrTargetsToExclude">Eventual IDs or targets to exclude from the killing</param>
+            <param name="idsOrtargetsToExclude">Eventual IDs or targets to exclude from the killing</param>
         </member>
         <member name="M:DG.Tweening.DOTween.Kill(System.Object,System.Boolean)">
             <summary>Kills all tweens with the given ID or target and returns the number of actual tweens killed</summary>
@@ -808,7 +808,7 @@
             <param name="playingOnly">If TRUE returns only the tweens with the given ID that are currently playing</param>
             <param name="fillableList">If NULL creates a new list, otherwise clears and fills this one (and thus saves allocations)</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.TweensByTarget(System.Object,System.Boolean,System.Collections.Generic.List{DG.Tweening.Tween})">
+        <member name="M:DG.Tweening.DOTween.TweensBytarget(System.Object,System.Boolean,System.Collections.Generic.List{DG.Tweening.Tween})">
             <summary>
             Returns a list of all active tweens with the given target.
             Returns NULL if there are no active tweens with the given target.
@@ -2053,11 +2053,11 @@
             <summary>Sets an ID for the tween, which can then be used as a filter with DOTween's static methods.</summary>
             <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
         </member>
-        <member name="M:DG.Tweening.TweenParams.SetTarget(System.Object)">
+        <member name="M:DG.Tweening.TweenParams.Settarget(System.Object)">
             <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
             <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
             When using shorcuts the shortcut target is already assigned as the tween's target,
-            so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
+            so using this method will overwrite it and prevent shortcut-operations like mytarget.DOPause from working correctly.</summary>
             <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.SetLoops(System.Int32,System.Nullable{DG.Tweening.LoopType})">
@@ -2175,20 +2175,20 @@
             <summary>Allows to link this tween to a GameObject
             so that it will be automatically killed when the GameObject is destroyed.
             <code>Has no effect</code> if the tween is added to a Sequence</summary>
-            <param name="gameObject">The link target (unrelated to the target set via <code>SetTarget</code>)</param>
+            <param name="gameObject">The link target (unrelated to the target set via <code>Settarget</code>)</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetLink``1(``0,UnityEngine.GameObject,DG.Tweening.LinkBehaviour)">
             <summary>Allows to link this tween to a GameObject and assign a behaviour depending on it.
             This will also automatically kill the tween when the GameObject is destroyed.
             <code>Has no effect</code> if the tween is added to a Sequence</summary>
-            <param name="gameObject">The link target (unrelated to the target set via <code>SetTarget</code>)</param>
+            <param name="gameObject">The link target (unrelated to the target set via <code>Settarget</code>)</param>
             <param name="behaviour">The behaviour to use (<see cref="F:DG.Tweening.LinkBehaviour.KillOnDestroy"/> is always evaluated even if you choose another one)</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetTarget``1(``0,System.Object)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.Settarget``1(``0,System.Object)">
             <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
             <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
             When using shorcuts the shortcut target is already assigned as the tween's target,
-            so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
+            so using this method will overwrite it and prevent shortcut-operations like mytarget.DOPause from working correctly.</summary>
             <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetLoops``1(``0,System.Int32)">

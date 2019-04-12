@@ -9,4 +9,9 @@ public static class GameDefine
 
     public const string RedDragonPath = "Prefabs/Role/RedDragon";
     public const string goblinPath = "Prefabs/Role/Goblin";
+
+    public const string skillSellNpcPath = "Prefabs/SkillSellNpc";
+    public const string itemSellNpcPath = "Prefabs/ItemSellNpc";
+
+    public const string playerPfPath = "Prefabs/Role/Player";
 }

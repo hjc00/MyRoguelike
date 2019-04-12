@@ -2,39 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack3 : FsmBase
+public class PlayerAttack1 : FsmBase
 {
 
     Animator anim;
-
+    AnimatorStateInfo animatorInfo;
     PlayerCtrl playerCtrl;
 
 
-    public PlayerAttack3(Animator animator, PlayerCtrl ctrl)
+    public PlayerAttack1(Animator animator, PlayerCtrl ctrl)
     {
         anim = animator;
+
         playerCtrl = ctrl;
+
     }
 
     public override void OnEnter()
     {
-        Debug.Log("attack 3 state");
+        //Debug.Log("attack 1 state");
+        SkillPerform.Instance.Forward(playerCtrl.transform, 0.1f, 0.5f,playerCtrl.PlayerData.RectForward);
         AudioManager.Instance.PlayClip(GameDefine.attackSoundName);
     }
 
 
     public override void OnStay()
     {
-      
+        HandleInput();
     }
 
     public override void OnExit()
     {
-        anim.ResetTrigger("attack");
+
     }
 
     public override void HandleInput()
     {
-        
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("attack");
+            return;
+        }
     }
 }

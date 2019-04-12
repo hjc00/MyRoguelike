@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,11 +22,20 @@ public class UIManager : MonoBehaviour
 
     }
 
+    private GameObject hintPf;
+    private GameObject Canvas;
+
     private void Awake()
     {
         instance = this;
 
         allWidgets = new Dictionary<string, Dictionary<string, GameObject>>();
+
+        Canvas = GameObject.FindGameObjectWithTag("Canvas");
+
+        hintPf = Resources.Load("Prefabs/UiHint") as GameObject;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public GameObject GetWidget(string panelName, string widgetName)
@@ -77,6 +88,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    public void PopHint(string str)
+    {
+        GameObject tempHint = Instantiate(this.hintPf);
+        tempHint.transform.SetParent(this.transform);
+        tempHint.transform.localPosition = Vector3.zero;
+        hintPf.GetComponent<Text>().text = str;
+
+        Destroy(tempHint, 1.2f);
+    }
 
 
 }

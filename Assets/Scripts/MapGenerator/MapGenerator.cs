@@ -12,6 +12,10 @@ public enum mapEnum
     Door = 5,
     Path = 6,
     PathWall = 7,
+    ItemNpc = 8,
+    SkillNpc = 9,
+    Enemy = 10,
+    Boss = 11,
 }
 
 public class point
@@ -205,9 +209,46 @@ public class MapGenerator : MonoBehaviour
         {
             roomPoints.Add(tmpRoom);
             roomCenterPoints.Add(center);
+
+           // SetRoomEnum(tmpRoom, center);
         }
 
     }
+
+    //List<int> usedIndex = new List<int>();
+    //int enemyCount = 3;
+    //int itemRoomCnt = 0;
+    //int skillRoomCnt = 0;
+
+    //private void SetRoomEnum(List<point> roomPoints, point center)
+    //{
+    //    int random = 0;
+
+
+    //    random = Random.Range(0, 300);
+
+    //    if (random < 100 && itemRoomCnt < 1)
+    //    {
+    //        map[center.x, center.y] = (int)mapEnum.ItemNpc;
+    //        itemRoomCnt++;
+    //    }
+    //    else if (random >= 100 && random < 200 && skillRoomCnt < 1)
+    //    {
+    //        map[center.x, center.y] = (int)mapEnum.SkillNpc;
+    //        skillRoomCnt++;
+    //    }
+    //    else
+    //    {
+    //        SetSingleRoomEnemy();
+    //    }
+
+    //}
+
+    //private void SetSingleRoomEnemy()
+    //{
+
+    //}
+
 
     void SetPathEnum(int xStart, int yStart, int xEnd, int yEnd, int dir)
     {
@@ -382,6 +423,7 @@ public class MapGenerator : MonoBehaviour
         {
             Debug.Log("无法生成指定个数的房间！请确认数据的合法性或加大步数");
         }
+        LevelManager.Instance.StartLevel();
     }
 
     void InitMap()

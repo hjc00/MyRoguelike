@@ -10,13 +10,14 @@ public class Main : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        gameObject.AddComponent<UIManager>();
 
         gameObject.AddComponent<NpcManager>();
 
         gameObject.AddComponent<ItemConfig>();
 
         gameObject.AddComponent<LevelManager>();
+
+        gameObject.AddComponent<AudioManager>();
 
         ItemUseEffectMgr = new ItemUseEffectMgr();
 

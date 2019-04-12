@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,6 +20,10 @@ public class LevelManager : MonoBehaviour
 
     private GameObject bossPf;
     private GameObject enemyPf;
+    private GameObject skillSellNpcPf;
+    private GameObject itemSellNpcPf;
+
+    private GameObject playerPf;
 
     private void Awake()
     {
@@ -28,23 +33,36 @@ public class LevelManager : MonoBehaviour
         //todo  读取关卡配置
         bossPf = Resources.Load<GameObject>(GameDefine.RedDragonPath);
         enemyPf = Resources.Load<GameObject>(GameDefine.goblinPath);
+
+        skillSellNpcPf = Resources.Load<GameObject>(GameDefine.skillSellNpcPath);
+        itemSellNpcPf = Resources.Load<GameObject>(GameDefine.itemSellNpcPath);
+        playerPf = Resources.Load<GameObject>(GameDefine.playerPfPath);
+
+        EventCenter.AddListener(EventType.OnBossDie, ReloadLevel);
+
     }
 
-    private void Start()
+
+    public void StartLevel()
     {
-        SetPlayPos();
         SetBossPos();
-        SetRoomEnemy();
-    }
+        SetRoom();
+        SetPlayPos();
 
+        UIManager.Instance.PopHint(string.Format("level {0}", PlayerPrefs.GetInt("level")));
+    }
 
     public int Level { get; set; }
 
     public void SetPlayPos()
     {
         point playerPoint = MapGenerator.Instance.playerPoint;
+        GameObject player = Instantiate(this.playerPf);
+        NpcManager.Instance.Player = player.transform;
 
-        NpcManager.Instance.Player.transform.position = new Vector3(playerPoint.x * MapGenerator.Instance.mapCellMul, 0, playerPoint.y * MapGenerator.Instance.mapCellMul);
+
+        player.transform.position = new Vector3(playerPoint.x * MapGenerator.Instance.mapCellMul, 0, playerPoint.y * MapGenerator.Instance.mapCellMul);
+ 
     }
 
     public void SetBossPos()
@@ -59,14 +77,29 @@ public class LevelManager : MonoBehaviour
         //bossPf.transform.position = pos;
     }
 
+    int itemRoomCnt = 0;
+    int skillRoomCnt = 0;
 
-    private void SetRoomEnemy()
+    private void SetRoom()
     {
-    
+        int random = 0;
 
         for (int i = 0; i < MapGenerator.Instance.roomPoints.Count; i++)
         {
-            SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
+            random = Random.Range(0, 300);
+
+            if (random < 100 && itemRoomCnt < 1 && i > 0)
+            {
+                SetItemRoom(i);
+            }
+            else if (random >= 100 && random < 200 && skillRoomCnt < 1 && i > 0)
+            {
+                SetSkillRoom(i);
+            }
+            else
+            {
+                SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
+            }
         }
     }
 
@@ -76,12 +109,17 @@ public class LevelManager : MonoBehaviour
 
     private void SetSingleRoomEnemy(List<point> singleRoomPoints)
     {
+        if (singleRoomPoints.Contains(MapGenerator.Instance.bossPoint))
+        {
+            return;
+        }
+
         usedIndex.Clear();
-        int tempCount = 0;
+        int tempCount = 1;
         int index = Random.Range(0, singleRoomPoints.Count);
 
         usedIndex.Add(index);
- 
+
         //Debug.Log(singleRoomPoints[index].x + " " + singleRoomPoints[index].y);
         while (tempCount < enemyCount)
         {
@@ -93,7 +131,7 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-     
+
                 usedIndex.Add(index);
 
                 tempCount++;
@@ -109,9 +147,57 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-
-    public void UpLevel()
+    private void SetItemRoom(int roomCenterIndex)
     {
+        if (MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x == MapGenerator.Instance.bossPoint.x
+            ||
+            MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y == MapGenerator.Instance.bossPoint.y)
+            return;
 
+        Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        GameObject itemSellNpc = Instantiate(itemSellNpcPf, pos, Quaternion.identity);
+        itemRoomCnt++;
+    }
+
+    private void SetSkillRoom(int roomCenterIndex)
+    {
+        if (MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x == MapGenerator.Instance.bossPoint.x
+         ||
+         MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y == MapGenerator.Instance.bossPoint.y)
+            return;
+
+        Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        GameObject skillSellNpc = Instantiate(skillSellNpcPf, pos, Quaternion.identity);
+        skillRoomCnt++;
+    }
+
+    public void ReloadLevel()
+    {
+        int curLevel = PlayerPrefs.GetInt("level");
+        if (curLevel == 3)
+        {
+            Time.timeScale = 0;
+            UIManager.Instance.PopHint("恭喜成功通关！");
+            PlayerPrefs.SetInt("level", curLevel);
+            StartCoroutine(BackToMainMenu());
+        }
+        else
+        {
+            curLevel++;
+            PlayerPrefs.SetInt("level", curLevel);
+            StartCoroutine(StartReloading());
+        }
+    }
+
+    IEnumerator BackToMainMenu()
+    {
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("StartScene");
+    }
+
+    IEnumerator StartReloading()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("LoadingScene");
     }
 }

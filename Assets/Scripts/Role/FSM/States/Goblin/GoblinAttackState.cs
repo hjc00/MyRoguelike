@@ -17,12 +17,11 @@ public class GoblinAttackState : FsmBase
     public override void OnEnter()
     {
         this.enemyCtrl.DisableCtrl();
-        base.OnEnter();
     }
 
     public override void OnStay()
     {
-        HandleInput();
+
 
     }
 
@@ -33,6 +32,6 @@ public class GoblinAttackState : FsmBase
 
     public override void HandleInput()
     {
-        base.HandleInput();
+ 
     }
 }

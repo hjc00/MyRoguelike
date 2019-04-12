@@ -15,59 +15,6 @@ public enum PlayerAnimationEnum
     Max,
 }
 
-#region PlayerData
-
-public class PlayerData : RoleData
-{
-
-    int rectForward = 10;   //矩形攻击范围长度
-    public int RectForward
-    {
-        get { return rectForward; }
-        set { rectForward = value; }
-    }
-
-
-    int rectWidth = 5;  //矩形攻击范围宽度
-    public int RectWidth
-    {
-        get { return rectWidth; }
-        set { rectWidth = value; }
-    }
-
-    int sectorAngle = 30;   //扇形攻击范围角度
-    public int SectorAngle
-    {
-        get { return sectorAngle; }
-        set { sectorAngle = value; }
-    }
-
-    int sectorRadius = 30;   //扇形攻击范围半径
-    public int SectorRadius
-    {
-        get { return sectorRadius; }
-        set { sectorRadius = value; }
-    }
-
-    int circleRadius = 10;   //原形攻击范围半径
-    public int CircleRadius
-    {
-        get { return circleRadius; }
-        set { circleRadius = value; }
-    }
-
-    public PlayerData(int rectForward, int rectWidth, int sectorAngle, int sectorRadius, int circleRadius)
-    {
-
-    }
-
-    public PlayerData(int rectForward, int rectWidth, int sectorAngle, int sectorRadius, int circleRadius,
-        int health, int speed, int atkPower, int defPower) : base(health, speed, atkPower, defPower)
-    {
-
-    }
-}
-#endregion
 
 
 
@@ -95,20 +42,37 @@ public class PlayerCtrl : RoleBaseCtrl
     private GameObject ArrowIndicator;
     private GameObject CircleIndicator;
 
-    public GameObject frozonPs;
+    public Transform cameraPos;
 
     public delegate void OnPlayerHealthReduce(int amount);
     public event OnPlayerHealthReduce onPlayerHealthReduce;
+
+    private PlayerInventory playerInventory;
 
     public override void Awake()
     {
         base.Awake();
 
-        playData = new PlayerData(5, 5, 60, 5, 5);
-
+        playData = new PlayerData(4, 2, 60, 5, 5);
         anim = GetComponent<Animator>();
-        itemUse = new ItemUseCtrl();
+        playerInventory = new PlayerInventory();
+        EventCenter.Broadcast<int>(EventType.OnUpdateGold, 0); ;
 
+        RegisterEvent();
+        FsmInit();
+
+        RangeIndicator = transform.Find("RangeIndicator").gameObject;
+        RangeIndicator.SetActive(false);
+
+        ArrowIndicator = transform.Find("ArrowIndicator").gameObject;
+        ArrowIndicator.SetActive(false);
+
+        CircleIndicator = transform.Find("CircleIndicator").gameObject;
+        CircleIndicator.SetActive(false);
+    }
+
+    void FsmInit()
+    {
         fsmManager = new FsmManager((int)PlayerAnimationEnum.Max);
 
         PlayerIdle playerIdle = new PlayerIdle(anim, this);
@@ -133,20 +97,31 @@ public class PlayerCtrl : RoleBaseCtrl
         fsmManager.AddState(playerAttack3);
 
         fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
+    }
 
-        RangeIndicator = transform.Find("RangeIndicator").gameObject;
-        RangeIndicator.SetActive(false);
+    void RegisterEvent()
+    {
+        EventCenter.AddListener<int>(EventType.OnAddGold, AddGold);
+    }
 
-        ArrowIndicator = transform.Find("ArrowIndicator").gameObject;
-        ArrowIndicator.SetActive(false);
+    void UnregisterEvent()
+    {
+        EventCenter.RemoveListener<int>(EventType.OnAddGold, AddGold);
+    }
 
-        CircleIndicator = transform.Find("CircleIndicator").gameObject;
-        CircleIndicator.SetActive(false);
+    private void OnDestroy()
+    {
+        UnregisterEvent();
     }
 
     private void Update()
     {
         fsmManager.FsmUpdate();
+    }
+
+    private void AddGold(int amount)
+    {
+        playerInventory.Gold += amount;
     }
 
     #region 状态机相关接口
@@ -244,6 +219,7 @@ public class PlayerCtrl : RoleBaseCtrl
     #region    攻击相关
     public void DoRectDamage()
     {
+
         NpcManager.Instance.DoRectDamage(PlayerData.RectForward, PlayerData.RectWidth, PlayerData.AtkPower);
     }
 
@@ -304,6 +280,11 @@ public class PlayerCtrl : RoleBaseCtrl
         NpcManager.Instance.ReduceSpeed(this.CircleIndicator.transform.position, radius);
     }
     #endregion
-
+    //private void OnDrawGizmos()
+    //{
+    //    //Gizmos.DrawSphere(NpcManager.Instance.Player.position + NpcManager.Instance.Player.forward * 3, 2);
+    //    Gizmos.DrawCube(transform.position + transform.forward * playData.RectForward * 0.5f, new Vector3(playData.RectForward * 0.5f, 1, playData.RectWidth * 0.5f));
+    //    Gizmos.color = Color.red;
+    //}
 }
 #endregion
