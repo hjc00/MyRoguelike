@@ -18,7 +18,7 @@ public class GoldUI : MonoBehaviour
 
     private void UpdateText(int amount)
     {
-
+        this.gameObject.SetActive(true);
         text.text = string.Format("Gold:{0}", amount);
     }
 }

@@ -56,11 +56,10 @@ public class PlayerCtrl : RoleBaseCtrl
         playData = new PlayerData(4, 2, 60, 5, 5);
         anim = GetComponent<Animator>();
         playerInventory = new PlayerInventory();
-        EventCenter.Broadcast<int>(EventType.OnUpdateGold, 0); ;
+  
 
         RegisterEvent();
         FsmInit();
-
         RangeIndicator = transform.Find("RangeIndicator").gameObject;
         RangeIndicator.SetActive(false);
 
@@ -127,6 +126,7 @@ public class PlayerCtrl : RoleBaseCtrl
     #region 状态机相关接口
     public void ChangeToIdle()
     {
+       
         fsmManager.ChangeState((int)PlayerAnimationEnum.Idle);
     }
 
@@ -137,6 +137,7 @@ public class PlayerCtrl : RoleBaseCtrl
 
     public void ChangeToAttack2()
     {
+
         fsmManager.ChangeState((int)PlayerAnimationEnum.Attack2);
     }
 

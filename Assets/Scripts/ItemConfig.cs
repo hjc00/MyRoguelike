@@ -22,9 +22,9 @@ public class ItemConfig : MonoBehaviour
     {
         instanse = this;
         LoadJson();
-     //   BaseItem healthPotionItem = new HealthPotionItem(1, "血瓶", "加血的");
 
-      //  itemDict.Add(healthPotionItem.Id, healthPotionItem);
+        // Debug.Log(itemDict[1000].icon);
+        // Debug.Log(itemDict[1000].gold);
     }
 
     private void LoadJson()
@@ -54,4 +54,14 @@ public class ItemConfig : MonoBehaviour
         return this.itemDict[cfgId];
     }
 
+    public int GetItemCount()
+    {
+        return itemDict.Count;
+    }
+
+    public void CreateItemObj(Vector3 pos, int id)
+    {
+        GameObject itemObj = Instantiate(Resources.Load<GameObject>(GameDefine.itemPrefabPath + this.GetItemByCfgId(id).prefabName),
+            pos, Quaternion.identity) as GameObject;
+    }
 }

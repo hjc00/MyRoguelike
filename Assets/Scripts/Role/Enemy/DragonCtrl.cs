@@ -27,7 +27,7 @@ public class DragonCtrl : EnemyCtrl
     public void Start()
     {
 
-        EnemyData = new EnemyData(5, 3, 250, 6, 20, 20);
+        EnemyData = new EnemyData(5, 3, 10, 6, 20, 20);
         sensor = new Sensor(10, 120, this);
 
         FsmManager = new FsmManager((int)DragonAnimEnum.Max);

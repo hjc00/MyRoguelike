@@ -3,4 +3,6 @@
     OnBossDie,
     OnAddGold,
     OnUpdateGold,
+    DestroyItemNpc,
+    DestroySkillNpc,
 }

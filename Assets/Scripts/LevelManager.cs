@@ -48,7 +48,9 @@ public class LevelManager : MonoBehaviour
         SetBossPos();
         SetRoom();
         SetPlayPos();
-
+        EventCenter.Broadcast<int>(EventType.OnUpdateGold, 0); ;
+        // if (UIManager.Instance != null)
+        //  Debug.Log("cur level " + PlayerPrefs.GetInt("level"));
         UIManager.Instance.PopHint(string.Format("level {0}", PlayerPrefs.GetInt("level")));
     }
 
@@ -57,12 +59,13 @@ public class LevelManager : MonoBehaviour
     public void SetPlayPos()
     {
         point playerPoint = MapGenerator.Instance.playerPoint;
+
+
         GameObject player = Instantiate(this.playerPf);
         NpcManager.Instance.Player = player.transform;
-
-
         player.transform.position = new Vector3(playerPoint.x * MapGenerator.Instance.mapCellMul, 0, playerPoint.y * MapGenerator.Instance.mapCellMul);
- 
+
+
     }
 
     public void SetBossPos()
@@ -96,7 +99,7 @@ public class LevelManager : MonoBehaviour
             {
                 SetSkillRoom(i);
             }
-            else
+            else if (i > 0)
             {
                 SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
             }
@@ -174,16 +177,16 @@ public class LevelManager : MonoBehaviour
     public void ReloadLevel()
     {
         int curLevel = PlayerPrefs.GetInt("level");
-        if (curLevel == 3)
+
+        curLevel++;
+        if (curLevel > 3)
         {
-            Time.timeScale = 0;
             UIManager.Instance.PopHint("恭喜成功通关！");
             PlayerPrefs.SetInt("level", curLevel);
             StartCoroutine(BackToMainMenu());
         }
         else
         {
-            curLevel++;
             PlayerPrefs.SetInt("level", curLevel);
             StartCoroutine(StartReloading());
         }
@@ -197,7 +200,9 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator StartReloading()
     {
-        yield return new WaitForSeconds(1);
+
+        yield return new WaitForSeconds(3);
+        NpcManager.Instance.ClearAllEnemy();
         SceneManager.LoadScene("LoadingScene");
     }
 }

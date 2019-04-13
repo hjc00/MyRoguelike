@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
 
         allWidgets = new Dictionary<string, Dictionary<string, GameObject>>();
 
-        Canvas = GameObject.FindGameObjectWithTag("Canvas");
+        Canvas = this.gameObject;
 
         hintPf = Resources.Load("Prefabs/UiHint") as GameObject;
 
@@ -92,12 +92,56 @@ public class UIManager : MonoBehaviour
     public void PopHint(string str)
     {
         GameObject tempHint = Instantiate(this.hintPf);
+        tempHint.GetComponent<Text>().text = str;
+
         tempHint.transform.SetParent(this.transform);
         tempHint.transform.localPosition = Vector3.zero;
-        hintPf.GetComponent<Text>().text = str;
-
         Destroy(tempHint, 1.2f);
     }
 
+
+    private Dictionary<string, GameObject> panelDict = new Dictionary<string, GameObject>();
+
+
+
+    public GameObject PopPanel(string name)
+    {
+        GameObject panel = null;
+        panelDict.TryGetValue(name, out panel);
+
+        if (panel == null)
+        {
+            panel = Instantiate(Resources.Load(GameDefine.panelPath + name)) as GameObject;
+            panel.transform.SetParent(this.Canvas.transform);
+            panel.transform.localPosition = Vector3.zero;
+            panelDict.Add(name, panel);
+        }
+        else
+        {
+            panel.SetActive(true);
+        }
+        panel.transform.DOScale(1, 0.5f);
+        return panel;
+
+    }
+
+
+    public void ClosePanel(string name)
+    {
+        GameObject panel = null;
+        panelDict.TryGetValue(name, out panel);
+
+        if (panel == null)
+            return;
+        else
+        {
+            panel.transform.DOScale(0, 0.5f).OnComplete(() =>
+            {
+                panel.SetActive(false);
+            });
+
+        }
+
+    }
 
 }
