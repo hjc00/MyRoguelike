@@ -5,4 +5,5 @@
     OnUpdateGold,
     DestroyItemNpc,
     DestroySkillNpc,
+    OnLearnSkill,
 }

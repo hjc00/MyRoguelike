@@ -9,17 +9,18 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1107512086641750}
+  m_RootGameObject: {fileID: 1559933811406788}
   m_IsPrefabParent: 1
---- !u!1 &1107512086641750
+--- !u!1 &1559933811406788
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4204549580256132}
-  - component: {fileID: 212479422219532182}
+  - component: {fileID: 4941912403161350}
+  - component: {fileID: 212542983543748250}
+  - component: {fileID: 114876048029664224}
   m_Layer: 0
   m_Name: RangeIndicator
   m_TagString: Untagged
@@ -27,25 +28,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4204549580256132
+--- !u!4 &4941912403161350
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1107512086641750}
+  m_GameObject: {fileID: 1559933811406788}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.001, z: 0}
-  m_LocalScale: {x: 0.100000024, y: 0.099999994, z: 1}
+  m_LocalPosition: {x: 340, y: 0, z: 270}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!212 &212479422219532182
+--- !u!114 &114876048029664224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1559933811406788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb785ca3fc011458618dd69502df98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &212542983543748250
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1107512086641750}
+  m_GameObject: {fileID: 1559933811406788}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

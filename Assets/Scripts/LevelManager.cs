@@ -45,9 +45,9 @@ public class LevelManager : MonoBehaviour
 
     public void StartLevel()
     {
+        SetPlayPos();
         SetBossPos();
         SetRoom();
-        SetPlayPos();
         EventCenter.Broadcast<int>(EventType.OnUpdateGold, 0); ;
         // if (UIManager.Instance != null)
         //  Debug.Log("cur level " + PlayerPrefs.GetInt("level"));
@@ -62,6 +62,7 @@ public class LevelManager : MonoBehaviour
 
 
         GameObject player = Instantiate(this.playerPf);
+        player.AddComponent<PlayerSkill>();
         NpcManager.Instance.Player = player.transform;
         player.transform.position = new Vector3(playerPoint.x * MapGenerator.Instance.mapCellMul, 0, playerPoint.y * MapGenerator.Instance.mapCellMul);
 
@@ -91,18 +92,19 @@ public class LevelManager : MonoBehaviour
         {
             random = Random.Range(0, 300);
 
-            if (random < 100 && itemRoomCnt < 1 && i > 0)
-            {
-                SetItemRoom(i);
-            }
-            else if (random >= 100 && random < 200 && skillRoomCnt < 1 && i > 0)
-            {
-                SetSkillRoom(i);
-            }
-            else if (i > 0)
-            {
-                SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
-            }
+            SetSkillRoom(i);
+            //if (random < 100 && itemRoomCnt < 1 && i > 0)
+            //{
+            //    SetItemRoom(i);
+            //}
+            //else if (random >= 100 && random < 200 && skillRoomCnt < 1 && i > 0)
+            //{
+            //    SetSkillRoom(i);
+            //}
+            //else if (i > 0)
+            //{
+            //    SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
+            //}
         }
     }
 
@@ -169,7 +171,8 @@ public class LevelManager : MonoBehaviour
          MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y == MapGenerator.Instance.bossPoint.y)
             return;
 
-        Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        // Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        Vector3 pos = NpcManager.Instance.Player.position + new Vector3(2, 0, 2);
         GameObject skillSellNpc = Instantiate(skillSellNpcPf, pos, Quaternion.identity);
         skillRoomCnt++;
     }

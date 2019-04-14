@@ -55,5 +55,16 @@ public class SkillConfig
         }
         return temp;
     }
+
+    public void UseSkill(int skillId)
+    {
+        if (!this.skillDict.ContainsKey(skillId))
+        {
+            Debug.LogError("技能不存在");
+            return;
+        }
+
+        skillDict[skillId].Use();
+    }
 }
 

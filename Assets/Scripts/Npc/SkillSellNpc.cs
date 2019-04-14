@@ -33,9 +33,9 @@ public class SkillSellNpc : MonoBehaviour {
 
     private void DestroySelf()
     {
-        transform.DOScale(0, 1f).OnComplete(() =>
-        {
-            Destroy(gameObject);
-        });
+        //transform.DOScale(0, 1f).OnComplete(() =>
+        //{
+        //    Destroy(gameObject);
+        //});
     }
 }

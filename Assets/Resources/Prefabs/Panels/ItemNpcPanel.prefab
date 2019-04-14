@@ -892,7 +892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca36195b9aa7c774788b9a1721efad8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSellUIs:
+  itemCellUIs:
   - {fileID: 114858116981470028}
   - {fileID: 114666058585417068}
   - {fileID: 114181324867640980}
@@ -1880,7 +1880,7 @@ RectTransform:
   m_GameObject: {fileID: 1506374270709350}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9473685, y: 0.9473685, z: 0.9473685}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224603226725192294}
   - {fileID: 224824535506950668}
@@ -1889,7 +1889,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -675.55554, y: -380}
   m_SizeDelta: {x: 989, y: 701.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224952289465081238

@@ -15,7 +15,7 @@ public class SkillCellUI : MonoBehaviour
 
     public void SetData(int id, SkillNpcPanel skillNpcPanel)
     {
-        
+
         Skill tempSkill = SkillConfig.Instance.GetSkillById(id);
         this.id = id;
         this.panel = skillNpcPanel;
@@ -29,6 +29,7 @@ public class SkillCellUI : MonoBehaviour
 
     private void OnClick()
     {
+        panel.selectSkillId = this.id;
         this.panel.ShowBuy();
     }
 }

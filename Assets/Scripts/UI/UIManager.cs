@@ -88,15 +88,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private GameObject hintGo;
 
     public void PopHint(string str)
     {
-        GameObject tempHint = Instantiate(this.hintPf);
-        tempHint.GetComponent<Text>().text = str;
+        if (hintGo == null)
+        {
+            hintGo = Instantiate(this.hintPf);
+        }
+        hintGo.GetComponentInChildren<Text>().text = str;
 
-        tempHint.transform.SetParent(this.transform);
-        tempHint.transform.localPosition = Vector3.zero;
-        Destroy(tempHint, 1.2f);
+        hintGo.transform.SetParent(this.transform);
+        hintGo.transform.localPosition = Vector3.zero;
+
+        Destroy(hintGo, 1.2f);
     }
 
 

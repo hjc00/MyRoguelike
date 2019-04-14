@@ -1,0 +1,32 @@
+[
+    {
+        "Id": 1,
+        "width": "",
+        "length": "",
+        "roomMinWidth": "",
+        "roomMaxWidth": "",
+        "pathMinLength": "",
+        "pathMaxLength": "",
+        "maxRoomCnt": ""
+    },
+    {
+        "Id": 2,
+        "width": "",
+        "length": "",
+        "roomMinWidth": "",
+        "roomMaxWidth": "",
+        "pathMinLength": "",
+        "pathMaxLength": "",
+        "maxRoomCnt": ""
+    },
+    {
+        "Id": 3,
+        "width": "",
+        "length": "",
+        "roomMinWidth": "",
+        "roomMaxWidth": "",
+        "pathMinLength": "",
+        "pathMaxLength": "",
+        "maxRoomCnt": ""
+    }
+]

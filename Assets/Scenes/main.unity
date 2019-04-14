@@ -168,7 +168,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: cbcb7c8d7fabe5f42a1c9fde7856a43d, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -286,8 +286,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 176, y: 168}
-  m_SizeDelta: {x: 231, y: 221.4}
+  m_AnchoredPosition: {x: 298, y: 202.7}
+  m_SizeDelta: {x: 285.7, y: 273.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &375853226
 MonoBehaviour:
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 568138366}
   - component: {fileID: 568138365}
   - component: {fileID: 568138364}
-  - component: {fileID: 568138368}
+  - component: {fileID: 568138367}
   m_Layer: 5
   m_Name: BtnA
   m_TagString: Untagged
@@ -601,7 +601,7 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 568138362}
---- !u!114 &568138368
+--- !u!114 &568138367
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -609,11 +609,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 568138362}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0fb81935a112a49bfa3028a7b64d26, type: 3}
+  m_Script: {fileID: 11500000, guid: 082d9639d0e932f4bafff5f4d457ae48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  skillRange: 5
 --- !u!1 &575617291
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +960,7 @@ MonoBehaviour:
   maxTryCount: 100
   minPathLength: 8
   maxPathLength: 10
-  roomCount: 2
+  roomCount: 5
   mapCellMul: 5
 --- !u!4 &896214425
 Transform:
@@ -1302,13 +1300,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1117390067}
-  m_LocalRotation: {x: 0.5558051, y: -0, z: -0, w: 0.83131266}
+  m_LocalRotation: {x: 0.56640625, y: 0, z: 0, w: 0.82412624}
   m_LocalPosition: {x: 0, y: 16.04, z: -5.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 67.532005, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 69, y: 0, z: 0}
 --- !u!114 &1117390072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1817,11 +1815,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1376126402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0fb81935a112a49bfa3028a7b64d26, type: 3}
+  m_Script: {fileID: 11500000, guid: 082d9639d0e932f4bafff5f4d457ae48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  skillRange: 5
 --- !u!1 &1486861384
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,11 +2369,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1978778951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0fb81935a112a49bfa3028a7b64d26, type: 3}
+  m_Script: {fileID: 11500000, guid: 082d9639d0e932f4bafff5f4d457ae48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  skillRange: 5
 --- !u!1 &2019377859
 GameObject:
   m_ObjectHideFlags: 0

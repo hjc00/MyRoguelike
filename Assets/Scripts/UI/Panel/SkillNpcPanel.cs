@@ -66,6 +66,7 @@ public class SkillNpcPanel : MonoBehaviour
 
         UIManager.Instance.ClosePanel(GameDefine.skillNpcPanel);
         EventCenter.Broadcast(EventType.DestroySkillNpc);
+        EventCenter.Broadcast<int>(EventType.OnLearnSkill, this.selectSkillId);
     }
 
 }

@@ -10,6 +10,8 @@ public class ButtonController : MonoBehaviour
     public Button btnC;
     public Button btnAtk;
 
+    private List<SkillBtnCtrl> skillBtnCtrls = new List<SkillBtnCtrl>();
+
     PlayerCtrl playerCtrl;
 
     private void Start()
@@ -17,7 +19,13 @@ public class ButtonController : MonoBehaviour
 
         btnAtk.onClick.AddListener(OnBtnAtkClick);
 
+        EventCenter.AddListener<int>(EventType.OnLearnSkill, SetSkillBtnData);
+
         playerCtrl = NpcManager.Instance.Player.gameObject.GetComponent<PlayerCtrl>();
+
+        skillBtnCtrls.Add(btnA.GetComponent<SkillBtnCtrl>());
+        skillBtnCtrls.Add(btnB.GetComponent<SkillBtnCtrl>());
+        skillBtnCtrls.Add(btnC.GetComponent<SkillBtnCtrl>());
     }
 
 
@@ -26,5 +34,20 @@ public class ButtonController : MonoBehaviour
         playerCtrl.transform.GetComponent<Animator>().SetTrigger("attack");
         // playerCtrl.DoRectDamage();
     }
+
+
+    private void SetSkillBtnData(int skillId)
+    {
+  
+        for (int i = 0; i < skillBtnCtrls.Count; i++)
+        {
+            if (skillBtnCtrls[i].SkillId == -1)
+            {
+                skillBtnCtrls[i].SetSkillData(skillId);
+                break;
+            }
+        }
+    }
+
 
 }
