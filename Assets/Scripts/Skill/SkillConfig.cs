@@ -56,7 +56,7 @@ public class SkillConfig
         return temp;
     }
 
-    public void UseSkill(int skillId)
+    public void UseSkill(int skillId, Transform user)
     {
         if (!this.skillDict.ContainsKey(skillId))
         {
@@ -64,7 +64,18 @@ public class SkillConfig
             return;
         }
 
-        skillDict[skillId].Use();
+        skillDict[skillId].Use(user);
+    }
+
+    public void UseSkill(int skillId, Transform user, Vector3 dir)
+    {
+        if (!this.skillDict.ContainsKey(skillId))
+        {
+            Debug.LogError("技能不存在");
+            return;
+        }
+
+        skillDict[skillId].Use(user, dir);
     }
 }
 

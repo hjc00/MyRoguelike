@@ -33,6 +33,10 @@ public class EffectPerform : MonoBehaviour
     {
         instance = this;
 
+        ObjectPool.Instance.CreatePool("frozon", GameDefine.frozonVfxPath + GameDefine.frozonVfx, 10);
+
+        DontDestroyOnLoad(this.gameObject);
+
     }
 
     public void ShowRangeIndicator(float range)

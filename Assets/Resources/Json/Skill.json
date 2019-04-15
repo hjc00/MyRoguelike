@@ -5,9 +5,16 @@
         "Desc": "向前方突进5米",
         "icon": "skill1000",
         "range": 10,
-        "needTarget": 0,
-        "indicator": 1,
-        "effectRange": 0
+        "type": 4,
+        "effectRange": 0,
+        "roleMoveDir": 1,
+        "roleMoveDis": 5,
+        "damage": 0,
+        "lowerSpeed": 0,
+        "anim": "idle",
+        "vfx": [
+            "forward"
+        ]
     },
     {
         "Id": 1001,
@@ -15,9 +22,16 @@
         "Desc": "对敌人进行减速",
         "icon": "skill1001",
         "range": 10,
-        "needTarget": 1,
-        "indicator": 2,
-        "effectRange": 5
+        "type": 3,
+        "effectRange": 5,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "damage": 0,
+        "lowerSpeed": 2,
+        "anim": "idle",
+        "vfx": [
+            "frozon"
+        ]
     },
     {
         "Id": 1002,
@@ -25,9 +39,16 @@
         "Desc": "后撤5米",
         "icon": "skill1002",
         "range": 10,
-        "needTarget": 0,
-        "indicator": 1,
-        "effectRange": 0
+        "type": 4,
+        "effectRange": 0,
+        "roleMoveDir": 2,
+        "roleMoveDis": 5,
+        "damage": 0,
+        "lowerSpeed": 0,
+        "anim": "idle",
+        "vfx": [
+            "back"
+        ]
     },
     {
         "Id": 1003,
@@ -35,8 +56,15 @@
         "Desc": "向所指示方向闪现",
         "icon": "skill1003",
         "range": 10,
-        "needTarget": 1,
-        "indicator": 1,
-        "effectRange": 0
+        "type": 2,
+        "effectRange": 0,
+        "roleMoveDir": 0,
+        "roleMoveDis": 5,
+        "damage": 0,
+        "lowerSpeed": 0,
+        "anim": "idle",
+        "vfx": [
+            "flash"
+        ]
     }
 ]

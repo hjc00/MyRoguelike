@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4369200199911122}
   - component: {fileID: 114232489572574830}
   m_Layer: 0
-  m_Name: FrozenParticles
+  m_Name: frozon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

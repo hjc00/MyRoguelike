@@ -19,8 +19,6 @@ public class Main : MonoBehaviour
 
         gameObject.AddComponent<AudioManager>();
 
-        ItemUseEffectMgr = new ItemUseEffectMgr();
-
         DontDestroyOnLoad(this.gameObject);
     }
 

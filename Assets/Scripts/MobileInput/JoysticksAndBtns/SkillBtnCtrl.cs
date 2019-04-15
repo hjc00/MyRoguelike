@@ -4,7 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Experimental.UIElements;
 
-
+public enum SkillType
+{
+    AOE = 1,
+    DIR = 2,
+    SELECT = 3,
+    INSTANT = 4
+}
 
 public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -17,9 +23,8 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public int SkillId = -1;
     private int range;
-    private int indicator;
+    private int type;
     private int effectRange;
-    private int needTarget;
 
     private void Start()
     {
@@ -36,10 +41,8 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Skill tempSkill = SkillConfig.Instance.GetSkillById(skillId);
         this.SkillId = skillId;
-        Debug.Log(this.SkillId);
         this.range = tempSkill.range;
-        this.indicator = tempSkill.indicator;
-        this.needTarget = tempSkill.needTarget;
+        this.type = tempSkill.type;
         this.effectRange = tempSkill.effectRange;
 
     }
@@ -74,24 +77,18 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (dir.x < 0 && dir.y > 0)
             angle = -angle;
 
-        switch (this.indicator)
+        switch (this.type)
         {
-            case 1:
+            case (int)SkillType.DIR:
                 {
 
                     EffectPerform.Instance.ShowArrowIndicator(this.range * 0.5f, angle);
                 }; break;
-            case 2:
+            case (int)SkillType.SELECT:
                 {
 
-                    float mag = (new Vector2(this.btnCtrlSprite.position.x, this.btnCtrlSprite.position.y) - this.originPos).magnitude;
-                    float quotient = mag / 80;//求出所占倍数;
 
-                    float percent = 7.12f * 0.5f * quotient;  //7.12为示范范围指示器的默认宽度
-
-                    Vector3 converDir = new Vector3(dir.x, 0.1f, dir.y);   //dir是屏幕坐标系，x y轴
-
-                    EffectPerform.Instance.ShowCircleIndicator(converDir.normalized * percent, effectRange);
+                    EffectPerform.Instance.ShowCircleIndicator(CalCircleIndicatorPos(dir), effectRange);
                 }; break;
 
             default:
@@ -100,6 +97,17 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     }
 
+    private Vector3 CalCircleIndicatorPos(Vector2 dir)  //计算出圆圈指示器在的坐标（相对坐标）
+    {
+        float mag = (new Vector2(this.btnCtrlSprite.position.x, this.btnCtrlSprite.position.y) - this.originPos).magnitude;
+        float quotient = mag / 80;//求出所占倍数;
+
+        float percent = 7.12f * 0.5f * quotient;  //7.12为示范范围指示器的默认宽度
+
+        Vector3 converDir = new Vector3(dir.x, 0.1f, dir.y);   //dir是屏幕坐标系，x y轴
+
+        return converDir.normalized * percent;
+    }
 
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -113,12 +121,6 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             UIManager.Instance.PopHint("该技能槽还没学习技能!");
             return;
 
-        }
-
-        if (this.needTarget == 0)
-        {
-            SkillConfig.Instance.UseSkill(this.SkillId);
-            return;
         }
 
         btnRangeSprite.gameObject.SetActive(true);
@@ -149,13 +151,13 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
         EffectPerform.Instance.HideRangeIndicator();
 
-        switch (this.indicator)
+        switch (this.type)
         {
-            case 1:
+            case (int)SkillType.DIR:
                 {
                     EffectPerform.Instance.HideArrowIndcator();
                 }; break;
-            case 2:
+            case (int)SkillType.SELECT:
                 {
                     EffectPerform.Instance.HideCircleIndicator();
                 }; break;
@@ -163,8 +165,44 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             default:
                 break;
         }
-        
-            SkillConfig.Instance.UseSkill(this.SkillId);
+
+        UseSkill(eventData);
+    }
+
+
+
+    private void UseSkill(PointerEventData eventData)
+    {
+        Vector2 dir = new Vector2(eventData.position.x - originPos.x, eventData.position.y - originPos.y);
+
+        switch (this.type)
+        {
+            case (int)SkillType.AOE:
+                {
+
+                };
+                break;
+            case (int)SkillType.DIR:
+                {
+                    SkillConfig.Instance.UseSkill(this.SkillId, playerCtrl.transform,
+                   playerCtrl.transform.position + new Vector3(eventData.position.x - originPos.x, 0, eventData.position.y - originPos.y).normalized);
+
+                }; break;
+            case (int)SkillType.SELECT:
+                {
+
+                    SkillConfig.Instance.UseSkill(this.SkillId, playerCtrl.transform,
+                     playerCtrl.transform.position + CalCircleIndicatorPos(dir));
+
+                }; break;
+            case (int)SkillType.INSTANT:
+                {
+                    SkillConfig.Instance.UseSkill(this.SkillId, playerCtrl.transform);
+                }; break;
+            default:
+                break;
+        }
+
     }
 
 }

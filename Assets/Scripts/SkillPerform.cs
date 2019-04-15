@@ -30,48 +30,56 @@ public class SkillPerform
         RaycastHit hit;
 
         transform.LookAt(pos);
+
         if (!Physics.Raycast(transform.position, pos - transform.position, out hit, maxDistance))
         {
-            tween = transform.DOMove(pos, duration);
+            tween = transform.DOMove(transform.position + (pos - transform.position) * maxDistance, duration);
             tween.OnComplete(transform.GetComponent<RoleBaseCtrl>().EnableCtrl);
         }
-        else  //暂时射线碰到墙就反弹
-        {
+        //else  //暂时射线碰到墙就反弹
+        //{
 
-            float differ = maxDistance - (hit.transform.position - transform.position).magnitude;
-            if (differ <= 0)
-            {
-                differ = 0;
-            }
-            Vector3 targetPos = transform.position - differ * (pos - transform.position).normalized;
-            tween = transform.DOMove(targetPos, duration);
-            transform.GetComponent<RoleBaseCtrl>().EnableCtrl();
-        }
-        // else
-        // {
+        //    float differ = maxDistance - (hit.transform.position - transform.position).magnitude;
+        //    if (differ <= 0)
+        //    {
+        //        differ = 0;
+        //    }
+        //    Vector3 targetPos = transform.position - differ * (pos - transform.position).normalized;
+        //    tween = transform.DOMove(targetPos, duration);
+        //    transform.GetComponent<RoleBaseCtrl>().EnableCtrl();
+        //}
+        //// else
+        //// {
 
-        //  }
+        ////  }
 
 
     }
 
     //默认前冲重载版本
-    public void Forward(Transform transform, float duration, float maxDistance,float checkForward)
+    public void Forward(Transform transform, float duration, float maxDistance, float checkForward)
     {
         if (transform == null)
             return;
 
         RaycastHit hitInfo;
+        Tween tween;
 
         if (Physics.Raycast(transform.position, transform.forward, out hitInfo, checkForward))
         {
-          //  Debug.Log(123123123);
+            float differ = maxDistance - (hitInfo.transform.position - transform.position).magnitude;
+            if (differ <= 0)
+            {
+                differ = 0;
+            }
+
+            Vector3 targetPos = transform.position + (hitInfo.transform.position - transform.position).normalized * differ;
+            tween = transform.DOMove(targetPos, duration);
             return;
         }
 
 
         transform.GetComponent<RoleBaseCtrl>().DisableCtrl();
-        Tween tween;
         Vector3 pos = transform.position + (transform.forward * maxDistance);
 
         transform.LookAt(pos);
@@ -88,13 +96,22 @@ public class SkillPerform
             return;
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, -transform.forward, out hit, 1))
+        Tween tween;
+
+        if (Physics.Raycast(transform.position, -transform.forward, out hit, backDistance))
         {
+            float differ = backDistance - (hit.transform.position - transform.position).magnitude;
+            if (differ <= 0)
+            {
+                differ = 0;
+            }
+            Debug.Log(differ);
+            Vector3 targetPos = transform.position + (hit.transform.position - transform.position).normalized * differ;
+            tween = transform.DOMove(targetPos, duration);
             return;
         }
 
         transform.GetComponent<RoleBaseCtrl>().DisableCtrl();
-        Tween tween;
 
 
         tween = transform.DOMove(transform.position + (-transform.forward * backDistance), duration);
@@ -109,6 +126,8 @@ public class SkillPerform
         {
             return;
         }
+
+
 
         transform.GetComponent<RoleBaseCtrl>().DisableCtrl();
         Tween tween;

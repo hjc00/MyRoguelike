@@ -23,4 +23,8 @@ public static class GameDefine
     public const string itemPrefabPath = "Prefabs/ItemObj/";
 
     public const string skillIconPath = "Textures/SkillIcon/";
+
+    public const string frozonVfx = "frozon";
+
+    public const string frozonVfxPath = "Prefabs/Vfx/";
 }
