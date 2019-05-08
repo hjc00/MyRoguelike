@@ -5,11 +5,17 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
 
-    ItemUseEffectMgr ItemUseEffectMgr;
-    LevelManager levelManager;
-    // Use this for initialization
+    static LevelManager levelManager;
+
+
+
     void Awake()
     {
+
+        SkillConfig.LoadJson();
+        BuffManager.LoadJson();
+        RoleConfig.LoadJson();
+        CastConfig.LoadJson();
 
         gameObject.AddComponent<NpcManager>();
 
@@ -19,17 +25,8 @@ public class Main : MonoBehaviour
 
         gameObject.AddComponent<AudioManager>();
 
+
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

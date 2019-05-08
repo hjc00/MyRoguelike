@@ -30,7 +30,6 @@ public class NpcManager : MonoBehaviour
         instance = this;
 
         npcs = new List<Transform>();
-
         // player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -38,6 +37,7 @@ public class NpcManager : MonoBehaviour
     {
         if (!this.npcs.Contains(go))
             this.npcs.Add(go);
+
     }
 
     public void RemoveNpc(Transform go)
@@ -45,6 +45,7 @@ public class NpcManager : MonoBehaviour
         if (!this.npcs.Contains(go))
             return;
         this.npcs.Remove(go);
+
     }
 
     public Vector3 GetPlayerPosition()
@@ -85,15 +86,21 @@ public class NpcManager : MonoBehaviour
     /// <param name="forward">  前向长度    </param>
     /// <param name="width">    宽度  </param>
     /// <param name="power">    攻击力 </param> 
-    public void DoRectDamage(int forward, int width, int power)
+    public void DoRectDamage(Vector3 pos, int forward, int width, int power)
     {
-        for (int i = 0; i < npcs.Count; i++)
+
+        Collider[] cols = Physics.OverlapBox(pos, new Vector3(forward * 0.5f, width * 0.5f, width * 0.5f),
+             Quaternion.identity, 1 << LayerMask.NameToLayer("Enemy"));
+     //   Debug.Log(cols.Length);
+        for (int i = 0; i < cols.Length; i++)
         {
-            if (CheckInRect(player, npcs[i], forward, width))
+            if (CheckInRect(player, cols[i].transform, forward, width))
             {
-                npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
+             //   Debug.Log(cols[i].GetComponent<EnemyCtrl>());
+                cols[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
                 CameraCtrl.Instance.CameraShake(0.1f, 0.5f);
-                SkillPerform.Instance.BeatBack(npcs[i], npcs[i].position - player.position, 0.1f, 0.5f);
+                cols[i].transform.LookAt(pos);
+                SkillPerform.Instance.BeatBack(cols[i].transform, cols[i].transform.position - NpcManager.Instance.Player.position, 0.1f, 0.5f);
             }
         }
     }
@@ -144,20 +151,6 @@ public class NpcManager : MonoBehaviour
                 npcs[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
             }
         }
-    }
-
-    public void ReduceSpeed(Vector3 center, int radius)          //以某一点为中心做圆形范围检测
-    {
-        for (int i = 0; i < npcs.Count; i++)
-        {
-            float magSqr = (npcs[i].position - center).sqrMagnitude;
-            if (magSqr <= radius * radius)
-            {
-                Debug.Log("reduce speed");
-                npcs[i].GetComponent<EnemyCtrl>().ReduceSpeed(2, 5);   //fix 持续时间
-            }
-        }
-
     }
 
     public void DoPlayerDamage(Transform enemy, int forward, int width, int power)

@@ -7,29 +7,10 @@ using Newtonsoft.Json;
 
 public class SkillConfig
 {
-    private Dictionary<int, Skill> skillDict;
+    private static Dictionary<int, Skill> skillDict = new Dictionary<int, Skill>();
 
-    private static SkillConfig instance;
 
-    public static SkillConfig Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                return new SkillConfig();
-            }
-            return instance;
-        }
-    }
-
-    public SkillConfig()
-    {
-        skillDict = new Dictionary<int, Skill>();
-        LoadJson();
-    }
-
-    private void LoadJson()
+    public static void LoadJson()
     {
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Skill");
 
@@ -45,10 +26,10 @@ public class SkillConfig
 
     }
 
-    public Skill GetSkillById(int id)
+    public static Skill GetSkillById(int id)
     {
         Skill temp = null;
-        this.skillDict.TryGetValue(id, out temp);
+        skillDict.TryGetValue(id, out temp);
         if (temp == null)
         {
             Debug.LogError("技能不存在");
@@ -56,9 +37,9 @@ public class SkillConfig
         return temp;
     }
 
-    public void UseSkill(int skillId, Transform user)
+    public static void UseSkill(int skillId, Transform user)
     {
-        if (!this.skillDict.ContainsKey(skillId))
+        if (!skillDict.ContainsKey(skillId))
         {
             Debug.LogError("技能不存在");
             return;
@@ -67,15 +48,15 @@ public class SkillConfig
         skillDict[skillId].Use(user);
     }
 
-    public void UseSkill(int skillId, Transform user, Vector3 dir)
+    public static void UseSkill(int skillId, Transform user, Vector3 pos)
     {
-        if (!this.skillDict.ContainsKey(skillId))
+        if (!skillDict.ContainsKey(skillId))
         {
             Debug.LogError("技能不存在");
             return;
         }
 
-        skillDict[skillId].Use(user, dir);
+        skillDict[skillId].Use(user, pos);
     }
 }
 

@@ -93,10 +93,24 @@ public class MapGenerator : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        floorPf = Resources.Load<GameObject>("Prefabs/Floor");
-        wallPf = Resources.Load<GameObject>("Prefabs/Wall");
-        doorPf = Resources.Load<GameObject>("Prefabs/Door");
-        pathPf = Resources.Load<GameObject>("Prefabs/Path");
+
+        LevelInfo tempLevel = LevelManager.Instance.GetCurLevelInfo();
+
+        this.mapWidth = tempLevel.width;
+        this.mapLenghth = tempLevel.length;
+        this.roomMinWidth = tempLevel.roomMinWidth;
+        this.roomMaxWidth = tempLevel.roomMaxWidth;
+        this.minPathLength = tempLevel.pathMinLength;
+        this.maxPathLength = tempLevel.pathMaxLength;
+        this.roomCount = tempLevel.maxRoomCnt;
+
+
+
+
+        floorPf = Resources.Load<GameObject>("Prefabs/Level/" + tempLevel.floorPf);
+        wallPf = Resources.Load<GameObject>("Prefabs/Level/" + tempLevel.wallPf);
+        doorPf = Resources.Load<GameObject>("Prefabs/Level/" + tempLevel.wallPf);
+        pathPf = Resources.Load<GameObject>("Prefabs/Level/" + tempLevel.pathPf);
 
         bossPoint = new point();
         roomPoints = new List<List<point>>();
@@ -210,7 +224,7 @@ public class MapGenerator : MonoBehaviour
             roomPoints.Add(tmpRoom);
             roomCenterPoints.Add(center);
 
-           // SetRoomEnum(tmpRoom, center);
+            // SetRoomEnum(tmpRoom, center);
         }
 
     }
@@ -317,7 +331,7 @@ public class MapGenerator : MonoBehaviour
 
     void CreateRoom()
     {
-        int roomNum = 0;
+        int roomNum = 1;
         for (int i = 0; i < maxTryCount; i++)
         {
             int index = Random.Range(0, wallPoints.Count);

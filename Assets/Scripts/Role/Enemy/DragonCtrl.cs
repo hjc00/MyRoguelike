@@ -14,7 +14,7 @@ public enum DragonAnimEnum
     Max,
 }
 
-public class DragonCtrl : EnemyCtrl
+public class DragonCtrl: EnemyCtrl
 {
 
     private Sensor sensor;
@@ -27,7 +27,7 @@ public class DragonCtrl : EnemyCtrl
     public void Start()
     {
 
-        EnemyData = new EnemyData(5, 3, 10, 6, 20, 20);
+     
         sensor = new Sensor(10, 120, this);
 
         FsmManager = new FsmManager((int)DragonAnimEnum.Max);
@@ -76,20 +76,22 @@ public class DragonCtrl : EnemyCtrl
 
     public override void ReduceHealth(int amount)
     {
-        if (EnemyData.Health <= 0)
+        if (RoleData.hp <= 0)
             return;
 
         anim.SetTrigger("hit");
-
-        EnemyData.Health -= amount;
+       // Debug.Log(this.RoleData.hp);
+        RoleData.hp -= amount;
 
         EffectPerform.Instance.ShowDamageUI(amount, this.transform);
 
 
-        if (EnemyData.Health <= 0)
+        if (RoleData.hp <= 0)
         {
             bool death = anim.GetBool("death");
+
             EventCenter.Broadcast(EventType.OnBossDie);
+           // Debug.Log("boradcast");
             if (!death)
             {
                 this.enabled = false;

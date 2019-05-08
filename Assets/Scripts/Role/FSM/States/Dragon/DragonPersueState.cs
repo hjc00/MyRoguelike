@@ -22,7 +22,7 @@ public class DragonPersueState : FsmBase {
     {
         anim.SetBool("run", true);
 
-        if (Vector3.Distance(dragonCtrl.transform.position, NpcManager.Instance.Player.position) < dragonCtrl.EnemyData.AtkForward)
+        if (Vector3.Distance(dragonCtrl.transform.position, NpcManager.Instance.Player.position) < dragonCtrl.RoleData.rectLength)
         {
             anim.SetBool("run", false);
 

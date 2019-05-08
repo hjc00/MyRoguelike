@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1001,
+        "buffType": "SubSpeed",
+        "buffSettleType": "Loop",
+        "duration": 5,
+        "freq": 1,
+        "amount": 5
+    },
+    {
+        "id": 1002,
+        "buffType": "SubHp",
+        "buffSettleType": "Permernant",
+        "duration": -1,
+        "freq": 0,
+        "amount": 20
+    }
+]

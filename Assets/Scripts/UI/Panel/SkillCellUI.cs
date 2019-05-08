@@ -16,7 +16,7 @@ public class SkillCellUI : MonoBehaviour
     public void SetData(int id, SkillNpcPanel skillNpcPanel)
     {
 
-        Skill tempSkill = SkillConfig.Instance.GetSkillById(id);
+        Skill tempSkill = SkillConfig.GetSkillById(id);
         this.id = id;
         this.panel = skillNpcPanel;
         icon.sprite = Resources.Load(GameDefine.skillIconPath + tempSkill.icon, typeof(Sprite)) as Sprite;

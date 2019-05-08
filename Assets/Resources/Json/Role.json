@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1000,
+        "name": "战士",
+        "hp": 100,
+        "mp": 20,
+        "atkPower": 20,
+        "defPower": 20,
+        "speed": 20,
+        "rectLength": 4,
+        "rectWidth": 4,
+        "atkType": 1
+    },
+    {
+        "id": 1001,
+        "name": "枪手",
+        "hp": 100,
+        "mp": 50,
+        "atkPower": 10,
+        "defPower": 10,
+        "speed": 5,
+        "rectLength": 4,
+        "rectWidth": 4,
+        "atkType": 2,
+        "cast": "bullet"
+    },
+    {
+        "id": 1002,
+        "name": "地精",
+        "hp": 40,
+        "mp": 20,
+        "atkPower": 10,
+        "defPower": 10,
+        "speed": 2,
+        "rectLength": 3,
+        "rectWidth": 3,
+        "atkType": 1
+    },
+    {
+        "id": 1003,
+        "name": "红龙",
+        "hp": 60,
+        "mp": 20,
+        "atkPower": 10,
+        "defPower": 10,
+        "speed": 3,
+        "rectLength": 3,
+        "rectWidth": 3,
+        "atkType": 2,
+        "cast": "fireball"
+    }
+]

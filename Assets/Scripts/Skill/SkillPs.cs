@@ -8,9 +8,10 @@ public class SkillPs : MonoBehaviour
     public float recycleTime = 5;
     private ParticleSystem[] ps;
 
-    void Start()
+    void Awake()
     {
         ps = GetComponentsInChildren<ParticleSystem>();
+
     }
 
     public void ShowPs()
@@ -19,6 +20,7 @@ public class SkillPs : MonoBehaviour
         {
             ps[i].Play();
         }
+        StartCoroutine(Recycle());
     }
 
     public IEnumerator Recycle()

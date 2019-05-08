@@ -17,7 +17,8 @@ public class GoblinDieState : FsmBase
     public override void OnEnter()
     {
 
-
+        this.enemyCtrl.RoleData.speed = 0;
+       
     }
 
     public override void OnStay()

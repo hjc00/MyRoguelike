@@ -6,14 +6,16 @@
         "icon": "skill1000",
         "range": 10,
         "type": 4,
+        "cd": 5,
         "effectRange": 0,
         "roleMoveDir": 1,
         "roleMoveDis": 5,
-        "damage": 0,
-        "lowerSpeed": 0,
+        "buffId": [
+            0
+        ],
         "anim": "idle",
         "vfx": [
-            "forward"
+            "fire"
         ]
     },
     {
@@ -23,11 +25,14 @@
         "icon": "skill1001",
         "range": 10,
         "type": 3,
+        "cd": 8,
         "effectRange": 5,
         "roleMoveDir": 0,
         "roleMoveDis": 0,
-        "damage": 0,
-        "lowerSpeed": 2,
+        "buffId": [
+            "1001",
+            "1002"
+        ],
         "anim": "idle",
         "vfx": [
             "frozon"
@@ -40,14 +45,16 @@
         "icon": "skill1002",
         "range": 10,
         "type": 4,
+        "cd": 8,
         "effectRange": 0,
         "roleMoveDir": 2,
         "roleMoveDis": 5,
-        "damage": 0,
-        "lowerSpeed": 0,
+        "buffId": [
+            0
+        ],
         "anim": "idle",
         "vfx": [
-            "back"
+            "fire"
         ]
     },
     {
@@ -57,14 +64,36 @@
         "icon": "skill1003",
         "range": 10,
         "type": 2,
+        "cd": 6,
         "effectRange": 0,
         "roleMoveDir": 0,
         "roleMoveDis": 5,
-        "damage": 0,
-        "lowerSpeed": 0,
+        "buffId": [
+            0
+        ],
         "anim": "idle",
         "vfx": [
-            "flash"
+            "fire"
+        ]
+    },
+    {
+        "Id": 1004,
+        "Name": "爆炸",
+        "Desc": "向周围产生一次爆炸，并伤害",
+        "icon": "skill1004",
+        "range": 8,
+        "type": 1,
+        "cd": 9,
+        "effectRange": 5,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "buffId": [
+            "1002",
+            "1002"
+        ],
+        "anim": "idle",
+        "vfx": [
+            "firework"
         ]
     }
 ]

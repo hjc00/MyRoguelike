@@ -22,9 +22,9 @@ public class SkillNpcPanel : MonoBehaviour
         //randomSkillIds[1] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
         //randomSkillIds[2] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
 
-        randomSkillIds[0] = 1001;
-        randomSkillIds[1] = 1002;
-        randomSkillIds[2] = 1003;
+        randomSkillIds[0] = 1000;
+        randomSkillIds[1] = 1001;
+        randomSkillIds[2] = 1004;
 
         CerateCell();
         SetUpCell();

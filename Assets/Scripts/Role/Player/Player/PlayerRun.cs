@@ -62,7 +62,8 @@ public class PlayerRun : FsmBase
 
                 playerCtrl.transform.rotation = Quaternion.Slerp(playerCtrl.transform.rotation, Quaternion.LookRotation(target), 0.2f);
 
-            playerCtrl.SimpleMove(target * playerCtrl.PlayerData.Speed);
+
+            playerCtrl.SimpleMove(target * playerCtrl.RoleData.speed);
 
 
             anim.SetFloat("velocity", target.magnitude);

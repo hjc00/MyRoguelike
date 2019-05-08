@@ -1,51 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
+using System;
 
+public enum AtkType
+{
+    ShortRange = 1,
+    LongRange = 2,
+}
+
+[Serializable]
 public class RoleData
 {
+    public int id { get; set; }
+    public string name { get; set; }
 
-    int health = 100;
-    int maxHealth = 100;
+    public int hp { get; set; }
 
-    public int Health
-    {
-        get { return health; }
-        set
-        {
-            health = value;
-            if (health >= maxHealth)
-                health = maxHealth;
-        }
-    }
 
-    int speed = 8;   //移动速度
+    public int mp { get; set; }
+    public int atkPower { get; set; }
+    public int defPower { get; set; }
+    public int speed { get; set; }
+    public int rectLength { get; set; }
+    public int rectWidth { get; set; }
+    public AtkType atkType { get; set; }
+    public string cast { get; set; }
 
-    public int Speed
-    {
-        get { return speed; }
-        set { speed = value; }
-    }
-
-    int atkPower = 10;   //攻击力
-    public int AtkPower
-    {
-        get { return atkPower; }
-        set { atkPower = value; }
-    }
-
-    public int DefPower { get; private set; }
-
-    public RoleData(int health, int speed, int atkPower, int defPower)
-    {
-        this.health = health;
-        this.speed = speed;
-        this.atkPower = atkPower;
-        this.DefPower = defPower;
-    }
+    [JsonIgnore]
+    private static int instanceId = 0;
+    [JsonIgnore]
+    public int InstanceId { get; set; }
+    [JsonIgnore]
+    public RoleBaseCtrl ctrl;
 
     public RoleData()
     {
 
     }
+    public RoleData(RoleData roleData)
+    {
+        this.InstanceId = instanceId++;
+        this.id = roleData.id;
+        this.name = roleData.name;
+        this.hp = roleData.hp;
+        this.mp = roleData.mp;
+        this.atkPower = roleData.atkPower;
+        this.defPower = roleData.defPower;
+        this.speed = roleData.speed;
+        this.rectLength = roleData.rectLength;
+        this.rectWidth = roleData.rectWidth;
+        this.atkType = roleData.atkType;
+        this.cast = roleData.cast;
+    }
+
+    public void SetCtrl(RoleBaseCtrl ctrl)
+    {
+        this.ctrl = ctrl;
+    }
+
+   
 }

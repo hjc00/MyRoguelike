@@ -16,29 +16,9 @@ public enum GoblinAnimationEnum
     Max,
 }
 
-public class EnemyData : RoleData
-{
-    private int atkForward = 3;
-    public int AtkForward
-    {
-        get { return atkForward; }
-    }
-
-    public int AtkWidth { get; private set; }
-
-    public EnemyData(int atkForward, int atkWidth, int health, int speed, int atkPower, int defPower) : base(health, speed, atkPower, defPower)
-    {
-        this.atkForward = atkForward;
-        this.AtkWidth = atkWidth;
-    }
-}
 
 public class EnemyCtrl : RoleBaseCtrl
 {
-    protected Animator anim;
-
-
-    public EnemyData EnemyData { get; set; }
 
 
     protected FsmManager FsmManager { get; set; }
@@ -53,7 +33,6 @@ public class EnemyCtrl : RoleBaseCtrl
     public override void Awake()
     {
         base.Awake();
-        anim = GetComponent<Animator>();
         NpcManager.Instance.AddNpc(this.transform);
 
     }
@@ -61,7 +40,6 @@ public class EnemyCtrl : RoleBaseCtrl
     private void Start()
     {
 
-        EnemyData = new EnemyData(3, 2, 100, 3, 10, 10);
 
         sensor = new Sensor(10, 120, this);
 
@@ -87,7 +65,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
     public override void SimpleMove(Vector3 dir)
     {
-        base.SimpleMove(dir.normalized * EnemyData.Speed);
+        base.SimpleMove(dir.normalized * roleData.speed);
     }
 
     private void Update()
@@ -116,52 +94,41 @@ public class EnemyCtrl : RoleBaseCtrl
         FsmManager.ChangeState((int)GoblinAnimationEnum.Persue);
     }
 
-    public virtual void ReduceHealth(int amount)
+    public virtual void ChangeToDie()
+    {
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Die);
+    }
+
+    public virtual void ChangeToAttack()
+    {
+        FsmManager.ChangeState((int)GoblinAnimationEnum.Attack);
+    }
+
+    public override void Die()
     {
 
-        if (EnemyData.Health <= 0)
+        EventCenter.Broadcast<int>(EventType.OnAddGold, Random.Range(1, 5));
+        base.Die();
+    }
+
+    public virtual void ReduceHealth(int amount)
+    {
+        if (roleData.hp <= 0)
             return;
 
         anim.SetTrigger("hit");
 
-        EnemyData.Health -= amount;
+        roleData.hp -= amount;
 
         EffectPerform.Instance.ShowDamageUI(amount, this.transform);
 
 
-        if (EnemyData.Health <= 0)
+        if (roleData.hp <= 0)
         {
-            bool death = anim.GetBool("death");
-            this.enabled = false;
-            NpcManager.Instance.RemoveNpc(this.transform);
-            cc.enabled = false;
-            EventCenter.Broadcast<int>(EventType.OnAddGold, Random.Range(1, 5));
-            Destroy(gameObject, 3);
-            if (!death)
-            {
-                anim.SetBool("death", true);
-
-            }
+            Die();
         }
     }
 
-    public void ReduceSpeed(int amount, int time)  //减少敌人速度
-    {
-        if (amount > EnemyData.Speed)
-        {
-            EnemyData.Speed = 0;
-            StartCoroutine(ResumeSpeed(5));
-            return;
-        }
-        EnemyData.Speed -= amount;
-        StartCoroutine(ResumeSpeed(5));
-    }
-
-    IEnumerator ResumeSpeed(int time)
-    {
-        yield return time;
-        EnemyData.Speed = 3;
-    }
 
     public virtual void DoPlayerDamage()
     {
@@ -169,8 +136,8 @@ public class EnemyCtrl : RoleBaseCtrl
         {
             return;
         }
-        NpcManager.Instance.DoPlayerDamage(this.transform, EnemyData.AtkForward, EnemyData.AtkWidth, EnemyData.AtkPower);
-        //    Debug.Log(EnemyData.AtkForward);
+        NpcManager.Instance.DoPlayerDamage(this.transform, roleData.rectLength, roleData.rectWidth, roleData.atkPower);
+
     }
 
     //private void OnDrawGizmos()

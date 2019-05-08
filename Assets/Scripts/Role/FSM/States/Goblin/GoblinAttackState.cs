@@ -8,30 +8,34 @@ public class GoblinAttackState : FsmBase
     Animator anim;
     EnemyCtrl enemyCtrl;
 
+    private int originSpeed = 5;
+
     public GoblinAttackState(Animator anim, EnemyCtrl ctrl)
     {
         this.anim = anim;
         this.enemyCtrl = ctrl;
+        originSpeed = this.enemyCtrl.RoleData.speed;
     }
 
     public override void OnEnter()
     {
-        this.enemyCtrl.DisableCtrl();
+      //  Debug.Log("goblin atk enter");
+        this.enemyCtrl.RoleData.speed = 0;
     }
 
     public override void OnStay()
     {
 
-
+        //Debug.Log("atk stay");
     }
 
     public override void OnExit()
     {
-        this.enemyCtrl.EnableCtrl();
+        this.enemyCtrl.RoleData.speed = originSpeed;
     }
 
     public override void HandleInput()
     {
- 
+
     }
 }

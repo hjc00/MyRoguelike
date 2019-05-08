@@ -18,15 +18,15 @@ public class PlayerAttack3 : FsmBase
 
     public override void OnEnter()
     {
-        Debug.Log("attack 3 state");
-        SkillPerform.Instance.Forward(playerCtrl.transform, 0.1f, 0.5f, playerCtrl.PlayerData.RectForward);
+        // Debug.Log("attack 3 state");
+        SkillPerform.Instance.Forward(playerCtrl.transform, 0.1f, 0.5f, playerCtrl.RoleData.rectLength);
         AudioManager.Instance.PlayClip(GameDefine.attackSoundName);
     }
 
 
     public override void OnStay()
     {
-      
+
     }
 
     public override void OnExit()
@@ -36,6 +36,6 @@ public class PlayerAttack3 : FsmBase
 
     public override void HandleInput()
     {
-        
+
     }
 }

@@ -19,7 +19,7 @@ public class PlayerAttack2 : FsmBase
     public override void OnEnter()
     {
         // Debug.Log("attack 2 state");
-        SkillPerform.Instance.Forward(playerCtrl.transform, 0.1f, 0.5f, playerCtrl.PlayerData.RectForward);
+        SkillPerform.Instance.Forward(playerCtrl.transform, 0.1f, 0.5f, playerCtrl.RoleData.rectLength);
 
         AudioManager.Instance.PlayClip(GameDefine.attackSoundName);
     }

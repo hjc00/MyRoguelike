@@ -23,6 +23,7 @@ public class CameraCtrl : MonoBehaviour
     {
         instacne = this;
 
+   
         target = NpcManager.Instance.Player.GetComponent<PlayerCtrl>().cameraPos;
 
         offset = target.position - NpcManager.Instance.Player.position;

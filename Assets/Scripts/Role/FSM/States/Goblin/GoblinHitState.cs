@@ -15,7 +15,6 @@ public class GoblinHitState : FsmBase
 
     public override void OnEnter()
     {
-        enemyCtrl.transform.LookAt(NpcManager.Instance.Player);
         anim.ResetTrigger("hit");
     }
 

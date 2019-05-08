@@ -27,6 +27,11 @@ public class ObjectPool : MonoBehaviour
         prefabs = new Dictionary<string, GameObject>();
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        CreatePool("bullet", GameDefine.bulletPath, 50);
+        CreatePool("frozon", GameDefine.VfxPath + GameDefine.frozonVfx, 10);
+        CreatePool("fire", GameDefine.VfxPath + "fire", 5);
+        CreatePool("firework", GameDefine.VfxPath + "firework", 5);
     }
 
     public void CreatePool(string poolName, string path, int cnt)
@@ -51,13 +56,15 @@ public class ObjectPool : MonoBehaviour
             temp.SetActive(false);
             newPool.Add(temp);
         }
+
+        pool.Add(poolName, newPool);
     }
 
-    public GameObject SpawnObj(string poolName)
+    public GameObject SpawnVfx(string poolName)
     {
         if (!pool.ContainsKey(poolName))
         {
-            Debug.Log("对象池不存在！请先创建");
+            CreatePool(poolName, GameDefine.VfxPath + poolName, 10);
             return null;
         }
         List<GameObject> tempPool = pool[poolName];
@@ -76,6 +83,39 @@ public class ObjectPool : MonoBehaviour
             res.SetActive(true);
         }
         return res;
+    }
+
+    public GameObject SpawnObj(string poolName)
+    {
+        if (!pool.ContainsKey(poolName))
+        {
+            Debug.Log("对象池不存在!");
+            return null;
+        }
+        List<GameObject> tempPool = pool[poolName];
+
+        GameObject res = null;
+        if (tempPool.Count > 0)
+        {
+            res = tempPool[tempPool.Count - 1];
+            res.SetActive(true);
+            tempPool.Remove(res);
+        }
+        else
+        {
+            res = Instantiate(prefabs[poolName]);
+            res.name = poolName;
+            res.SetActive(true);
+        }
+        return res;
+    }
+
+    public GameObject SpawnObj(string poolName, Vector3 pos, Quaternion quaternion)
+    {
+        GameObject temp = SpawnObj(poolName);
+        temp.transform.position = pos;
+        temp.transform.rotation = quaternion;
+        return temp;
     }
 
     public void RecycleObject(string poolName, GameObject go)

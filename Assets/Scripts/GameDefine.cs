@@ -13,7 +13,8 @@ public static class GameDefine
     public const string skillSellNpcPath = "Prefabs/Npc/SkillSellNpc";
     public const string itemSellNpcPath = "Prefabs/Npc/ItemSellNpc";
 
-    public const string playerPfPath = "Prefabs/Role/Player";
+    public const string shortRangeRole = "Prefabs/Role/ShortRangeRole";
+    public const string longRangeRole = "Prefabs/Role/LongRangeRole";
 
     public const string panelPath = "Prefabs/Panels/";
     public const string itemNpcPanel = "ItemNpcPanel";
@@ -26,5 +27,7 @@ public static class GameDefine
 
     public const string frozonVfx = "frozon";
 
-    public const string frozonVfxPath = "Prefabs/Vfx/";
+    public const string VfxPath = "Prefabs/Vfx/";
+
+    public const string bulletPath = "Prefabs/Cast/bullet";
 }

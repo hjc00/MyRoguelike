@@ -31,14 +31,14 @@ public class ButtonController : MonoBehaviour
 
     private void OnBtnAtkClick()
     {
-        playerCtrl.transform.GetComponent<Animator>().SetTrigger("attack");
+        playerCtrl.Attack();
         // playerCtrl.DoRectDamage();
     }
 
 
     private void SetSkillBtnData(int skillId)
     {
-  
+
         for (int i = 0; i < skillBtnCtrls.Count; i++)
         {
             if (skillBtnCtrls[i].SkillId == -1)

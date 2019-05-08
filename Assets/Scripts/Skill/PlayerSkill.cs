@@ -26,7 +26,7 @@ public class PlayerSkill : MonoBehaviour
             UIManager.Instance.PopHint("你已学会3个技能！不能在学习");
             return;
         }
-        Skill tempSkill = SkillConfig.Instance.GetSkillById(skillId);
+        Skill tempSkill = SkillConfig.GetSkillById(skillId);  
         ownSkills.Add(tempSkill);
         UIManager.Instance.PopHint("学习成功!");
     }

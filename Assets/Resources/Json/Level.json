@@ -1,32 +1,44 @@
 [
     {
-        "Id": 1,
-        "width": "",
-        "length": "",
-        "roomMinWidth": "",
-        "roomMaxWidth": "",
-        "pathMinLength": "",
-        "pathMaxLength": "",
-        "maxRoomCnt": ""
+        "id": 1,
+        "width": 100,
+        "length": 100,
+        "roomMinWidth": 5,
+        "roomMaxWidth": 8,
+        "pathMinLength": 4,
+        "pathMaxLength": 10,
+        "maxRoomCnt": 3,
+        "mapCellMul": 5,
+        "wallPf": "lv1_wall",
+        "pathPf": "lv1_path",
+        "floorPf": "lv1_floor"
     },
     {
-        "Id": 2,
-        "width": "",
-        "length": "",
-        "roomMinWidth": "",
-        "roomMaxWidth": "",
-        "pathMinLength": "",
-        "pathMaxLength": "",
-        "maxRoomCnt": ""
+        "id": 2,
+        "width": 100,
+        "length": 100,
+        "roomMinWidth": 6,
+        "roomMaxWidth": 9,
+        "pathMinLength": 5,
+        "pathMaxLength": 10,
+        "maxRoomCnt": 3,
+        "mapCellMul": 5,
+        "wallPf": "lv2_wall",
+        "pathPf": "lv2_path",
+        "floorPf": "lv2_floor"
     },
     {
-        "Id": 3,
-        "width": "",
-        "length": "",
-        "roomMinWidth": "",
-        "roomMaxWidth": "",
-        "pathMinLength": "",
-        "pathMaxLength": "",
-        "maxRoomCnt": ""
+        "id": 3,
+        "width": 100,
+        "length": 100,
+        "roomMinWidth": 7,
+        "roomMaxWidth": 10,
+        "pathMinLength": 6,
+        "pathMaxLength": 10,
+        "maxRoomCnt": 3,
+        "mapCellMul": 5,
+        "wallPf": "lv3_wall",
+        "pathPf": "lv3_path",
+        "floorPf": "lv3_floor"
     }
 ]

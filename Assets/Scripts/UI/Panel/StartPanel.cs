@@ -8,7 +8,7 @@ public class StartPanelLogic
     public void OnStartClick()
     {
         PlayerPrefs.SetInt("level", 1);
-        SceneManager.LoadScene("LoadingScene");
+        SceneManager.LoadScene("SelectScene");
     }
 
     public void OnLoadClick()
@@ -18,7 +18,7 @@ public class StartPanelLogic
 
     public void OnQuitClick()
     {
-        Debug.Log("quit click");
+        Application.Quit();
     }
 }
 
@@ -32,7 +32,7 @@ public class StartPanel : UIBase
         startPanelLogic = new StartPanelLogic();
 
         AddBtnOnClickListener("StartBtn_w", startPanelLogic.OnStartClick);
-        AddBtnOnClickListener("LoadBtn_w", startPanelLogic.OnLoadClick);
+      //  AddBtnOnClickListener("LoadBtn_w", startPanelLogic.OnLoadClick);
         AddBtnOnClickListener("QuitBtn_w", startPanelLogic.OnQuitClick);
     }
 
