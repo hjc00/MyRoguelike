@@ -1257,7 +1257,7 @@ GameObject:
   - component: {fileID: 143218512841505536}
   - component: {fileID: 114582013534245266}
   m_Layer: 9
-  m_Name: RedDragon
+  m_Name: redDragon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

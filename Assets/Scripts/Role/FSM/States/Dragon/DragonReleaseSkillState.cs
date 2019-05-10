@@ -6,9 +6,9 @@ public class DragonReleaseSkillState : FsmBase
 {
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl dragonCtrl;
 
-    public DragonReleaseSkillState(Animator anim, DragonCtrl ctrl)
+    public DragonReleaseSkillState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
         this.dragonCtrl = ctrl;

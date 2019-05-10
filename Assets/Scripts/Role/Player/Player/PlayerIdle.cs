@@ -17,7 +17,7 @@ public class PlayerIdle : FsmBase
     public override void OnEnter()
     {
         base.OnEnter();
-        Debug.Log("idle state");
+       // Debug.Log("idle state");
     }
 
     public override void OnStay()

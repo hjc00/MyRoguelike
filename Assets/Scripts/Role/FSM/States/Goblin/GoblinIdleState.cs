@@ -22,7 +22,10 @@ public class GoblinIdleState : FsmBase
 
     public override void OnStay()
     {
-
+        if (enemyCtrl.HasTarget())
+        {
+            enemyCtrl.ChangeToPersue();
+        }
     }
 
     public override void OnExit()

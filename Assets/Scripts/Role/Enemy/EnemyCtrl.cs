@@ -29,6 +29,8 @@ public class EnemyCtrl : RoleBaseCtrl
     protected float sensorTimer = 0;
     protected float sensorCheckInterval = 0.1f;
 
+    protected Transform followTarget;
+
 
     public override void Awake()
     {
@@ -37,7 +39,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
     }
 
-    private void Start()
+    public virtual void Start()
     {
 
 
@@ -68,14 +70,31 @@ public class EnemyCtrl : RoleBaseCtrl
         base.SimpleMove(dir.normalized * roleData.speed);
     }
 
-    private void Update()
+    public virtual void Update()
     {
+        if (this.roleData.hp <= 0)
+            return;
+
         FsmManager.FsmUpdate();
         sensorTimer += Time.deltaTime;
         if (sensorTimer > sensorCheckInterval)
         {
             sensor.SensorUpdate();
         }
+    }
+
+    public void SetFollowTarget(Transform transform)
+    {
+        this.followTarget = transform;
+    }
+
+    public bool HasTarget()
+    {
+        if (this.followTarget == null)
+        {
+            return false;
+        }
+        return true;
     }
 
     public virtual void ChangeToIdle()
@@ -108,6 +127,7 @@ public class EnemyCtrl : RoleBaseCtrl
     {
 
         EventCenter.Broadcast<int>(EventType.OnAddGold, Random.Range(1, 5));
+        this.enabled = false;
         base.Die();
     }
 
@@ -132,6 +152,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
     public virtual void DoPlayerDamage()
     {
+
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))
         {
             return;
@@ -142,7 +163,7 @@ public class EnemyCtrl : RoleBaseCtrl
 
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.DrawCube(this.transform.position + this.transform.forward * EnemyData.AtkForward, new Vector3(EnemyData.AtkWidth, 2, EnemyData.AtkWidth));
+    //    Gizmos.DrawCube(this.transform.position + this.transform.forward * roleData.rectLength, new Vector3(roleData.rectLength, 2, roleData.rectWidth));
     //    Gizmos.color = Color.red;
     //}
 }

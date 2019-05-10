@@ -19,19 +19,21 @@ public class GoblinAttackState : FsmBase
 
     public override void OnEnter()
     {
-      //  Debug.Log("goblin atk enter");
+        //  Debug.Log("goblin atk enter");
         this.enemyCtrl.RoleData.speed = 0;
+        //  Debug.Log(this.enemyCtrl.RoleData.speed);
     }
 
     public override void OnStay()
     {
-
-        //Debug.Log("atk stay");
+       // enemyCtrl.SimpleMove((NpcManager.Instance.Player.position - enemyCtrl.transform.position) * 0);
+        // Debug.Log("atk stay");
     }
 
     public override void OnExit()
     {
         this.enemyCtrl.RoleData.speed = originSpeed;
+        //   Debug.Log(this.enemyCtrl.RoleData.speed);
     }
 
     public override void HandleInput()

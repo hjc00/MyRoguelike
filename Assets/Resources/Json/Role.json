@@ -32,8 +32,8 @@
         "atkPower": 10,
         "defPower": 10,
         "speed": 2,
-        "rectLength": 3,
-        "rectWidth": 3,
+        "rectLength": 4,
+        "rectWidth": 4,
         "atkType": 1
     },
     {
@@ -41,12 +41,60 @@
         "name": "红龙",
         "hp": 60,
         "mp": 20,
-        "atkPower": 10,
+        "atkPower": 25,
         "defPower": 10,
         "speed": 3,
-        "rectLength": 3,
-        "rectWidth": 3,
+        "rectLength": 4,
+        "rectWidth": 4,
         "atkType": 2,
         "cast": "fireball"
+    },
+    {
+        "id": 1004,
+        "name": "兽人",
+        "hp": 60,
+        "mp": 0,
+        "atkPower": 15,
+        "defPower": 0,
+        "speed": 5,
+        "rectLength": 4,
+        "rectWidth": 4,
+        "atkType": 1
+    },
+    {
+        "id": 1005,
+        "name": "小狼",
+        "hp": 80,
+        "mp": 0,
+        "atkPower": 30,
+        "defPower": 0,
+        "speed": 6,
+        "rectLength": 4,
+        "rectWidth": 4,
+        "atkType": 1
+    },
+    {
+        "id": 1006,
+        "name": "山精",
+        "hp": 100,
+        "mp": 20,
+        "atkPower": 40,
+        "defPower": 20,
+        "speed": 3,
+        "rectLength": 5,
+        "rectWidth": 5,
+        "atkType": 1
+    },
+    {
+        "id": 1007,
+        "name": "骷髅王",
+        "hp": 200,
+        "mp": 50,
+        "atkPower": 60,
+        "defPower": 20,
+        "speed": 4,
+        "rectLength": 5,
+        "rectWidth": 5,
+        "atkType": 1
     }
 ]

@@ -21,23 +21,28 @@ public class GoblinPersueState : FsmBase
 
     public override void OnStay()
     {
-        anim.SetBool("run", true);
-       // Debug.Log("persue stay");
-        //  Debug.Log(Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) + " rect length " + enemyCtrl.RoleData.rectLength);
-        enemyCtrl.RotateTo(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
-
-        enemyCtrl.SimpleMove(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
-
-        if (Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) < enemyCtrl.RoleData.rectLength + 0.5d)
+        // Debug.Log("persue stay");
+       // Debug.Log(Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) + " rect length " + enemyCtrl.RoleData.rectLength);
+        if (Vector3.Distance(enemyCtrl.transform.position, NpcManager.Instance.Player.position) < enemyCtrl.RoleData.rectLength - 1)
         {
             anim.SetBool("run", false);
 
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))
             {
                 anim.SetTrigger("attack");
+
                 this.enemyCtrl.RoleData.speed = 0;
             }
             return;
+        }
+        else
+        {
+            anim.SetBool("run", true);
+
+            enemyCtrl.RotateTo(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
+
+            enemyCtrl.SimpleMove(NpcManager.Instance.Player.position - enemyCtrl.transform.position);
+
         }
 
     }

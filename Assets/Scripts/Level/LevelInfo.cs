@@ -20,4 +20,6 @@ public class LevelInfo
     public string wallPf;
     public string pathPf;
     public string floorPf;
+    public string bossPf;
+    public string enemyPf;
 }

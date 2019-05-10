@@ -17,7 +17,7 @@ public class PlayerRun : FsmBase
 
     public override void OnEnter()
     {
-        Debug.Log("run state");
+       // Debug.Log("run state");
         base.OnEnter();
     }
 

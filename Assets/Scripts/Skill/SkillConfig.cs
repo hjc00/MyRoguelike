@@ -12,6 +12,8 @@ public class SkillConfig
 
     public static void LoadJson()
     {
+        if (skillDict.Count > 0)
+            return;
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Skill");
 
         Skill[] skills = JsonConvert.DeserializeObject<Skill[]>(textAsset.text);

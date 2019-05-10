@@ -5,9 +5,9 @@ using UnityEngine;
 public class DragonDieState : FsmBase {
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl dragonCtrl;
 
-    public DragonDieState(Animator anim, DragonCtrl ctrl)
+    public DragonDieState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
         this.dragonCtrl = ctrl;

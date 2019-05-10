@@ -62,9 +62,6 @@ public class LevelManager : MonoBehaviour
 
         instance = this;
 
-        //todo  读取关卡配置
-        bossPf = Resources.Load<GameObject>(GameDefine.RedDragonPath);
-        enemyPf = Resources.Load<GameObject>(GameDefine.goblinPath);
 
         skillSellNpcPf = Resources.Load<GameObject>(GameDefine.skillSellNpcPath);
         itemSellNpcPf = Resources.Load<GameObject>(GameDefine.itemSellNpcPath);
@@ -77,10 +74,22 @@ public class LevelManager : MonoBehaviour
         LoadJson();
     }
 
+    public void LoadBossPf()  //读取该关卡对应的boss
+    {
+        bossPf = Resources.Load<GameObject>(GameDefine.rolePath + GetCurLevelInfo().bossPf);
+    }
+
+    public void LoadEnemyBoss()  //读取该关卡对应的小怪
+    {
+        enemyPf = Resources.Load<GameObject>(GameDefine.rolePath + GetCurLevelInfo().enemyPf);
+    }
+
 
     public void StartLevel()
     {
         roleType = PlayerPrefs.GetInt("roleType");
+        LoadBossPf();
+        LoadEnemyBoss();
         SetPlayPos();
         SetBossPos();
         SetRoom();
@@ -121,7 +130,7 @@ public class LevelManager : MonoBehaviour
         point bossPoint = MapGenerator.Instance.bossPoint;
 
 
-        Vector3 pos = new Vector3(bossPoint.x * MapGenerator.Instance.mapCellMul, 2, bossPoint.y * MapGenerator.Instance.mapCellMul);
+        Vector3 pos = new Vector3(bossPoint.x * MapGenerator.Instance.mapCellMul, 0.01f, bossPoint.y * MapGenerator.Instance.mapCellMul);
 
         GameObject bossGo = Instantiate(bossPf, pos, Quaternion.identity);
 
@@ -135,7 +144,7 @@ public class LevelManager : MonoBehaviour
     {
         int random = 0;
         SetSkillRoom(1);
-        for (int i = 0; i < MapGenerator.Instance.roomPoints.Count; i++)
+        for (int i = 1; i < MapGenerator.Instance.roomPoints.Count; i++)
         {
             random = Random.Range(0, 300);
 

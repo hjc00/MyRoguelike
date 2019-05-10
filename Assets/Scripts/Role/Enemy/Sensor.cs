@@ -21,13 +21,17 @@ public class Sensor
         if (CheckIsInView())
         {
             ctrl.ChangeToPersue();
+            ctrl.SetFollowTarget(NpcManager.Instance.Player);
         }
     }
 
     private bool CheckIsInView()  //判断是否在视野范围内
     {
+        if (ctrl == null || NpcManager.Instance.Player == null)
+            return false;
         Vector3 dir = NpcManager.Instance.Player.position - ctrl.transform.position;
 
+        // Debug.Log(dir.magnitude + "     " + this.viewRadius);
 
         if (Mathf.Acos(Vector3.Dot(dir.normalized, ctrl.transform.forward)) * Mathf.Rad2Deg < this.viewAngle * 0.5f
             && dir.magnitude < this.viewRadius)

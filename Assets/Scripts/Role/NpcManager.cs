@@ -48,6 +48,11 @@ public class NpcManager : MonoBehaviour
 
     }
 
+    public void RemovePlayer()
+    {
+        this.player = null;
+    }
+
     public Vector3 GetPlayerPosition()
     {
         return player.position;
@@ -91,12 +96,12 @@ public class NpcManager : MonoBehaviour
 
         Collider[] cols = Physics.OverlapBox(pos, new Vector3(forward * 0.5f, width * 0.5f, width * 0.5f),
              Quaternion.identity, 1 << LayerMask.NameToLayer("Enemy"));
-     //   Debug.Log(cols.Length);
+        //   Debug.Log(cols.Length);
         for (int i = 0; i < cols.Length; i++)
         {
             if (CheckInRect(player, cols[i].transform, forward, width))
             {
-             //   Debug.Log(cols[i].GetComponent<EnemyCtrl>());
+                //   Debug.Log(cols[i].GetComponent<EnemyCtrl>());
                 cols[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
                 CameraCtrl.Instance.CameraShake(0.1f, 0.5f);
                 cols[i].transform.LookAt(pos);
@@ -159,7 +164,7 @@ public class NpcManager : MonoBehaviour
         if (CheckInRect(enemy, player, forward, width))
         {
             player.GetComponent<PlayerCtrl>().ReduceHealth(power);
-            SkillPerform.Instance.BeatBack(player, player.position - enemy.position, 0.1f, 0.5f);
+            SkillPerform.Instance.BeatBack(player, player.position - enemy.position, 0.1f, 0.3f);
         }
     }
 

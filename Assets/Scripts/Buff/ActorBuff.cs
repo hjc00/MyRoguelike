@@ -11,7 +11,7 @@ public class ActorBuff : MonoBehaviour
         if (buffs.Contains(buff))
             return;
         buffs.Add(buff);
-        Debug.Log("start buff " + buff.id);
+       // Debug.Log("start buff " + buff.id);
         buff.StartBuff(roleData, this);
     }
 
@@ -19,7 +19,7 @@ public class ActorBuff : MonoBehaviour
     {
         if (buffs.Contains(buff))
         {
-            Debug.Log("remove " + buff.id);
+          //  Debug.Log("remove " + buff.id);
             buffs.Remove(buff);
         }
     }

@@ -11,6 +11,10 @@ public class BuffManager
 
     public static void LoadJson()
     {
+
+        if (buffdict.Count > 0)
+            return;
+
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Buff");
 
         Buff[] buffs = JsonConvert.DeserializeObject<Buff[]>(textAsset.text);

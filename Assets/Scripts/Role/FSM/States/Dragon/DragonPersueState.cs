@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragonPersueState : FsmBase {
+public class DragonPersueState : FsmBase
+{
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl ctrl;
 
-    public DragonPersueState(Animator anim, DragonCtrl ctrl)
+    public DragonPersueState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
-        this.dragonCtrl = ctrl;
+        this.ctrl = ctrl;
     }
 
     public override void OnEnter()
     {
-        
+
     }
 
     public override void OnStay()
     {
-        anim.SetBool("run", true);
 
-        if (Vector3.Distance(dragonCtrl.transform.position, NpcManager.Instance.Player.position) < dragonCtrl.RoleData.rectLength)
+        ctrl.RotateTo(NpcManager.Instance.Player.position - ctrl.transform.position);
+
+        if (Vector3.Distance(ctrl.transform.position, NpcManager.Instance.Player.position) < ctrl.RoleData.rectLength)
         {
             anim.SetBool("run", false);
 
@@ -32,14 +34,18 @@ public class DragonPersueState : FsmBase {
             }
             return;
         }
-        dragonCtrl.RotateTo(NpcManager.Instance.Player.position - dragonCtrl.transform.position);
+        else
+        {
+            anim.SetBool("run", true);
 
-        dragonCtrl.SimpleMove(NpcManager.Instance.Player.position - dragonCtrl.transform.position);
+
+            ctrl.SimpleMove(NpcManager.Instance.Player.position - ctrl.transform.position);
+        }
     }
 
     public override void OnExit()
     {
-      
+
     }
 
     public override void HandleInput()

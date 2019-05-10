@@ -6,17 +6,17 @@ public class DragonAttackState : FsmBase
 {
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl bossCtrl;
 
-    public DragonAttackState(Animator anim, DragonCtrl ctrl)
+    public DragonAttackState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
-        this.dragonCtrl = ctrl;
+        this.bossCtrl = ctrl;
     }
 
     public override void OnEnter()
     {
-        this.dragonCtrl.DisableCtrl();
+        this.bossCtrl.DisableCtrl();
     }
 
     public override void OnStay()
@@ -26,7 +26,7 @@ public class DragonAttackState : FsmBase
 
     public override void OnExit()
     {
-        this.dragonCtrl.EnableCtrl();
+        this.bossCtrl.EnableCtrl();
     }
 
     public override void HandleInput()

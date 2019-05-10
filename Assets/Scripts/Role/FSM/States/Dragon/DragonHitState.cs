@@ -5,12 +5,12 @@ using UnityEngine;
 public class DragonHitState : FsmBase {
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl ctrl;
 
-    public DragonHitState(Animator anim, DragonCtrl ctrl)
+    public DragonHitState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
-        this.dragonCtrl = ctrl;
+        this.ctrl = ctrl;
     }
 
     public override void OnEnter()

@@ -6,12 +6,12 @@ public class DragonIdleState : FsmBase
 {
 
     Animator anim;
-    DragonCtrl dragonCtrl;
+    BossCtrl ctrl;
 
-    public DragonIdleState(Animator anim, DragonCtrl ctrl)
+    public DragonIdleState(Animator anim, BossCtrl ctrl)
     {
         this.anim = anim;
-        this.dragonCtrl = ctrl;
+        this.ctrl = ctrl;
     }
 
     public override void OnEnter()

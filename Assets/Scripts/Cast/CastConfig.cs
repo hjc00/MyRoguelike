@@ -13,6 +13,9 @@ public class CastConfig
 
     public static void LoadJson()
     {
+        if (castInfoDict.Count > 0)
+            return;
+
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Cast");
 
         Cast[] casts = JsonConvert.DeserializeObject<Cast[]>(textAsset.text);

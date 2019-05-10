@@ -10,6 +10,8 @@ public static class GameDefine
     public const string RedDragonPath = "Prefabs/Role/RedDragon";
     public const string goblinPath = "Prefabs/Role/Goblin";
 
+    public const string rolePath = "Prefabs/Role/";
+
     public const string skillSellNpcPath = "Prefabs/Npc/SkillSellNpc";
     public const string itemSellNpcPath = "Prefabs/Npc/ItemSellNpc";
 
@@ -19,6 +21,7 @@ public static class GameDefine
     public const string panelPath = "Prefabs/Panels/";
     public const string itemNpcPanel = "ItemNpcPanel";
     public const string skillNpcPanel = "SkillNpcPanel";
+    public const string restartPanel = "RestartPanel";
 
     public const string itemIconPath = "Textures/ItemIcon/";
     public const string itemPrefabPath = "Prefabs/ItemObj/";

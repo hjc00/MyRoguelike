@@ -164,13 +164,15 @@ public class PlayerCtrl : RoleBaseCtrl
 
         if (roleData.hp <= 0)
         {
-            bool death = anim.GetBool("death");
+            //  Debug.Log("death trigger");
+            anim.SetTrigger("death");
 
-            if (!death)
-            {
-                this.enabled = false;
-                anim.SetBool("death", true);
-            }
+            this.roleData.speed = 0;
+
+            this.cc.enabled = false;
+            UIManager.Instance.PopPanel(GameDefine.restartPanel);
+            this.enabled = false;
+         //   Time.timeScale = 0;
         }
     }
 
