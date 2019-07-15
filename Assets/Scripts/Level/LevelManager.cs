@@ -33,6 +33,8 @@ public class LevelManager : MonoBehaviour
 
     private static void LoadJson()
     {
+        if (levelDict.Count > 0)
+            return;
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Level");
 
         LevelInfo[] levelInfos = JsonConvert.DeserializeObject<LevelInfo[]>(textAsset.text);
@@ -59,7 +61,8 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-
+        if (LevelManager.instance != null)
+            return;
         instance = this;
 
 
@@ -85,18 +88,29 @@ public class LevelManager : MonoBehaviour
     }
 
 
+    public static void ReInitPlayerData()
+    {
+        PlayerPrefs.SetInt("level", 1);
+        PlayerPrefs.SetInt("AtkPower", 0);
+        PlayerPrefs.SetInt("DefPower", 0);
+        PlayerPrefs.SetInt("MP", 0);
+        PlayerPrefs.SetInt("gold", 0);
+    }
+
     public void StartLevel()
     {
+        UIManager.Instance.DestroyAllPanel();
         roleType = PlayerPrefs.GetInt("roleType");
         LoadBossPf();
         LoadEnemyBoss();
         SetPlayPos();
         SetBossPos();
         SetRoom();
-        EventCenter.Broadcast<int>(EventType.OnUpdateGold, 0); ;
-        // if (UIManager.Instance != null)
-        //  Debug.Log("cur level " + PlayerPrefs.GetInt("level"));
-        UIManager.Instance.PopHint(string.Format("level {0}", PlayerPrefs.GetInt("level")));
+        EventCenter.Broadcast<int>(EventType.OnUpdateGold, PlayerPrefs.GetInt("gold")); ;
+
+        if (UIManager.Instance != null)
+            // Debug.Log("start level " + PlayerPrefs.GetInt("level"));
+            UIManager.Instance.PopHint(string.Format("level {0}", PlayerPrefs.GetInt("level")));
     }
 
     public int Level { get; set; }
@@ -119,7 +133,7 @@ public class LevelManager : MonoBehaviour
 
         player.AddComponent<PlayerSkill>();
         NpcManager.Instance.Player = player.transform;
-
+        player.GetComponent<PlayerCtrl>();
         player.transform.position = new Vector3(playerPoint.x * MapGenerator.Instance.mapCellMul, 0, playerPoint.y * MapGenerator.Instance.mapCellMul);
 
 
@@ -133,6 +147,7 @@ public class LevelManager : MonoBehaviour
         Vector3 pos = new Vector3(bossPoint.x * MapGenerator.Instance.mapCellMul, 0.01f, bossPoint.y * MapGenerator.Instance.mapCellMul);
 
         GameObject bossGo = Instantiate(bossPf, pos, Quaternion.identity);
+        bossGo.transform.LookAt(NpcManager.Instance.Player.position);
 
         //bossPf.transform.position = pos;
     }
@@ -143,21 +158,25 @@ public class LevelManager : MonoBehaviour
     private void SetRoom()
     {
         int random = 0;
-        SetSkillRoom(1);
+
+        SetSkillRoom(0);
+        SetItemRoom(0);
+
         for (int i = 1; i < MapGenerator.Instance.roomPoints.Count; i++)
         {
             random = Random.Range(0, 300);
 
             // SetSkillRoom(i);
             SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
-            //if (random < 100 && itemRoomCnt < 1 && i > 0)
-            //{
-            //    SetItemRoom(i);
-            //}
-            //else if (random >= 100 && random < 200 && skillRoomCnt < 1 && i > 0)
-            //{
-            //   SetSkillRoom(i);
-            //}
+
+            if (random < 100 && itemRoomCnt < 1 && i > 1)
+            {
+                SetItemRoom(i);
+            }
+            else if (random >= 100 && random < 200 && skillRoomCnt < 1 && i > 1)
+            {
+                SetSkillRoom(i);
+            }
             //else if (i > 0)
             //{
             //    SetSingleRoomEnemy(MapGenerator.Instance.roomPoints[i]);
@@ -206,6 +225,9 @@ public class LevelManager : MonoBehaviour
             Vector3 pos = new Vector3(singleRoomPoints[usedIndex[i]].x * MapGenerator.Instance.mapCellMul, 0, singleRoomPoints[usedIndex[i]].y * MapGenerator.Instance.mapCellMul);
 
             GameObject enemyGo = Instantiate(enemyPf, pos, Quaternion.identity);
+
+
+            enemyGo.transform.LookAt(NpcManager.Instance.Player.position);
         }
     }
 
@@ -216,7 +238,7 @@ public class LevelManager : MonoBehaviour
             MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y == MapGenerator.Instance.bossPoint.y)
             return;
 
-        Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        Vector3 pos = new Vector3((MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x + 2) * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
         GameObject itemSellNpc = Instantiate(itemSellNpcPf, pos, Quaternion.identity);
         itemRoomCnt++;
     }
@@ -228,8 +250,9 @@ public class LevelManager : MonoBehaviour
          MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y == MapGenerator.Instance.bossPoint.y)
             return;
 
-        // Vector3 pos = new Vector3(MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
-        Vector3 pos = NpcManager.Instance.Player.position + new Vector3(2, 0, 2);
+        Vector3 pos = new Vector3((MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].x - 2) * MapGenerator.Instance.mapCellMul, 2, MapGenerator.Instance.RoomCenterPoints[roomCenterIndex].y * MapGenerator.Instance.mapCellMul);
+        // Vector3 pos = NpcManager.Instance.Player.position + new Vector3(2, 0, 2);
+
         GameObject skillSellNpc = Instantiate(skillSellNpcPf, pos, Quaternion.identity);
         skillRoomCnt++;
     }
@@ -237,12 +260,12 @@ public class LevelManager : MonoBehaviour
     public void ReloadLevel()
     {
         int curLevel = PlayerPrefs.GetInt("level");
-
         curLevel++;
+        //  Debug.Log("reload level cur level " + curLevel);
         if (curLevel > 3)
         {
             UIManager.Instance.PopHint("恭喜成功通关！");
-            PlayerPrefs.SetInt("level", curLevel);
+            ReInitPlayerData();
             StartCoroutine(BackToMainMenu());
         }
         else
@@ -264,5 +287,11 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         NpcManager.Instance.ClearAllEnemy();
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    private void OnDestroy()
+    {
+        // Debug.Log("remove");
+        EventCenter.RemoveListener(EventType.OnBossDie, ReloadLevel);
     }
 }

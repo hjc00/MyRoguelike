@@ -14,5 +14,37 @@
         "duration": -1,
         "freq": 0,
         "amount": 20
+    },
+    {
+        "id": 1003,
+        "buffType": "SubHp",
+        "buffSettleType": "Permernant",
+        "duration": -1,
+        "freq": 0,
+        "amount": 25
+    },
+    {
+        "id": 1004,
+        "buffType": "SubHp",
+        "buffSettleType": "Permernant",
+        "duration": -1,
+        "freq": 0,
+        "amount": 10
+    },
+    {
+        "id": 1005,
+        "buffType": "SubHp",
+        "buffSettleType": "Permernant",
+        "duration": -1,
+        "freq": 0,
+        "amount": 25
+    },
+    {
+        "id": 1006,
+        "buffType": "SubSpeed",
+        "buffSettleType": "Loop",
+        "duration": 3,
+        "freq": 1,
+        "amount": 2
     }
 ]

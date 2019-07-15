@@ -11,6 +11,9 @@ class RoleConfig
 
     public static void LoadJson()
     {
+        if (roleDataDict.Count > 0)
+            return;
+
         TextAsset textAsset = Resources.Load<TextAsset>("Json/Role");
 
         RoleData[] roleDatas = JsonConvert.DeserializeObject<RoleData[]>(textAsset.text);

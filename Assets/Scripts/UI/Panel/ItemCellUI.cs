@@ -13,6 +13,8 @@ public class ItemCellUI : MonoBehaviour
 
     private ItemNpcPanel itemNpcPanel;
     private int id;
+    private int itemGold;
+
     private void Awake()
     {
         this.GetComponent<Button>().onClick.AddListener(OnClick);
@@ -28,12 +30,18 @@ public class ItemCellUI : MonoBehaviour
         desc.text = item.Desc;
         gold.text = item.gold.ToString();
         itemName.text = item.Name;
-
+        this.itemGold = item.gold;
     }
 
     private void OnClick()
     {
         itemNpcPanel.selectItemId = this.id;
+
+        //if (NpcManager.Instance.Player.GetComponent<PlayerCtrl>().playerInventory.Gold < this.itemGold)
+        //{
+        //    UIManager.Instance.PopHint("金钱不足无法购买");
+        //    return;
+        //}
         itemNpcPanel.ShowBuy();
     }
 

@@ -7,10 +7,13 @@ public class Main : MonoBehaviour
 
     static LevelManager levelManager;
 
-
+    static bool hasCreated = false;
 
     void Awake()
     {
+        if (hasCreated)
+            return;
+
 
         SkillConfig.LoadJson();
         BuffManager.LoadJson();
@@ -25,7 +28,7 @@ public class Main : MonoBehaviour
 
         gameObject.AddComponent<AudioManager>();
 
-
+        hasCreated = true;
         DontDestroyOnLoad(this.gameObject);
     }
 

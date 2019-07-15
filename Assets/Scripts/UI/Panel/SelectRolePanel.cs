@@ -19,14 +19,14 @@ public class SelectRolePanel : MonoBehaviour
     private void SetShortRangeRole()
     {
         PlayerPrefs.SetInt("roleType", 1);
-
+        LevelManager.ReInitPlayerData();
         SceneManager.LoadScene("LoadingScene");
     }
 
     private void SetLongRangeRole()
     {
         PlayerPrefs.SetInt("roleType", 2);
-
+        LevelManager.ReInitPlayerData();
         SceneManager.LoadScene("LoadingScene");
     }
 }

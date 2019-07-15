@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class ItemNpcPanel : MonoBehaviour
+public class ItemNpcPanel : BasePanel
 {
 
     private int[] randomItemId = new int[3];
@@ -13,13 +13,20 @@ public class ItemNpcPanel : MonoBehaviour
 
     public int selectItemId { get; set; }
     Vector3 npcPos;
-    private void Awake()
-    {
-        randomItemId[0] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
-        randomItemId[1] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
-        randomItemId[2] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
 
+    public override void Awake()
+    {
+        RandomItemData();
         SetUpCell();
+    }
+
+    private void RandomItemData()
+    {
+       // Debug.Log("item data");
+
+        randomItemId[0] = Random.Range(0, ItemConfig.Instance.GetItemCount()) + 1000;
+        randomItemId[1] = Random.Range(0, ItemConfig.Instance.GetItemCount()) + 1000;
+        randomItemId[2] = Random.Range(0, ItemConfig.Instance.GetItemCount()) + 1000;
     }
 
     public void SetData(Vector3 pos)
@@ -53,8 +60,11 @@ public class ItemNpcPanel : MonoBehaviour
     public void ClickBuy()
     {
         this.CloseBuy();
+
         UIManager.Instance.ClosePanel(GameDefine.itemNpcPanel);
-        ItemConfig.Instance.CreateItemObj(this.npcPos + new Vector3(1, 0, 1), this.selectItemId);
+
+        ItemConfig.Instance.CreateItemObj(this.npcPos + new Vector3(1, -1, 1), this.selectItemId);
+
         EventCenter.Broadcast(EventType.DestroyItemNpc);
     }
 }

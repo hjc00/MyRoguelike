@@ -22,6 +22,7 @@ public static class GameDefine
     public const string itemNpcPanel = "ItemNpcPanel";
     public const string skillNpcPanel = "SkillNpcPanel";
     public const string restartPanel = "RestartPanel";
+    public const string pausePanel = "PausePanel";
 
     public const string itemIconPath = "Textures/ItemIcon/";
     public const string itemPrefabPath = "Prefabs/ItemObj/";

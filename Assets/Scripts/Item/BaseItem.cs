@@ -16,7 +16,7 @@ public class BaseItem
     public int addOff { get; private set; }
     public int addDef { get; private set; }
 
-    public BaseItem(int id, string name, string desc, string icon, int gold, 
+    public BaseItem(int id, string name, string desc, string icon, int gold,
         string prefabName, int addHp, int addMp, int addOff, int addDef)
     {
         this.Id = id;
@@ -33,6 +33,28 @@ public class BaseItem
 
     public virtual void Use(PlayerCtrl playerCtrl)
     {
+        if (playerCtrl == null || playerCtrl.RoleData == null)
+            return;
+
+        if (this.addHp != 0)
+        {
+            playerCtrl.AddHealth(this.addHp);
+        }
+
+        if (this.addMp != 0)
+        {
+            playerCtrl.UpdateMp(this.addMp);
+        }
+
+        if (this.addOff != 0)
+        {
+            playerCtrl.UpdateAtkPower(this.addOff);
+        }
+
+        if (this.addDef != 0)
+        {
+            playerCtrl.UpdateDefPower(this.addDef);
+        }
 
     }
 }

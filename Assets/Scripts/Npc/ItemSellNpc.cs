@@ -20,6 +20,7 @@ public class ItemSellNpc : MonoBehaviour
         if (other.gameObject.tag.Equals("Player"))
         {
             GameObject panel = UIManager.Instance.PopPanel(GameDefine.itemNpcPanel);
+
             panel.GetComponent<ItemNpcPanel>().SetData(this.transform.position);
         }
     }

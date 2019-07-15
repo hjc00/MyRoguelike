@@ -20,13 +20,18 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    private static bool hasCreated = false;
+
     private void Awake()
     {
 
+        instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
+
+        hasCreated = true;
         pool = new Dictionary<string, List<GameObject>>();
         prefabs = new Dictionary<string, GameObject>();
-        instance = this;
-        DontDestroyOnLoad(gameObject);
 
         CreatePool("bullet", GameDefine.bulletPath, 50);
         CreatePool("frozon", GameDefine.VfxPath + GameDefine.frozonVfx, 10);
@@ -51,7 +56,8 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < cnt; i++)
         {
             GameObject temp = Instantiate(prefab);
-            temp.transform.SetParent(this.transform);
+            // Debug.Log(instance);
+            temp.transform.SetParent(instance.transform);
             temp.name = poolName;
             temp.SetActive(false);
             newPool.Add(temp);
@@ -65,8 +71,9 @@ public class ObjectPool : MonoBehaviour
         if (!pool.ContainsKey(poolName))
         {
             CreatePool(poolName, GameDefine.VfxPath + poolName, 10);
-            return null;
+
         }
+
         List<GameObject> tempPool = pool[poolName];
 
         GameObject res = null;
@@ -83,6 +90,14 @@ public class ObjectPool : MonoBehaviour
             res.SetActive(true);
         }
         return res;
+    }
+
+    public GameObject SpawnVfx(string poolName, Vector3 pos, Quaternion rotation)
+    {
+        GameObject tempVfx = SpawnVfx(poolName);
+        tempVfx.transform.position = pos;
+        tempVfx.transform.rotation = rotation;
+        return tempVfx;
     }
 
     public GameObject SpawnObj(string poolName)
@@ -127,5 +142,10 @@ public class ObjectPool : MonoBehaviour
         }
         go.SetActive(false);
         pool[poolName].Add(go);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("destroy ojbect pool");
     }
 }

@@ -58,6 +58,18 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (this.SkillId == -1)
+        {
+
+            return;
+        }
+
+        if (this.timer < cd)
+        {
+            return;
+
+        }
+
         btnCtrlSprite.position = eventData.position;
 
         if (Vector2.Distance(btnCtrlSprite.position, originPos) > radius)
@@ -197,20 +209,21 @@ public class SkillBtnCtrl : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         {
             case (int)SkillType.AOE:
                 {
-                    SkillConfig.UseSkill(this.SkillId, playerCtrl.transform);
+                    SkillConfig.UseSkill(this.SkillId, playerCtrl.transform, 30);//fix aoe rotaeAngle 可配置
+
                 };
                 break;
             case (int)SkillType.DIR:
                 {
                     SkillConfig.UseSkill(this.SkillId, playerCtrl.transform,
-                   playerCtrl.transform.position + new Vector3(eventData.position.x - originPos.x, 0, eventData.position.y - originPos.y).normalized);
+                   playerCtrl.transform.position + new Vector3(eventData.position.x - originPos.x, 0, eventData.position.y - originPos.y).normalized, dir);
 
                 }; break;
             case (int)SkillType.SELECT:
                 {
 
                     SkillConfig.UseSkill(this.SkillId, playerCtrl.transform,
-                     playerCtrl.transform.position + CalCircleIndicatorPos(dir));
+                     playerCtrl.transform.position + CalCircleIndicatorPos(dir), dir);
 
                 }; break;
             case (int)SkillType.INSTANT:

@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 95829711586275232}
   - component: {fileID: 143653128504077834}
   - component: {fileID: 114069624416733788}
+  - component: {fileID: 114724610499168474}
   m_Layer: 9
   m_Name: skeleton
   m_TagString: Untagged
@@ -1209,6 +1210,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roleId: 1007
+--- !u!114 &114724610499168474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301922100631736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 754f48fb3478a21478882ba22830d96d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossCast: {fileID: 1009001581806498, guid: 59c1221104ebec846afa8061e2779a97, type: 2}
 --- !u!137 &137335530522632320
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

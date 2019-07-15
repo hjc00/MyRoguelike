@@ -6,4 +6,8 @@
     DestroyItemNpc,
     DestroySkillNpc,
     OnLearnSkill,
+    OnUpdateHP,
+    OnUpdateMP,
+    OnUpdateAtk,
+    OnUpdateDef,
 }

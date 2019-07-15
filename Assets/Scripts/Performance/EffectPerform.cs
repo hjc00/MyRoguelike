@@ -31,6 +31,8 @@ public class EffectPerform : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+            return;
         instance = this;
 
 
@@ -94,14 +96,29 @@ public class EffectPerform : MonoBehaviour
     {
         GameObject damageUI = Instantiate(this.DamageUI);
 
-        damageUI.transform.position = Camera.main.WorldToScreenPoint(appearTrans.position + new Vector3(0, 2, 0));
         damageUI.GetComponent<Text>().text = "-" + amount.ToString();
+
+        //  StartCoroutine(DelayShowFlowUI(damageUI, appearTrans));
+        damageUI.transform.position = Camera.main.WorldToScreenPoint(appearTrans.position + new Vector3(0, 2, 0));
         damageUI.transform.SetParent(canvas.transform);
     }
 
-    public void PlayFrozenPs(Vector3 pos)
+    public void ShowFlowUI(string s, Transform appearTrans)
     {
-        GameObject frozonGo = Instantiate(this.frozonEfx);
-        frozonGo.transform.position = pos;
+        GameObject damageUI = Instantiate(this.DamageUI);
+
+        damageUI.GetComponent<Text>().text = s;
+
+        //StartCoroutine(DelayShowFlowUI(damageUI, appearTrans));
+        damageUI.transform.position = Camera.main.WorldToScreenPoint(appearTrans.position + new Vector3(0, 2, 0));
+        damageUI.transform.SetParent(canvas.transform);
     }
+
+    IEnumerator DelayShowFlowUI(GameObject damageUI, Transform appearTrans)
+    {
+        yield return new WaitForSeconds(0.2f);
+        damageUI.transform.position = Camera.main.WorldToScreenPoint(appearTrans.position + new Vector3(0, 2, 0));
+        damageUI.transform.SetParent(canvas.transform);
+    }
+
 }

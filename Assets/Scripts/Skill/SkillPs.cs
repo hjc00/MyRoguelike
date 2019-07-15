@@ -10,7 +10,12 @@ public class SkillPs : MonoBehaviour
 
     void Awake()
     {
+
         ps = GetComponentsInChildren<ParticleSystem>();
+        if (ps.Length == 0)
+        {
+            ps = GetComponents<ParticleSystem>();
+        }
 
     }
 

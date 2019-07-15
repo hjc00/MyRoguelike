@@ -92,6 +92,8 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+            return;
         instance = this;
 
         LevelInfo tempLevel = LevelManager.Instance.GetCurLevelInfo();

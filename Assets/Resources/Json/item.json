@@ -2,7 +2,7 @@
     {
         "Id": 1000,
         "Name": "血瓶",
-        "Desc": "加血（HP+20）",
+        "Desc": "HP+20",
         "gold": 5,
         "icon": "item1000",
         "prefabName": "item1000",
@@ -11,7 +11,7 @@
     {
         "Id": 1001,
         "Name": "大力水",
-        "Desc": "大力出奇迹（HP+10，攻击+5）",
+        "Desc": "HP+10，攻击+5",
         "gold": 10,
         "icon": "item1001",
         "prefabName": "item1001",
@@ -21,7 +21,7 @@
     {
         "Id": 1002,
         "Name": "大血瓶",
-        "Desc": "加血（HP+50）",
+        "Desc": "HP+50",
         "gold": 8,
         "icon": "item1002",
         "prefabName": "item1002",
@@ -44,5 +44,14 @@
         "icon": "item1004",
         "prefabName": "item1004",
         "addDef": 5
+    },
+    {
+        "Id": 1005,
+        "Name": "长剑",
+        "Desc": "装备长剑，攻击+20",
+        "gold": 15,
+        "icon": "item1005",
+        "prefabName": "item1005",
+        "addOff": 20
     }
 ]

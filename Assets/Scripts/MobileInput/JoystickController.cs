@@ -34,6 +34,9 @@ public class JoystickController : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     private void Start()
     {
+        //if (instance != null)
+        //    return;
+
         instance = this;
 
         originPos = transform.position;

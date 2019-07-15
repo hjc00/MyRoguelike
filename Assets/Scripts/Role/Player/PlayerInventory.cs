@@ -17,6 +17,7 @@ public class PlayerInventory
         {
             gold = value;
             EventCenter.Broadcast<int>(EventType.OnUpdateGold, gold);
+            PlayerPrefs.SetInt("gold", gold);
         }
     }
 }

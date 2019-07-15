@@ -41,6 +41,30 @@ public class Skill
         this.vfx = vfx;
     }
 
+    public void Use(Transform user, int rotateAngle)
+    {
+        if (this.roleMoveDir != 0)
+        {
+            MoveRole(user);
+        }
+        if (this.vfx != null)
+        {
+            for (int i = 0; i < 360; i += rotateAngle)
+            {
+
+                Vector3 v = Quaternion.Euler(0, i, 0) * user.forward;
+
+                Vector3 pos = user.position + v;
+
+                ShowVfx(user, pos, pos - user.position, Quaternion.FromToRotation(user.forward, v));
+            }
+        }
+        // Debug.Log("use type 1");
+        // CheckEnemy(user.position, this.range * 0.5f, this.range * 0.5f, this.range * 0.5f);
+
+
+    }
+
     public void Use(Transform user)
     {
         if (this.roleMoveDir != 0)
@@ -49,13 +73,13 @@ public class Skill
         }
         if (this.vfx != null)
         {
-            ShowVfx(user.transform.position);
+            ShowVfx(user, user.transform.position);
         }
         // Debug.Log("use type 1");
         CheckEnemy(user.position, this.range * 0.5f, this.range * 0.5f, this.range * 0.5f);
     }
 
-    public void Use(Transform user, Vector3 pos)
+    public void Use(Transform user, Vector3 pos, Vector3 dir)
     {
         if (this.roleMoveDir == 0)
         {
@@ -63,20 +87,46 @@ public class Skill
         }
         if (this.vfx != null)
         {
-            ShowVfx(pos);
+            ShowVfx(user, pos, pos + dir, user.rotation);
         }
         // Debug.Log("use type 2");
         CheckEnemy(pos, this.effectRange * 0.5f, this.effectRange * 0.5f, this.effectRange * 0.5f);
     }
 
-    private void ShowVfx(Vector3 pos)
+    private void ShowVfx(Transform user, Vector3 pos)
     {
         for (int i = 0; i < this.vfx.Count; i++)
         {
-            // Debug.Log(this.vfx[i]);
+
             GameObject tempVfx = ObjectPool.Instance.SpawnVfx(this.vfx[i]);
+
             tempVfx.GetComponent<SkillPs>().ShowPs();
-            tempVfx.transform.position = pos;
+
+
+            tempVfx.transform.position = pos + new Vector3(0, 0.5f, 0);
+        }
+    }
+
+
+    private void ShowVfx(Transform user, Vector3 pos, Vector3 dir, Quaternion rotation)
+    {
+        for (int i = 0; i < this.vfx.Count; i++)
+        {
+            //Debug.Log(this.vfx[i]);
+            GameObject tempVfx = ObjectPool.Instance.SpawnVfx(this.vfx[i], user.position, rotation);
+            // Debug.Log(tempVfx.transform.rotation);
+            tempVfx.GetComponent<SkillPs>().ShowPs();
+
+            CastCtrl castCtrl = tempVfx.GetComponent<CastCtrl>();
+
+            if (castCtrl != null)
+            {
+                dir.y = pos.y + 0.5f;
+                // Debug.Log(dir);
+                castCtrl.Fly(Vector3.forward);
+            }
+
+            tempVfx.transform.position = pos + new Vector3(0, 0.5f, 0);
         }
     }
 

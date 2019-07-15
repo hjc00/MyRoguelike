@@ -21,6 +21,8 @@ public class CameraCtrl : MonoBehaviour
 
     private void Awake()
     {
+        if (instacne != null)
+            return;
         instacne = this;
 
    

@@ -17,6 +17,7 @@ public enum DragonAnimEnum
 public class BossCtrl : EnemyCtrl
 {
 
+
     private Sensor sensor;
 
     public override void Awake()
@@ -24,9 +25,11 @@ public class BossCtrl : EnemyCtrl
         base.Awake();
     }
 
+    BossSkill bossSkill;
+
     public override void Start()
     {
-
+        bossSkill = GetComponent<BossSkill>();
 
         sensor = new Sensor(10, 120, this);
 
@@ -52,10 +55,21 @@ public class BossCtrl : EnemyCtrl
 
     }
 
+
+    private float skillTimer = 0;
+    private float skillCooldown = 10;
+    private bool canReleaseSkill = true;
+
     public override void Update()
     {
         if (this.roleData.hp <= 0)
             return;
+
+        skillTimer += Time.deltaTime;
+        if (skillTimer >= skillCooldown)
+        {
+            canReleaseSkill = true;
+        }
 
         FsmManager.FsmUpdate();
         sensorTimer += Time.deltaTime;
@@ -63,6 +77,18 @@ public class BossCtrl : EnemyCtrl
         {
             sensor.SensorUpdate();
         }
+    }
+
+    public void ReleaseSkill()
+    {
+        if (this.canReleaseSkill == false)
+            return;
+
+        anim.SetTrigger("releaseSkill");
+
+        bossSkill.Use();
+        this.canReleaseSkill = false;
+        this.skillTimer = 0;
     }
 
     public override void ChangeToPersue()
@@ -85,6 +111,12 @@ public class BossCtrl : EnemyCtrl
         FsmManager.ChangeState((int)DragonAnimEnum.Attack);
     }
 
+    public override void Die()
+    {
+
+        EventCenter.Broadcast(EventType.OnBossDie);
+    }
+
     public override void ReduceHealth(int amount)
     {
         if (RoleData.hp <= 0)
@@ -100,9 +132,9 @@ public class BossCtrl : EnemyCtrl
         if (RoleData.hp <= 0)
         {
             bool death = anim.GetBool("death");
+            // Debug.Log("broadcast boss die");
+            Die();
 
-            EventCenter.Broadcast(EventType.OnBossDie);
-            // Debug.Log("boradcast");
             if (!death)
             {
                 this.enabled = false;
@@ -111,7 +143,7 @@ public class BossCtrl : EnemyCtrl
         }
     }
 
- 
+
 
     public override void DoPlayerDamage()
     {

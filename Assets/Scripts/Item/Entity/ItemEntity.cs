@@ -32,6 +32,9 @@ public class ItemEntity : MonoBehaviour
             return;
 
         item.Use(playerCtrl);
+
+        EffectPerform.Instance.ShowFlowUI(this.item.Desc, other.transform);
+
         Destroy(this.gameObject);
     }
 }

@@ -36,7 +36,7 @@ public class PlayerCtrl : RoleBaseCtrl
     public delegate void OnPlayerHealthReduce(int amount);
     public event OnPlayerHealthReduce onPlayerHealthReduce;
 
-    private PlayerInventory playerInventory;
+    public PlayerInventory playerInventory;
 
     public override void Awake()
     {
@@ -44,9 +44,22 @@ public class PlayerCtrl : RoleBaseCtrl
 
         playerInventory = new PlayerInventory();
 
+        if (PlayerPrefs.GetInt("AtkPower") != 0)
+        {
+            this.roleData.atkPower = PlayerPrefs.GetInt("AtkPower");
+        }
+        if (PlayerPrefs.GetInt("DefPower") != 0)
+        {
+            this.roleData.defPower = PlayerPrefs.GetInt("DefPower");
+        }
+        if (PlayerPrefs.GetInt("MP") != 0)
+        {
+            this.roleData.mp = PlayerPrefs.GetInt("MP");
+        }
 
         RegisterEvent();
         FsmInit();
+      
 
     }
 
@@ -102,6 +115,7 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         playerInventory.Gold += amount;
     }
+
 
     #region 状态机相关接口
     public virtual void ChangeToIdle()
@@ -172,7 +186,7 @@ public class PlayerCtrl : RoleBaseCtrl
             this.cc.enabled = false;
             UIManager.Instance.PopPanel(GameDefine.restartPanel);
             this.enabled = false;
-         //   Time.timeScale = 0;
+            //   Time.timeScale = 0;
         }
     }
 
@@ -180,6 +194,37 @@ public class PlayerCtrl : RoleBaseCtrl
     {
         roleData.hp += amount;
         onPlayerHealthReduce(roleData.hp);
+    }
+
+    public void UpdateAtkPower(int amount)
+    {
+        //  Debug.Log("amount " + amount);
+        this.roleData.atkPower += amount;
+        EventCenter.Broadcast<int>(EventType.OnUpdateAtk, this.roleData.atkPower);
+        PlayerPrefs.SetInt("AtkPower", this.roleData.atkPower);
+
+    }
+
+    //public void UpdateSpeed(int amount)
+    //{
+    //    this.roleData.speed += amount;
+    //    EventCenter.Broadcast<int>(EventType.OnUpdateAtk, this.roleData.atkPower);
+    //}
+
+    public void UpdateDefPower(int amount)
+    {
+        //Debug.Log("amount " + amount);
+        this.roleData.defPower += amount;
+        EventCenter.Broadcast<int>(EventType.OnUpdateDef, this.roleData.defPower);
+        PlayerPrefs.SetInt("DefPower", this.roleData.defPower);
+    }
+
+    public void UpdateMp(int amount)
+    {
+        Debug.Log("amount " + amount);
+        this.roleData.mp += amount;
+        EventCenter.Broadcast<int>(EventType.OnUpdateMP, this.roleData.mp);
+        PlayerPrefs.SetInt("MP", this.roleData.mp);
     }
 
     #endregion

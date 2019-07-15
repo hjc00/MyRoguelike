@@ -10,14 +10,14 @@
         "id": 3001,
         "name": "火球",
         "damage": 20,
-        "speed": 10,
+        "speed": 20,
         "liveTime": 6
     },
     {
         "id": 3002,
         "name": "冰球",
         "damage": 12,
-        "speed": 3,
+        "speed": 8,
         "liveTime": 3,
         "buffIds": [
             1001

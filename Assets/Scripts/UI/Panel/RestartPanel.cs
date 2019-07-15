@@ -22,14 +22,15 @@ public class RestartPanel : MonoBehaviour
     {
         UIManager.Instance.ClosePanel(GameDefine.restartPanel);
       //  Time.timeScale = 1;
-        PlayerPrefs.SetInt("level", 1);
+        LevelManager.ReInitPlayerData();
         SceneManager.LoadScene("SelectScene");
     }
 
     private void QuitGame()
     {
         UIManager.Instance.ClosePanel(GameDefine.restartPanel);
-      //  Time.timeScale = 1;
+        //  Time.timeScale = 1;
+        LevelManager.ReInitPlayerData();
         SceneManager.LoadScene("StartScene");
     }
 }

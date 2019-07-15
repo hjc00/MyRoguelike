@@ -46,9 +46,10 @@ public class CastCtrl : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            this.transform.Translate(flyDir * this.speed * Time.deltaTime);
+            this.transform.Translate(this.flyDir * this.speed * Time.deltaTime);
+            // Debug.Log(this.transform.position.y);
 
-             CheckHit();
+            //  CheckHit();
 
             if (timer > liveTime)
             {
@@ -57,21 +58,22 @@ public class CastCtrl : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.transform.CompareTag("Enemy") == true)
-    //    {
-    //        other.transform.GetComponent<RoleBaseCtrl>().UpdateHp(-damage);
-    //        EffectPerform.Instance.ShowDamageUI(damage, other.transform);
-    //        BuffManager.AddBuffs(other.transform.GetComponent<RoleBaseCtrl>().RoleData, other.transform.GetComponent<ActorBuff>(), buffs);
-    //        Recycle();
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.CompareTag("Enemy") == true)
+        {
+            other.transform.GetComponent<RoleBaseCtrl>().UpdateHp(-damage);
+            EffectPerform.Instance.ShowDamageUI(damage, other.transform);
+            BuffManager.AddBuffs(other.transform.GetComponent<RoleBaseCtrl>().RoleData, other.transform.GetComponent<ActorBuff>(), buffs);
+            Recycle();
+        }
+    }
 
     public void Fly(Vector3 flyDir)
     {
         this.fly = true;
         this.flyDir = flyDir;
+        // this.transform.rotation = Quaternion.Euler(flyDir);
         timer = 0;
     }
 
@@ -85,7 +87,7 @@ public class CastCtrl : MonoBehaviour
         RaycastHit hitinfo;
 
         lastPos = transform.position;
-     
+
         if (Physics.Raycast(lastPos, flyDir, out hitinfo, speed * Time.deltaTime, LayerMask.GetMask("Enemy")))
         {
             if (this.buffs != null && hitinfo.transform.CompareTag("Enemy") == true)

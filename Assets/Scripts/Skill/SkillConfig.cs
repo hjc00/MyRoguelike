@@ -50,7 +50,7 @@ public class SkillConfig
         skillDict[skillId].Use(user);
     }
 
-    public static void UseSkill(int skillId, Transform user, Vector3 pos)
+    public static void UseSkill(int skillId, Transform user, int rotateAngle)
     {
         if (!skillDict.ContainsKey(skillId))
         {
@@ -58,7 +58,18 @@ public class SkillConfig
             return;
         }
 
-        skillDict[skillId].Use(user, pos);
+        skillDict[skillId].Use(user, rotateAngle);
+    }
+
+    public static void UseSkill(int skillId, Transform user, Vector3 pos, Vector3 dir)
+    {
+        if (!skillDict.ContainsKey(skillId))
+        {
+            Debug.LogError("技能不存在");
+            return;
+        }
+
+        skillDict[skillId].Use(user, pos, dir);
     }
 }
 

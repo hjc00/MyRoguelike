@@ -17,6 +17,13 @@ public class UIManager : MonoBehaviour
     {
         get
         {
+            //if (instance == null)
+            //{
+            //    GameObject obj = new GameObject();
+            //    instance = obj.AddComponent<UIManager>();
+            //    obj.name = "UICanvas";
+            //    DontDestroyOnLoad(obj);
+            //}
             return instance;
         }
 
@@ -25,8 +32,17 @@ public class UIManager : MonoBehaviour
     private GameObject hintPf;
     private GameObject Canvas;
 
+    private static bool hasCreated = false;
+
     private void Awake()
     {
+        // if (hasCreated == false)
+        //  {
+
+        DontDestroyOnLoad(gameObject);
+
+        // }
+
         instance = this;
 
         allWidgets = new Dictionary<string, Dictionary<string, GameObject>>();
@@ -35,7 +51,8 @@ public class UIManager : MonoBehaviour
 
         hintPf = Resources.Load("Prefabs/UiHint") as GameObject;
 
-        DontDestroyOnLoad(gameObject);
+        hasCreated = true;
+
     }
 
     public GameObject GetWidget(string panelName, string widgetName)
@@ -107,7 +124,29 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, GameObject> panelDict = new Dictionary<string, GameObject>();
 
+    public GameObject PopPanel(string name, TweenCallback tweenCallback)
+    {
+        GameObject panel = null;
+        panelDict.TryGetValue(name, out panel);
 
+        if (panel == null)
+        {
+            panel = Instantiate(Resources.Load(GameDefine.panelPath + name)) as GameObject;
+            panel.transform.SetParent(this.Canvas.transform);
+            panel.transform.localPosition = Vector3.zero;
+            panelDict.Add(name, panel);
+
+        }
+        else
+        {
+            panel.SetActive(true);
+        }
+
+        Tween tween = panel.transform.DOScale(1, 0.5f);
+        tween.OnComplete(tweenCallback);
+
+        return panel;
+    }
 
     public GameObject PopPanel(string name)
     {
@@ -125,9 +164,20 @@ public class UIManager : MonoBehaviour
         {
             panel.SetActive(true);
         }
-        panel.transform.DOScale(1, 0.5f);
+        Tween tween = panel.transform.DOScale(1, 0.5f);
+
         return panel;
 
+    }
+
+    public void DestroyAllPanel()
+    {
+        foreach (KeyValuePair<string, GameObject> panels in panelDict)
+        {
+            Destroy(panels.Value);
+
+        }
+        panelDict.Clear();
     }
 
 
@@ -149,4 +199,23 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void ClosePanel(string name, TweenCallback tweenCallback)
+    {
+        GameObject panel = null;
+        panelDict.TryGetValue(name, out panel);
+
+        if (panel == null)
+            return;
+        else
+        {
+            panel.transform.DOScale(0, 0.5f).OnComplete(() =>
+            {
+
+                tweenCallback();
+                panel.SetActive(false);
+            });
+
+        }
+
+    }
 }

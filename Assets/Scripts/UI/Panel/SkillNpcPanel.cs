@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class SkillNpcPanel : MonoBehaviour
+public class SkillNpcPanel : BasePanel
 {
 
 
@@ -15,17 +15,15 @@ public class SkillNpcPanel : MonoBehaviour
 
     public int selectSkillId { get; set; }
 
-    private void Awake()
+    public override void Awake()
     {
         skillCellUI = new SkillCellUI[3];
-        //randomSkillIds[0] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
-        //randomSkillIds[1] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
-        //randomSkillIds[2] = Random.Range(0, ItemConfig.Instance.GetItemCount() - 1) + 1000;
-
-        randomSkillIds[0] = 1000;
-        randomSkillIds[1] = 1001;
-        randomSkillIds[2] = 1004;
-
+        randomSkillIds[0] = Random.Range(0, 3) + 1000;
+        randomSkillIds[1] = Random.Range(0, 4) + 2000;
+        randomSkillIds[2] = Random.Range(0, 4) + 2000;
+        //randomSkillIds[0] = 2000;
+        //randomSkillIds[1] = 2003;
+        //randomSkillIds[2] = 2004;
         CerateCell();
         SetUpCell();
     }
@@ -33,6 +31,7 @@ public class SkillNpcPanel : MonoBehaviour
     private void CerateCell()
     {
         skillCellUI[0] = this.CellTemplate.GetComponent<SkillCellUI>();
+        //  Debug.Log(skillCellUI.Length);
         for (int i = 1; i < skillCellUI.Length; i++)
         {
             GameObject tempCell = Instantiate(this.CellTemplate);

@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+            return;
         instance = this;
         sourceManager = new SourceManager(this.gameObject, 3);
         clipManager = new ClipManager();

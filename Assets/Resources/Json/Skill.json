@@ -20,26 +20,6 @@
     },
     {
         "Id": 1001,
-        "Name": "冰冻",
-        "Desc": "对敌人进行减速",
-        "icon": "skill1001",
-        "range": 10,
-        "type": 3,
-        "cd": 8,
-        "effectRange": 5,
-        "roleMoveDir": 0,
-        "roleMoveDis": 0,
-        "buffId": [
-            "1001",
-            "1002"
-        ],
-        "anim": "idle",
-        "vfx": [
-            "frozon"
-        ]
-    },
-    {
-        "Id": 1002,
         "Name": "后撤",
         "Desc": "后撤5米",
         "icon": "skill1002",
@@ -58,7 +38,7 @@
         ]
     },
     {
-        "Id": 1003,
+        "Id": 1002,
         "Name": "闪现",
         "Desc": "向所指示方向闪现",
         "icon": "skill1003",
@@ -77,23 +57,117 @@
         ]
     },
     {
-        "Id": 1004,
+        "Id": 1003,
         "Name": "爆炸",
         "Desc": "向周围产生一次爆炸，并伤害",
         "icon": "skill1004",
         "range": 8,
-        "type": 1,
+        "type": 4,
         "cd": 9,
         "effectRange": 5,
         "roleMoveDir": 0,
         "roleMoveDis": 0,
         "buffId": [
-            "1002",
-            "1002"
+            1005
         ],
         "anim": "idle",
         "vfx": [
             "firework"
+        ]
+    },
+    {
+        "Id": 2000,
+        "Name": "火球术",
+        "Desc": "发出一个火球并造成伤害",
+        "icon": "skill1005",
+        "range": 10,
+        "type": 2,
+        "cd": 4,
+        "effectRange": 2,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "anim": "idle",
+        "vfx": [
+            "frameBall"
+        ]
+    },
+    {
+        "Id": 2001,
+        "Name": "陨石术",
+        "Desc": "向目标位置砸下一个火球，伤害并减速",
+        "icon": "skill1006",
+        "range": 10,
+        "type": 3,
+        "cd": 8,
+        "effectRange": 6,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "buffId": [
+            "1002",
+            "1002",
+            "1001"
+        ],
+        "anim": "idle",
+        "vfx": [
+            "fallStone"
+        ]
+    },
+    {
+        "Id": 2002,
+        "Name": "冰球术",
+        "Desc": "向四周发射出冰球，造成减速",
+        "icon": "skill1007",
+        "range": 10,
+        "type": 1,
+        "cd": 8,
+        "effectRange": 2,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "buffId": [
+            1006
+        ],
+        "anim": "idle",
+        "vfx": [
+            "iceBall"
+        ]
+    },
+    {
+        "Id": 2003,
+        "Name": "音速",
+        "Desc": "向周围产生音波，造成伤害",
+        "icon": "skill1008",
+        "range": 10,
+        "type": 4,
+        "cd": 9,
+        "effectRange": 5,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "buffId": [
+            1003
+        ],
+        "anim": "idle",
+        "vfx": [
+            "shockWave"
+        ]
+    },
+    {
+        "Id": 2004,
+        "Name": "冰冻",
+        "Desc": "对敌人进行减速",
+        "icon": "skill1001",
+        "range": 10,
+        "type": 3,
+        "cd": 8,
+        "effectRange": 5,
+        "roleMoveDir": 0,
+        "roleMoveDis": 0,
+        "buffId": [
+            "1001",
+            "1002"
+        ],
+        "anim": "idle",
+        "vfx": [
+            "frozon"
         ]
     }
 ]

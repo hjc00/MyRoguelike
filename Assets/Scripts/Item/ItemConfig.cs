@@ -20,6 +20,9 @@ public class ItemConfig : MonoBehaviour
 
     private void Awake()
     {
+        if (instanse != null)
+            return;
+
         instanse = this;
         LoadJson();
 
@@ -35,6 +38,7 @@ public class ItemConfig : MonoBehaviour
 
         for (int i = 0; i < baseItems.Length; i++)
         {
+            // Debug.Log(baseItems[i].addHp);
             itemDict.Add(baseItems[i].Id, baseItems[i]);
         }
 

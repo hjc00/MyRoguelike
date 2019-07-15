@@ -105,6 +105,7 @@ public class NpcManager : MonoBehaviour
                 cols[i].GetComponent<EnemyCtrl>().ReduceHealth(power);
                 CameraCtrl.Instance.CameraShake(0.1f, 0.5f);
                 cols[i].transform.LookAt(pos);
+                ObjectPool.Instance.SpawnVfx("hit", cols[i].transform.position + new Vector3(0, 0.5f, 0), cols[i].transform.rotation);
                 SkillPerform.Instance.BeatBack(cols[i].transform, cols[i].transform.position - NpcManager.Instance.Player.position, 0.1f, 0.5f);
             }
         }
@@ -165,6 +166,7 @@ public class NpcManager : MonoBehaviour
         {
             player.GetComponent<PlayerCtrl>().ReduceHealth(power);
             SkillPerform.Instance.BeatBack(player, player.position - enemy.position, 0.1f, 0.3f);
+            ObjectPool.Instance.SpawnVfx("hit", player.position + new Vector3(0, 0.5f, 0), player.rotation);
         }
     }
 

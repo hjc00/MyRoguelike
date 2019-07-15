@@ -26,6 +26,13 @@ public class DragonPersueState : FsmBase
 
         if (Vector3.Distance(ctrl.transform.position, NpcManager.Instance.Player.position) < ctrl.RoleData.rectLength)
         {
+
+            if (Random.Range(0, 100) < 50)
+            {
+                ctrl.ReleaseSkill();
+                return;
+            }
+
             anim.SetBool("run", false);
 
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("hit"))

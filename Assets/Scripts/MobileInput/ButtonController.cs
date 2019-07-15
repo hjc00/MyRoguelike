@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ButtonController : MonoBehaviour
 {
@@ -10,14 +11,19 @@ public class ButtonController : MonoBehaviour
     public Button btnC;
     public Button btnAtk;
 
+    public Button btnPause;
+
     private List<SkillBtnCtrl> skillBtnCtrls = new List<SkillBtnCtrl>();
 
     PlayerCtrl playerCtrl;
+
+    TweenCallback onOpenPausePanel;
 
     private void Start()
     {
 
         btnAtk.onClick.AddListener(OnBtnAtkClick);
+        btnPause.onClick.AddListener(OnBtnPauseClick);
 
         EventCenter.AddListener<int>(EventType.OnLearnSkill, SetSkillBtnData);
 
@@ -26,8 +32,21 @@ public class ButtonController : MonoBehaviour
         skillBtnCtrls.Add(btnA.GetComponent<SkillBtnCtrl>());
         skillBtnCtrls.Add(btnB.GetComponent<SkillBtnCtrl>());
         skillBtnCtrls.Add(btnC.GetComponent<SkillBtnCtrl>());
+
+
+        onOpenPausePanel += PauseGame;
     }
 
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        onOpenPausePanel -= PauseGame;
+    }
+
+    private void OnBtnPauseClick()
+    {
+        UIManager.Instance.PopPanel(GameDefine.pausePanel, onOpenPausePanel);
+    }
 
     private void OnBtnAtkClick()
     {
@@ -49,5 +68,8 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-
+    private void OnDestroy()
+    {
+        onOpenPausePanel -= PauseGame;
+    }
 }
